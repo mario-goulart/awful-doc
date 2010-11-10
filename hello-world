@@ -1,0 +1,45 @@
+=== A "Hello, world!" example
+
+Here's a "Hello, world!" example to be run by awful ({{hello-world.scm}}).
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello, world!"))
+</enscript>
+
+To run this example, execute:
+
+  $ awful hello-world.scm
+
+Then access localhost:8080 using your favourite web browser.
+
+Without any configuration, awful listens on port 8080.  Since awful uses Spiffy behind the scenes, you can configure the web server parameters using Spiffy's.
+
+{{define-page}} is the primitive procedure to define pages.  In the simplest case, it takes as arguments a path to the page and a procedure to generate the page contents. The path to the page you use as the first argument is the same to be used as the path part of the URL you use to access the page.
+
+In the example we use the {{main-page-path}} parameter, which is one of the awful configuration parameters.  The default is {{"/"}}.
+
+If you look at the page source code, you'll see that awful created an HTML page for you.  Awful uses the [[/egg/html-utils|html-tags]]'s {{html-page}} procedure behind the scenes.  You can customize the page either by passing {{html-page}}'s keyword parameters to {{define-page}} or by setting the {{page-template}} parameter with your favourite procedure to generate pages. {{page-template}} is a one-mandatory-argument procedure which receives the page contents and returns a string representing the formatted contents. {{define-page}} would still pass the {{html-page}} keyword parameters, so you can make use of them (the {{page-template}} procedure should be defined considering them -- if you don't need them, just ignore them by defining {{(lambda (contents . args) ...)}}).
+
+You can also use some global page-related parameters if all pages use the same CSS, doctype and charset ({{page-css}}, {{page-doctype}} and {{page-charset}}, respectively).
+
+
+An alternative way to write Awful '''scripts''' is by using the {{#!/path/to/awful}} shebang line.  Example:
+
+<enscript highlight=scheme>
+#! /usr/bin/awful
+
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello, world!"))
+</enscript>
+
+Then you just need to run your script (assuming the file has execution permissions):
+
+  $ ./hello-world.scm
+

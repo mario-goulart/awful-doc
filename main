@@ -1,0 +1,50 @@
+== Awful
+
+[[toc:]]
+
+=== Description
+
+awful provides an application and an extension to ease the development of web-based applications.
+
+Here's a short summary of awful features:
+
+* Straightforward interface to databases (currently supported are postgresql and sqlite3)
+* Support for page dispatching via regular expressions
+* Easy access to query string and body request variables from HTTP requests
+* Ajax support via [[http://jquery.com/|JQuery]]
+* Reasonably flexible (several configuration parameters)
+* Compiled pages made easy
+* Session inspector
+* Web REPL
+
+==== Screencasts
+
+Here are some screencasts about awful:
+
+; [[http://wiki.call-cc.org/video/awful.ogv|Awful in 35s]] : a 35 seconds video showing the installation of the awful egg and the development of a "hello, world" example
+
+; [[http://wiki.call-cc.org/video/awful-guess.ogv|Number guessing game]] : a video demonstrating the development of a very simple number guessing game using ajax and the web REPL
+
+
+=== Author
+
+[[/users/mario-domenech-goulart|Mario Domenech Goulart]]
+
+
+=== Requirements
+
+The following eggs are required:
+
+* [[/egg/spiffy|spiffy]]
+* [[/egg/spiffy-cookies|spiffy-cookies]]
+* [[/egg/spiffy-request-vars|spiffy-request-vars]]
+* [[/egg/html-tags|html-tags]]
+* [[/egg/html-utils|html-utils]]
+* [[/egg/json|json]]
+* [[/egg/http-session|http-session]]
+
+
+=== Components
+
+awful is composed by two parts: an application, which can be thought as a web server; and an extension, which provides most of the supported features.
+

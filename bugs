@@ -1,0 +1,7 @@
+=== Known bugs and limitations
+
+* The {{ajax}} procedure is not session-aware when called from {{define-session-page}} (it is when called from {{define-page}}) and cookies are not enabled (i.e., {{enable-session-cookie}} is {{#f}}).  To workaround this bug, you can explicitly pass the sid (see the read-only {{sid}} parameter) along with requests (see the {{arguments}} keyword parameter for {{ajax}} and ajax-related procedures).
+
+* Awful currently doesn't detect if cookies are enabled on the client side.
+
+* If you need to run awful as root to use privileged ports, beware that the given apps are loaded with root privileges, which are only dropped when Spiffy's {{start-server}} starts running.

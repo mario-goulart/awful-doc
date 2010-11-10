@@ -1,0 +1,433 @@
+=== A "Hello, world!" example
+
+Here's a "Hello, world!" example to be run by awful ({{hello-world.scm}}).
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello, world!"))
+</enscript>
+
+To run this example, execute:
+
+  $ awful hello-world.scm
+
+Then access localhost:8080 using your favourite web browser.
+
+Without any configuration, awful listens on port 8080.  Since awful uses Spiffy behind the scenes, you can configure the web server parameters using Spiffy's.
+
+{{define-page}} is the primitive procedure to define pages.  In the simplest case, it takes as arguments a path to the page and a procedure to generate the page contents. The path to the page you use as the first argument is the same to be used as the path part of the URL you use to access the page.
+
+In the example we use the {{main-page-path}} parameter, which is one of the awful configuration parameters.  The default is {{"/"}}.
+
+If you look at the page source code, you'll see that awful created an HTML page for you.  Awful uses the [[/egg/html-utils|html-tags]]'s {{html-page}} procedure behind the scenes.  You can customize the page either by passing {{html-page}}'s keyword parameters to {{define-page}} or by setting the {{page-template}} parameter with your favourite procedure to generate pages. {{page-template}} is a one-mandatory-argument procedure which receives the page contents and returns a string representing the formatted contents. {{define-page}} would still pass the {{html-page}} keyword parameters, so you can make use of them (the {{page-template}} procedure should be defined considering them -- if you don't need them, just ignore them by defining {{(lambda (contents . args) ...)}}).
+
+You can also use some global page-related parameters if all pages use the same CSS, doctype and charset ({{page-css}}, {{page-doctype}} and {{page-charset}}, respectively).
+
+
+An alternative way to write Awful '''scripts''' is by using the {{#!/path/to/awful}} shebang line.  Example:
+
+<enscript highlight=scheme>
+#! /usr/bin/awful
+
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello, world!"))
+</enscript>
+
+Then you just need to run your script (assuming the file has execution permissions):
+
+  $ ./hello-world.scm
+
+
+=== Accessing request variables
+
+Awful provides a procedure ({{$}}) to access variables from the request, both from the query string (GET method) and from the request body (e.g., POST method).
+
+Here's a modified "Hello, world!" example to greet some person instead of the whole world:
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    (++ "Hello, " ($ 'person "world") "!")))
+</enscript>
+
+The {{++}} procedure is an alias to {{string-append}} (name inspired by Haskell's operator to concatenate strings).
+
+So, restart the web server to reload the code, then access the main page using an argument, represented by the {{person}} query string variable: {{http://localhost:8080/?person=Mario}}. You'll see a page showing {{Hello, Mario!}}.
+
+
+=== Re-evaluating the code by reloading the page
+
+When we upgraded our "Hello, world!" example to the improved one which can use an argument passed through the URL, we needed to modify the code and restart the web server to reload the application code.  Awful provides a way to reload the code via URL without restarting the server.  To do that, we can define a special page whose handler just reloads the code:
+
+<enscript highlight=scheme>
+(define-page "/reload"
+  (lambda ()
+    (load-apps (awful-apps))
+    "Reloaded"))
+</enscript>
+
+and restart the awful server.  Now, whenever you want to reload the application code, access {{http://localhost:8080/reload}}.
+
+You can control which IP numbers can access the reload page by using the {{page-access-control}} parameter.  For example, allowing only the localhost to reload the apps:
+
+<enscript highlight=scheme>
+(page-access-control
+ (lambda (path)
+   (if (equal? path "/reload")
+       (member (remote-address) '("127.0.0.1"))
+       #t)))
+</enscript>
+
+When used in development mode (see the {{--development-mode}} command line option for the awful application server), awful automatically defines a {{/reload}} path (available to any host) for reloading all the applications.
+
+
+=== Using ajax
+
+Awful provides a way to (hopefully) make the use of ajax straightforward for web applications.
+
+By default, the ajax support is disabled, but it can be easily globally enabled by setting the {{enable-ajax}} parameter to {{#t}}.  When you enable ajax via {{enable-ajax}}, all the pages defined via {{define-page}} will be linked to the JQuery javascript library. If you want just a couple of pages to have ajax support (i.e., not global ajax support), you can use the {{use-ajax}} keyword parameter for {{define-page}}, so only the pages defined with {{use-ajax: #t}} have ajax support.
+
+When you have ajax enabled and you want to disable it for specific pages, you can pass {{#f}} as the value for the {{define-page}} keyword parameter {{no-ajax}}.
+
+The URL of the JQuery file can be customized by setting the {{ajax-library}} parameter (the default is Google's API JQuery file version 1.4.2).
+
+So, if we now change our code to
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    (++ "Hello, " ($ 'person "world") "!"))
+  use-ajax: #t)
+</enscript>
+
+and reload the application, we'll have our page linked to JQuery.
+
+Awful provides some procedures to do ajax.  We start by the more generic one ({{ajax}}) to reply the page greetings when we click "Hello, <person>!".
+
+<enscript highlight=scheme>
+(use awful html-tags)
+
+(define-page (main-page-path)
+  (lambda ()
+    (ajax "greetings" 'greetings 'click
+          (lambda ()
+            (<b> "Hello, awful!"))
+          target: "greetings-reply")
+    (++ (<a> href: "#"
+             id: "greetings"
+             (++ "Hello, " ($ 'person "world") "!"))
+        (<div> id: "greetings-reply")))
+  use-ajax: #t)
+</enscript>
+
+The {{ajax}} procedure uses at least four arguments:
+
+1. The URL path to the server-side handler (a string).  This path is relative to {{ajax-namespace}} parameter (default is {{ajax}}.  So, in the example, we'll have {{/ajax/greetings}} as the ajax path to be generated if we pass {{ajax}} as the first argument.
+
+2. The ID of the DOM element to observe.
+
+3. The event to be handled
+
+4. The procedure to be run on the server-side.
+
+So, in the example, {{ajax}} will bind the fourth argument (the procedure) to the first argument (the path) on the server side. Then it will add javascript code to the page in order to wait for click events for the element of ID {{greetings}}.  When we click "Hello, <person>!", we'll get {{Hello, awful!}} printed on the page as reply.  {{ajax}} updates the DOM element whose id is the value of the {{target}} keyword parameter ({{"greetings-reply"}}, in the example).
+
+For the very specific case of creating links that execute server side code when clicked, awful provides the {{ajax-link}} procedure.  So our example could be coded like:
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    (++ (ajax-link "greetings" 'greetings
+                   (lambda ()
+                     (<b> "Hello, awful!"))
+                   target: "greetings-reply")
+        (<div> id: "greetings-reply")))
+  use-ajax: #t)
+</enscript>
+
+
+
+=== Adding arbitrary javascript code to pages
+
+Awful provides a procedure which can be used to add arbitrary javascript code to the page. It's called {{add-javascript}}.  Here's an example using javascript's {{alert}} and our "Hello, world!" example:
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    (add-javascript "alert('Hello!');")
+    (++ (ajax-link "greetings" 'greetings
+                   (lambda ()
+                     (<b> "Hello, awful!"))
+                   target: "greetings-reply")
+        (<div> id: "greetings-reply")))
+  use-ajax: #t)
+</enscript>
+
+
+
+=== Database access
+
+To access databases, you need some of the awful eggs which provide database access.  Currently, these are the possible options:
+
+* [[/egg/awful-postgresql|awful-postgresql]] (for Postgresql databases, using the [[/egg/postgresql|postgresql]] egg)
+
+* [[/egg/awful-sqlite3|awful-sqlite3]] (for Sqlite3 databases, using the [[/egg/sqlite3|sqlite3]] egg)
+* [[/egg/awful-sql-de-lite|awful-sql-de-lite]] (for Sqlite3 databases, using the [[/egg/sql-de-lite|sql-de-lite]] egg)
+
+As with ajax, database access is not enabled by default.  To enable it, you need to pick one the awful database support eggs and call the {{enable-db}} procedure.  Since version 0.10, and differently from the {{enable-*}} parameters, {{enable-db}} is a zero-argument procedure provided by each of awful database-support eggs.  So, if you use {{awful-postgresql}}, the {{enable-db}} procedure will automatically set up awful to use a postgresql database.
+
+Additionally, to access the db, you need to provide the credentials.  You can provide the credentials by setting the {{db-credentials}} parameter.  See the documentation for the eggs corresponding to the database type you are using ([[/egg/postgresql|postgresql]] for Postgresql and [[/egg/sqlite3|sqlite3]] or [[/egg/sql-de-lite|sql-de-lite]] for Sqlite3.)
+
+To actually query the database, there's the {{$db}} procedure, which uses as arguments a string representing the query and, optionally, a default value (a keyword parameter) to be used in case the query doesn't return any result. {{$db}} returns a list of lists. Below is an usage example:
+
+<enscript highlight=scheme>
+(use awful awful-postgresql)
+
+(enable-db)
+(db-credentials '((dbname . "my-db")
+                  (user . "mario")
+                  (password . "secret")
+                  (host . "localhost")))
+
+(define-page "db-example"
+  (lambda ()
+    (with-output-to-string
+      (lambda ()
+        (pp ($db "select full_name, phone from users"))))))
+</enscript>
+
+''Hint'': for Sqlite3 databases, {{db-credentials}} should be the path to the database file.
+
+There's also the {{$db-row-obj}} procedure for when you want to access the results of a query by row name.  {{$db-row-obj}} returns a procedure of two arguments: the name of the field and, optionally, a default value to be used in case the field value is {{#f}}.
+
+<enscript highlight=scheme>
+(define-page "db-example"
+  (lambda ()
+    (let ((& ($db-row-obj "select full_name, phone from users where user_id=1")))
+      (<p> "Full name: " (& 'full_name))
+      (<p> "Phone: " (& 'phone)))))
+</enscript>
+
+''Warning'': currently {{$db-row-obj}} is only implemented for Postgresql.
+
+If you need more flexibility to query the database, you can always use the {{(db-connection}}) parameter to get the database connection object and use it with the procedures available from the your favorite database egg API.
+
+
+=== Login pages and session
+
+Awful provides a very basic (awful?) support for creating authentication pages.
+
+The basic things you have to do is:
+
+1. Enable the use of sessions:
+
+<enscript highlight=scheme>
+(enable-session #t)
+</enscript>
+
+2. Set the password validation parameter.  This parameter is a two argument procedure (user and password) which returns a value (usually {{#t}} or {{#f}}) indicating whether the password is valid for the given user.  The default is a password which returns {{#f}}.  Let's set it to a procedure which returns {{#t}} is the user and the password are the same:
+
+<enscript highlight=scheme>
+(valid-password?
+  (lambda (user password)
+    (equal? user password)))
+</enscript>
+
+3. Define a login trampoline, which is an intermediate page accessed when redirecting from the login page to the main page.
+
+<enscript highlight=scheme>
+(define-login-trampoline "/login-trampoline")
+</enscript>
+
+4. Create a login page.  Awful provides a simple user/password login form ({{login-form}}), which we are going to use.  Here's our full example so far (using the basic "Hello, world!" as main page).
+
+<enscript highlight=scheme>
+(use awful)
+
+(enable-session #t)
+
+(define-login-trampoline "/login-trampoline")
+
+(valid-password?
+  (lambda (user password)
+    (equal? user password)))
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello world!"))
+
+(define-page (login-page-path)
+  (lambda ()
+    (login-form))
+  no-session: #t)
+</enscript>
+
+That's the very basic we need to set an auth page.  If the password is valid for the given user, awful will perform a redirect to the main page ({{main-page-path}} parameter) passing the {{user}} variable and its value in the query string .  If the password is not valid, awful will redirect to the login page ({{login-page-path}} parameter) and pass the following variables and values:
+
+; {{reason}} : the reason why awful redirected to the login page. It may be {{invalid-password}}, for when the password is invalid for the given user; or {{invalid-session}} for when the session identifier is not valid (e.g., the session expired).
+
+; {{attempted-page}} : the URL path to page the user tried to access, but couldn't because either he/she was not logged in or he/she provided an invalid session identifier.
+
+; {{user}} : the user used for the form user field.
+
+Now we're gonna change our main page to store the user in the session and retrieve it to make the greetings message:
+
+<enscript highlight=scheme>
+(define-page (main-page-path)
+  (lambda ()
+    ($session-set! 'user ($ 'user))
+    (++ "Hello " ($session 'user "world") "!")))
+</enscript>
+
+Here we can see the two procedures to access the session: {{$session}} and {{$session-set!}}.
+
+{{$session-set!}} accepts two arguments: the first one is the name of the session variable and the second one is its value.
+
+{{$session}} takes the name of the session variable as argument and returns its session value.  We can optionally use a second argument to specify a default value, in case the session variable is not bound or is {{#f}}.
+
+
+=== Session inspector
+
+Awful provides a session inspector, so we can easily see the session contents for a given session identifier.  By default, the session inspector is disabled.  We can enabled it using the {{enable-session-inspector}} procedure, passing the session inspector URL path as argument:
+
+<enscript highlight=scheme>
+(enable-session-inspector "session-inspector")
+</enscript>
+
+Now, if you log in and try to access {{http://localhost:8080/session-inspector}}, you'll get ... an access denied page.
+
+Awful provides a way to control access to the session inspector ({{session-inspector-access-control}} parameter).  The {{session-inspector-access-control}} parameter is an one-argument procedure which returns {{#f}} or some other value to indicate whether the access to the session inspector is allowed or not. By default, it blocks all access.  Let's configure it so we can access the session inspector from the local machine (whose IP number is 127.0.0.1):
+
+<enscript highlight=scheme>
+(session-inspector-access-control
+ (lambda ()
+   (member (remote-address) '("127.0.0.1"))))
+</enscript>
+
+Regarding to the access denied message, you can customize it by setting the {{session-inspector-access-denied-message}}.
+
+Now we can access {{http://localhost:8080/session-inspector}} and see the session contents.
+
+''Note'': if {{enable-session-cookie}} is {{#f}}, you need to pass the session identifier in the query string (e.g., {{http://localhost:8080/session-inspector?sid=the-session-cookie-here}}).
+
+Here's a screenshot:
+
+[[image:http://parenteses.org/mario/img/awful/session-inspector.png|Awful session inspector]]
+
+When {{enable-session}} is {{#t}} and the {{--development-mode}} option is given to the awful application server, the session inspector is automatically enabled and is avaliable from {{/session-inspector}}.
+
+=== Web REPL
+
+For further run-time, server-side web hacking, awful provides a REPL that you can use via web browser. 
+
+The web REPL can use either a plain HTML textarea for the input area or a more featureful editor (based on [[http://codemirror.net|codemirror]]).  By default, the web REPL uses the ''fancy'' editor.
+
+The activation and control access are basically the same as for the session inspector.  The relevant procedure and parameters are:
+
+* {{enable-web-repl}}
+* {{web-repl-access-control}}
+* {{web-repl-access-denied-message}}
+* {{enable-web-repl-fancy-editor}}
+* {{web-repl-fancy-editor-base-uri}}
+
+Here's a screenshot (using the fancy editor):
+
+[[image:http://parenteses.org/mario/img/awful/fancy-web-repl.png|Awful web REPL]]
+
+When the {{--development-mode}} option is given to the awful application server, the web REPL is automatically enabled and is avaliable from {{/web-repl}}. The awful application server also accepts the {{--disable-web-repl-fancy-editor}} command line option to disable the web REPL fancy editor.
+
+
+=== Pages access control
+
+To allow/deny access to pages, you can use the {{page-access-control}} parameter.  It's an one-argument procedure (the page path) which can be set to determine if the access to the page is allowed or not.
+
+The example bellow shows a very silly access control to the main page: it only allows the access when the value of the request variable {{user}} is {{"mario"}}:
+
+<enscript highlight=scheme>
+(use awful)
+
+(enable-session #t)
+
+(define-login-trampoline "/login-trampoline")
+
+(valid-password?
+ (lambda (user password)
+   (equal? user password)))
+
+(page-access-control
+ (lambda (path)
+   (or (member path `(,(login-page-path) "/login-trampoline")) ;; allow access to login-related pages
+       (and (equal? ($ 'user) "mario")
+            (equal? path (main-page-path))))))
+
+(define-page (main-page-path)
+  (lambda ()
+    "Hello world"))
+
+(define-page (login-page-path)
+  (lambda ()
+    (login-form))
+  no-session: #t)
+</enscript>
+
+You can customize the access denied message by setting the {{page-access-denied-message}} with an one-argument procedure (the page path).
+
+
+=== Compiled pages
+
+Since Chicken is a compiler and our pages are Chicken code, we can compile them to have faster pages.  We just need to compile our app and pass the generated {{.so}} to the {{awful}} application:
+
+  $ csc -s hello-world.scm
+  $ awful hello-world.so
+
+
+
+=== Multiple applications support
+
+To be able to deploy multiple awful applications with different configurations under the same server, use Spiffy access files.  See Spiffy's [[/egg/spiffy#access-files|access files documentation]] for further details.
+
+
+=== The awful application server
+
+Awful consists of an application server and an extension module.  The awful application server is a command line program whose usage is:
+
+ $ awful --help
+ awful [ -h | --help ]
+ awful [ -v | --version ]
+ awful [ --development-mode ] [ --disable-web-repl-fancy-editor ] [ --ip-address=<ip address> ] [ --port=<port number> ] [ <app1> <app2> ... ]
+
+{{<app1> <app2> ...}} are files containing code to be loaded by the awful application server.
+
+{{--ip-address}} can be used to bind the web server to the given IP address.
+
+{{--port}} can be used to make the web server listen to the given port.
+
+{{--ip-address}} and {{--port}} take precedence over the Spiffy parameters to specify the server IP address ({{server-bind-address}}) and port ({{server-port}}).
+
+The {{--development-mode}} option is intended to be used during the development of your web application.  It's not recommended to run awful with {{--development-mode}} in production.  The development mode enables the web REPL and the session inspector (when {{enable-session}} is {{#t}}) for the localhost, prints error messages and backtraces to the client (e.g., web browser) and HTTP server debugging messages to the {{current-error-port}}.  It also makes the {{/reload}} path available for reloading awful applications.
+
+When in development mode, the web REPL and the session inspector are available from the {{/web-repl}} and {{/session-inspector}} paths.
+
+If you enable the development mode you can still use {{enable-web-repl}} and {{enable-session-inspector}} to customize their respective paths and access control procedures (although the development mode always allows access to web REPL and session inspector for the localhost).
+
+The {{--disable-web-repl-fancy-editor}} command line option disables the web REPL fancy editor.
+
+
+=== Deploying awful
+
+See the [[/deploying-awful|Deploying Awful]] page on the [[http://wiki.call-cc.org|Chicken Wiki]].
+

@@ -1,0 +1,208 @@
+=== Examples
+
+Here are some simple examples using assorted awful features.
+
+
+==== Number guessing game
+
+A screencast showing this example is available at
+[[http://wiki.call-cc.org/video/awful-guess.ogv|http://wiki.call-cc.org/video/awful-guess.ogv]]
+
+This examples shows a simple guessing game. A random number is
+generated on the server side and the user tries to guess it.  It shows
+some basic ajax features.
+
+<enscript highlight=scheme>
+(use awful html-tags spiffy-request-vars)
+
+(enable-ajax #t)
+
+(define (prompt-guess)
+  (<input> type: "text" id: "guess"))
+
+(define-page (main-page-path)
+  (lambda ()
+    (ajax "try-guess" 'guess 'change
+          (lambda ()
+            (let ((guess ($ 'guess as-number))
+                  (thinking (random 10)))
+              (<p> (if (and guess (= guess thinking))
+                       "You guessed it right!"
+                       (conc "You guessed it wrong. I'm thinking " thinking ".")))))
+            target: "verdict"
+            arguments: '((guess . "$('#guess').val()")))
+    (++ (<p> "Guess the number I'm thinking:")
+        (prompt-guess)
+        (<div> id: "verdict"))))
+</enscript>
+
+To run it, execute:
+
+  $ awful number-guess.scm
+
+(considering you saved the code above in a file called
+{{number-guess.scm}}), then access {{http://localhost:8080}}.
+
+
+
+==== Sandoxed Chicken Web REPL
+
+This example was featured in the
+[[http://gazette.call-cc.org/issues/10.html|Chicken Gazette #10]].
+
+It shows how to implement a very simple web-based Chicken REPL using a
+sandbox environment (see the
+[[http://wiki.call-cc.org/egg/sandbox|sandbox egg]] documentation) for
+safe evaluation.
+
+The idea is to have a web page with an input box. Users type the forms
+they want to evaluate and submit them to the server. The server
+evaluates the given forms in a sandbox environment and return the
+results.
+
+Here's the commented code:
+
+<enscript highlight=scheme>
+(use html-tags awful sandbox)
+
+;; Here we define the REPL page.  It uses the session to store the
+;; sandboxed environment.  By default, the `main-page-path' parameter
+;; value is "/".
+(define-session-page (main-page-path)
+  (lambda ()
+
+    ;; Create the sandbox environment (if it does not exist yet) and
+    ;; store it in the user session.
+    (unless ($session 'sandbox-env)
+      ($session-set! 'sandbox-env
+                     (make-safe-environment
+                      parent: default-safe-environment
+                      mutable: #t
+                      extendable: #t)))
+
+    ;; Here we set an ajax handler for the REPL expressions
+    ;; submission.  When users change the REPL input widget (i.e., by
+    ;; pressing ENTER), the contents of the text input field are
+    ;; submitted and handled by the procedure given as the forth
+    ;; argument to `ajax'.
+    (ajax "eval" 'repl-input 'change
+          (lambda ()
+
+            ;; This binds the variable `repl-input' from the POST
+            ;; method the the `repl-input' Scheme variable
+            (let ((repl-input ($ 'repl-input)))
+
+              ;; We'd better handle exceptions when trying to
+              ;; evaluate the expressions given by users.
+              (handle-exceptions
+               exn
+               ;; If something goes wrong, we print the error message
+               ;; and the call chain.
+               (<pre> convert-to-entities?: #t
+                      (with-output-to-string
+                        (lambda ()
+                          (print-error-message exn)
+                          (print-call-chain))))
+               ;; Here we try to evaluate the given expression in the
+               ;; sandboxed environment stored in the user session. 
+               ;; The `repl-output' page div is updated with the result.
+               (<pre> convert-to-entities?: #t
+                      (safe-eval
+                       (with-input-from-string repl-input read)
+                       fuel: 100
+                       allocation-limit: 100
+                       environment: ($session 'sandbox-env))))))
+
+          ;; Here we pass the contents of the text input to the ajax
+          ;; handler.  The default HTTP method used by `ajax' is POST.
+          arguments: `((repl-input . "$('#repl-input').val()"))
+
+          ;; The output of the ajax handler updates the `repl-output'
+          ;; page div.
+          target: "repl-output")
+
+    ;; Here's what is displayed to users
+    (++ (<h1> "Sandboxed Chicken web REPL")
+        (<input> type: "text" id: "repl-input")
+        (<div> id: "repl-output")))
+
+  ;; This tells `define-session-page' to link the page to JQuery
+  use-ajax: #t)
+</enscript>
+
+To run the code above you'll need to install awful and sandbox:
+
+  $ chicken-install awful sandbox
+
+Then (considering you save the code above in a file called {{web-sandbox.scm}}), run:
+
+  $ awful web-sandbox.scm
+
+and access {{http://localhost:8080}}.
+
+
+Here are some screenshots of the code above running on Firefox:
+
+[[image:http://gazette.call-cc.org/img/10/web-sandbox.png|Screenshot of the sandboxed web REPL running on Firefox]]
+
+If you try something nasty, the sandbox will abort the evaluation and you'll get an error message and the call chain:
+
+[[image:http://gazette.call-cc.org/img/10/web-sandbox-loop.png|Screenshot of the sandboxed web REPL running on Firefox]]
+
+We can also compile the web application:
+
+ $ csc -s web-sandbox.scm
+ $ awful web-sandbox.so
+
+
+==== Color chooser
+
+Here's an example provided by
+[[http://wiki.call-cc.org/users/christian-kellermann|Christian Kellermann]] demonstrating an ajax-based color chooser:
+
+<enscript highlight=scheme>
+(use awful html-utils html-tags)
+
+(define color-table
+  '("f63353" "fead76" "107279" "10fabc" "1181bf" "120902" "129105"
+    "131848" "13a04b" "1427ee" "14a8b1" "1532d4" "15bcf7" "16671a"
+    "16c13d" "175b60" "17d583" "186fa6" "18ecc9" "1973ec"))
+
+(enable-ajax #t)
+
+(define (color-picker counter color)
+  (<div> class: "color-box" style: (conc  "background-color: " (conc "#" color))
+         (text-input (conc "change-color-" counter) value: color)))
+
+(define (make-color-chooser counter c)
+  (ajax "ajax" (conc "#change-color-" counter) 'change
+        (lambda ()
+          (let ((color (or ($ 'color) c))
+                (counter ($ 'counter)))
+            (color-picker counter color)))
+        target: (conc "color-box-" counter)
+        arguments: `((color . ,(conc  "$('#change-color-" counter "').val()"))
+                     (counter . ,counter))
+        live: #t)
+  (<div> id: (conc "color-box-" counter) (color-picker counter c)))
+
+(define-page (main-page-path)
+  (lambda ()
+    (concat (map (let ((counter -1))
+                   (lambda (c)
+                     (set! counter (add1 counter))
+                     (make-color-chooser counter c)))
+                 color-table))))
+
+</enscript>
+
+Here's a screenshot:
+
+[[image:http://parenteses.org/mario/img/awful/color-chooser.png|Awful color chooser]]
+
+To run this example (considering you save the code above in a file called {{color-chooser.scm}}):
+
+  $ awful color-chooser.scm
+
+then access {{http://localhost:8080}}.  You can change the colors by
+editing the input boxes then pressing enter.
