@@ -206,3 +206,136 @@ To run this example (considering you save the code above in a file called {{colo
 
 then access {{http://localhost:8080}}.  You can change the colors by
 editing the input boxes then pressing enter.
+
+
+==== Fortune server
+
+This example is a fortune server in awful.  It demonstrates some handy
+awful features like database access and ajax.  You'll need the
+[[http://wiki.call-cc.org/egg/awful-sql-de-lite|awful-sql-de-lite]]
+egg and its dependencies (which should be automatically installed by
+{{chicken-install}}).
+
+Here are instructions to install and use it:
+
+1. Install [[http://wiki.call-cc.org/egg/awful-sql-de-lite|awful-sql-de-lite]]
+
+   $ chicken-install awful-sql-de-lite
+
+
+2. Create the fortunes database (see the code below):
+
+   $ csi -s create-database.scm
+
+
+3. Run the fortune server (see the code below):
+
+   $ awful fortune-server.scm
+
+
+Here's the code for {{create-database.scm}} which creates and populates the fortune database:
+
+<enscript highlight=scheme>
+(use sql-de-lite posix)
+
+(define fortunes
+  '(("Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
+     "Brian Kernighan")
+    ("In order to understand recursion, one must first understand recursion.")
+    ("If debugging is the process of removing software bugs, then programming must be the process of putting them in."
+     "Edsger Dijkstra")
+    ("Controlling complexity is the essence of computer programming."
+     "Brian Kernigan")
+    ("The function of good software is to make the complex appear to be simple."
+     "Grady Booch")
+    ("That's the thing about people who think they hate computers.  What they really hate is lousy programmers."
+     "Larry Niven")
+    ("First learn computer science and all the theory.  Next develop a programming style.  Then forget all that and just hack."
+    "George Carrette")
+    ("To iterate is human, to recurse divine."
+    "L. Peter Deutsch")
+    ("The best thing about a boolean is even if you are wrong, you are only off by a bit.")
+    ("Optimism is an occupational hazard of programming; feedback is the treatment."
+     "Kent Beck")
+    ("Simplicity is prerequisite for reliability."
+     "Edsger W. Dijkstra")
+    ("Simplicity is the ultimate sophistication."
+     "Leonardo da Vinci")
+    ("The unavoidable price of reliability is simplicity."
+     "C.A.R. Hoare")
+    ("The ability to simplify means to eliminate the unnecessary so that the necessary may speak."
+     "Hans Hoffmann")
+    ("Simplicity is hard to build, easy to use, and hard to charge for. Complexity is easy to build, hard to use, and easy to charge for."
+     "Chris Sacca")))
+
+(delete-file* "fortunes.db")
+
+(let ((db (open-database "fortunes.db")))
+  (exec (sql db "create table fortunes(sentence text, author text)"))
+  (for-each (lambda (fortune)
+              (let* ((sentence (car fortune))
+                     (author (cdr fortune))
+                     (statement
+                      (string-append
+                       "insert into fortunes (sentence, author) values (?,?)")))
+                (exec (sql db statement)
+                      sentence
+                      (if (null? author) "" (car author)))))
+            fortunes)
+  (close-database db))
+</enscript>
+
+Here's the code for the fortune server:
+
+<enscript highlight=scheme>
+(use awful html-tags awful-sql-de-lite)
+
+(enable-db)
+(db-credentials "fortunes.db")
+
+(define (random-fortune)
+  (car ($db "select sentence, author from fortunes order by random() limit 1")))
+
+(define-page (main-page-path)
+  (lambda ()
+    (ajax "new-fortune" 'new-fortune 'click
+          (lambda ()
+            (let ((fortune (random-fortune)))
+              `((sentence . ,(car fortune))
+                (author . ,(cadr fortune)))))
+          update-targets: #t)
+
+    (<div> id: "content"
+           (<div> id: "sentence" "Click the button below to get a new fortune")
+           (<div> id: "author")
+           (<button> id: "new-fortune" "New fortune")))
+
+  css: "fortune.css"
+  use-ajax: #t
+  charset: "utf-8")
+</enscript>
+
+
+The contents of the {{fortune.css}} file are:
+
+  body
+  { font-family: arial, verdana, sans-serif;
+  }
+  
+  #sentence
+  { width: 20em;
+    background-color: #DEE7EC;
+    padding: 6px;
+    min-height: 7em;
+  }
+  
+  #author
+  { width: 20em;
+    min-height: 2em;
+    padding: 6px;
+    background-color: #eee;
+  }
+
+Here's a screenshot:
+
+[[image:http://parenteses.org/mario/img/awful/fortune-server.png|Awful fortune server]]
