@@ -1,6 +1,6 @@
 === List of user configurable parameters
 
-==== Debugging
+==== Debugging (parameters)
 
 <parameter>(debug-file [file path])</parameter>
 
@@ -28,7 +28,7 @@ The default value is {{""}}.
 When {{#t}}, enables debugging of awful's resources table (an alist mapping paths (or regexes) and vhost paths to their corresponding procedures to be executed on the server side upon request).  The debugging data is sent to the file pointed by {{debug-file}}.  The default value is {{#f}}.
 
 
-==== Database
+==== Database (parameters)
 
 <parameter>(db-credentials [boolean or list])</parameter>
 
@@ -37,7 +37,7 @@ Credentials to be used to access the database (see the documentation for the egg
 The default value is {{#f}}.
 
 
-==== Ajax
+==== Ajax (parameters)
 
 <parameter>(ajax-library [string])</parameter>
 
@@ -68,7 +68,7 @@ The default value is {{"Invalid session"}}.
 
 
 
-==== Sessions
+==== Sessions (parameters)
 
 <parameter>(enable-session [boolean])</parameter>
 
@@ -87,7 +87,7 @@ When {{#t}}, awful uses cookies to store the session identifier.  Otherwise, the
 The name of the cookie for storing the session identifier.  The dafult value is {{"awful-cookie"}}.
 
 
-==== Access control
+==== Access control (parameters)
 
 <parameter>(page-access-control [procedure])</parameter>
 
@@ -110,7 +110,7 @@ A two-argument (user and password) procedure which indicates whether the given p
 The default value is {{(lambda (user password) #f)}}.
 
 
-==== Pages
+==== Pages (parameters)
 
 <parameter>(page-doctype [string])</parameter>
 
@@ -157,7 +157,7 @@ The default value is {{(lambda (exn) (<h3> "An error has accurred while processi
 
 
 
-==== Page paths
+==== Page paths (parameters)
 
 <parameter>(main-page-path [string])</parameter>
 
@@ -181,7 +181,7 @@ The default value is {{"/login"}}.
 
 
 
-==== Headers
+==== Headers (parameters)
 
 <parameter>(awful-response-headers [alist])</parameter>
 
@@ -209,7 +209,7 @@ Here's an example:
 
 
 
-==== Web REPL
+==== Web REPL (parameters)
 
 <parameter>(web-repl-access-control [procedure])</parameter>
 
@@ -236,7 +236,7 @@ The URI which indicates the fancy editor source files (javascript and CSS) locat
 
 
 
-==== Session inspector
+==== Session inspector (parameters)
 
 <parameter>(session-inspector-access-control [procedure])</parameter>
 
@@ -252,7 +252,7 @@ Message to be printed when the access to the session inspector is denied.
 The default value is {{(<h3> "Access denied.")}}.
 
 
-==== Javascript
+==== Javascript (parameters)
 
 <parameter>(enable-javascript-compression [boolean])</parameter>
 
