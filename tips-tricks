@@ -109,6 +109,47 @@ This feature is automatically enabled when the awful application server is used 
 When invoked without arguments, awful (the application) starts the web server using the current directory as root path and keeps listening on port 8080.  So, if you want to quickly share a file (or some files), change to the directory containing the files and execute {{awful}}.  The access {{http://<host>:8080/<the-file-you-want>}}.
 
 
+==== Awful & SXML
+
+By default, awful uses [[http://wiki.call-cc.org/egg/html-tags|html-tags]] to generate HTML for pages.  Of course, it can be changed, and you can even use SXML.  Here's an example by setting the {{page-template}} parameter to use SXML (see the [[http://wiki.call-cc.org/egg/sxml-transforms|sxml-transforms egg]]):
+
+<enscript highlight=scheme>
+(use awful sxml-transforms)
+
+(page-template
+ (lambda (contents . rest)
+   (with-output-to-string
+     (lambda ()
+       (SXML->HTML `(html (body ,contents)))))))
+
+(define (define-sxml-page path contents)
+  (define-page path
+    (lambda ()
+      (contents))))
+
+(define-sxml-page (main-page-path)
+  (lambda ()
+    '(p "Awful SXML example")))
+</enscript>
+
+Alternatively, you can tell {{define-page}} not to use {{page-template}} and do the SXML transformations in the page definition body:
+
+<enscript highlight=scheme>
+(use awful sxml-transforms)
+
+(define (define-sxml-page path contents)
+  (define-page path
+    (lambda ()
+      (with-output-to-string
+        (lambda ()
+          (SXML->HTML `(html (body ,(contents)))))))
+    no-template: #t))
+
+(define-sxml-page (main-page-path)
+  (lambda ()
+    '(p "Awful SXML example")))
+</enscript>
+
 
 ==== Awful badge
 
