@@ -227,7 +227,7 @@ The optional parameter {{vhost-root-path}} is the path of virtual host where the
 
 ==== Ajax
 
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache)</procedure>
 
 Generate javascript code to be added to the page defined by {{define-page}}.  Return the generated javascript code (which usually is not useful, so should be discarded).
 
@@ -308,6 +308,8 @@ The {{success}} keyword parameter (string) can be any arbitrary javascript code 
     (++ (link "#" "foo" id: "foo")
         (<div> id: "bar"))))
 </enscript>
+
+The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will force requested pages not to be cached by the browser.  The default value is not set, leaving it to be set by JQuery. See [[http://api.jquery.com/jQuery.ajax/|JQuery's documentation]] for further details.
 
 The {{ajax}} procedure is session, HTTP request and database -aware.
 
