@@ -2,6 +2,4 @@
 
 * Awful currently doesn't detect if cookies are enabled on the client side.
 
-* If you need to run awful as root to use privileged ports, beware that the given apps are loaded with root privileges, which are only dropped when Spiffy's {{start-server}} starts running.
-
 * If you are facing weird problems when reloading compiled applications (i.e., you have defined a page to reload your compiled applications), it is possible that a Chicken issue is the cause (see [[http://bugs.call-cc.org/ticket/442|ticket #442]]).
