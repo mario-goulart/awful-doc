@@ -1,4 +1,12 @@
 === Version history
+; 0.28:
+* Updated JQuery from version 1.4.3 to 1.5.0.
+* {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (e.g., you don't need to explicitly pass the session identifier).
+* Added the {{cache}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}.
+* The HTTP request variables are now parsed and made available on demand, when {{$}} is called for the first time for each request (thanks to David Krentzlin).
+* Applications are no longer loaded with administrator privileges when awful is run by administrator and configured to switch to a non privileged user. For code which needs administrator privileges (like binding to low ports, IP addresses, user/group settings etc), there's a new command line option for the awful application server: {{--privileged-code}}.  '''Warning''': if you rely on your configuration performing actions with administrator privileges, this change may affect your code.
+* {{define-session-page}} bug fix (it was not properly obtaining the session identifier).
+
 
 ; 0.27: Require the {{regex}} egg, for chickens >= 4.6.2
 
