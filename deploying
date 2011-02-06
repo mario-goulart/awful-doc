@@ -1,0 +1,86 @@
+=== Deploying Awful
+
+Here are some tips about how to deploy awful on your system.
+
+
+==== On Unix[-like] systems
+
+Create a user for running awful.  For example, on GNU/Linux systems,
+you can use the adduser program:
+
+  # adduser --system --no-create-home --disabled-password --disabled-login --group awful
+
+This will create a user and a group called {{awful}}.
+
+
+Create a directory for the awful configuration file:
+
+  # mkdir /etc/awful
+
+
+Create a directory for log files:
+
+  # mkdir /var/log/awful
+
+Create a directory for static files:
+
+  # mkdir /var/www/awful
+
+You may also want to create a directory for your awful applications:
+
+  # mkdir /var/lib/awful
+
+
+Create configuration files for awful.  In the privileged configuration
+file ({{privileged.conf}} below) you can set all the configuration
+parameters for awful and spiffy which require administrator
+provileges.
+
+In another file ({{awful.conf}} below) you can put whatever code which
+does not need administrator provileges.
+
+Here's some example configuration for awful listening on port 80
+(strictly speaking, [[/egg/spiffy|spiffy]] -- the actual web server --
+listens on this port):
+
+===== privileged.conf
+
+<enscript highlight=scheme>
+;; -*- scheme -*-
+
+(use spiffy awful)
+(spiffy-user "awful")
+(server-port 80)
+(root-path "/var/www/awful")
+(debug-log "/var/log/awful/debug.log")
+(error-log "/var/log/awful/error.log")
+</enscript>
+
+
+===== awful.conf
+<enscript highlight=scheme>
+(load "/var/lib/awful/my-app") ;; if you don't use file suffixes, Chicken will
+                               ;; pick .so files when you compile your apps
+</enscript>
+
+
+Set the permissions for the configuration, log, static files and awful
+applications directories:
+
+  # chown -R awful:awful /etc/awful /var/log/awful /var/www/awful /var/lib/awful
+
+
+Set up an init script for your system.  Basically, it should call
+
+  /usr/bin/awful --privileged-code=/etc/awful/privileged.conf /etc/awful/awful.conf &> /var/log/awful/init.log &
+
+If awful doesn't start, take a look at {{/var/log/awful/init.log}}
+
+You can find an [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-debian-init|init script]] for [[http://www.debian.org|Debian]] systems (or derivatives, like [[http://www.ubuntulinux.com|Ubuntu]]) at the [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/trunk|awful source repository]].  Here are the steps to install it:
+
+  # cd /etc/init.d
+  # wget --user=anonymous --password='' http://code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-debian-init -O awful
+  # chmod 755 awful
+  # update-rc.d awful defaults
+
+There's also an [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-gentoo-init|init script for Gentoo]] (by [[/users/david-krentzlin|David Krentzlin]]).
