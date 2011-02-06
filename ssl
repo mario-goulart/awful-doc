@@ -1,0 +1,3 @@
+=== Awful & SSL
+
+To make awful serve pages using SSL, see the documentation for the [[/egg/awful-ssl|awful-ssl]] egg.
