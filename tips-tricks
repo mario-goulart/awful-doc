@@ -146,6 +146,34 @@ Alternatively, you can create a {{define-sxml-page}} procedure which calls {{def
 </enscript>
 
 
+==== Reloading awful from Emacs
+
+Here's a quick hack to reload awful apps from Emacs.  It can be handy
+when you are developing using awful in development mode
+({{--development-mode}}, or when you defined your own reload path).
+
+<enscript highlight=elisp>
+(defun awful-reload ()
+  (interactive)
+  (shell-command "lynx -dump http://localhost:8080/reload"))
+
+(add-hook 'scheme-mode-hook
+   #'(lambda ()
+       (local-set-key "\C-cR" 'awful-reload)))
+</enscript>
+
+The code above defines an {{awful-reload}} procedure, which requests
+the {{/reload}} path (automatically defined by awful when running in
+development mode) using {{lynx}}.  You can use whatever command line
+HTTP client you want. {{lynx}} is handy because of the {{-dump}}
+option, which can be readly displayed by Emacs in the shell command
+output buffer.
+
+Here's a screenshot:
+
+[[image:http://parenteses.org/mario/img/awful/awful-reload-emacs.png|Reloading awful apps from Emacs]]
+
+
 ==== Awful badge
 
 Here's a suggestion:  [[image:http://parenteses.org/mario/img/thats-awful.png|That's awful!]]
