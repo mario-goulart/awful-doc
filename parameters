@@ -272,7 +272,7 @@ A possible value for {{javascript-compressor}} is {{jsmin-string}} (see the [[/e
 
 <parameter>(javascript-position [symbol])</parameter>
 
-A symbol indicating the position of javascript code in the generated pages.  Possible values are {{top}} (in the page headers) and {{bottom}} (right before {{</body>}}).  The default value is {{bottom}}.
+A symbol indicating the position of javascript code in the generated pages.  Possible values are {{top}} (in the page headers) and {{bottom}} (right before {{</body>}}).  The default value is {{top}}.
 
 
 === List of read-only parameters available to users
