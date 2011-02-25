@@ -1,4 +1,11 @@
 === Version history
+
+; 0.29:
+* Updated JQuery from version 1.5.0 to 1.5.1.
+* {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simulataneously, or {{periodical-ajax}} and {{add-ajavascrip}}).
+* The default URI for {{ajax-library}} is now protocol-relative (thanks to Peter Bex).
+* Added the {{javascript-position}} parameter.
+
 ; 0.28:
 * Updated JQuery from version 1.4.3 to 1.5.0.
 * {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (e.g., you don't need to explicitly pass the session identifier).
