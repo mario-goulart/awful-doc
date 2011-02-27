@@ -2,7 +2,7 @@
 
 ; 0.29:
 * Updated JQuery from version 1.5.0 to 1.5.1.
-* {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simulataneously, or {{periodical-ajax}} and {{add-ajavascrip}}).
+* {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simultaneously, or {{periodical-ajax}} and {{add-javascript}}).
 * The default URI for {{ajax-library}} is now protocol-relative (thanks to Peter Bex).
 * Added the {{javascript-position}} parameter.
 
