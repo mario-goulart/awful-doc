@@ -68,6 +68,8 @@ So, restart the web server to reload the code, then access the main page using a
 When we upgraded our "Hello, world!" example to the improved one which can use an argument passed through the URL, we needed to modify the code and restart the web server to reload the application code.  Awful provides a way to reload the code via URL without restarting the server.  To do that, we can define a special page whose handler just reloads the code:
 
 <enscript highlight=scheme>
+(use awful)
+
 (define-page "/reload"
   (lambda ()
     (load-apps (awful-apps))
@@ -79,6 +81,8 @@ and restart the awful server.  Now, whenever you want to reload the application 
 You can control which IP numbers can access the reload page by using the {{page-access-control}} parameter.  For example, allowing only the localhost to reload the apps:
 
 <enscript highlight=scheme>
+(use awful spiffy)
+
 (page-access-control
  (lambda (path)
    (if (equal? path "/reload")
