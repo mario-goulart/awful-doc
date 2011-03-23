@@ -1,4 +1,4 @@
-=== List of procedures
+=== List of procedures and macros
 
 
 ==== Miscelaneous
@@ -111,6 +111,13 @@ The {{user-label}}, {{password-label}} and {{submit-label}} keyword parameters a
 Return the HTTP request value for the given variable {{var}}.  The variable is looked for in both the query string (GET method) and request body (e.g., POST method).  See the documentation for the procedure returned by [[/eggref/4/spiffy-request-vars|spiffy-request-vars]]'s {{request-vars}} for further details.
 
 
+<macro>(with-request-variables (var1 var2 ... varn) expression1 ...)</macro>
+
+A wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]]'s {{with-request-vars*}}.
+
+All the [[/egg/spiffy-request-vars|spiffy-request-vars]]'s converter procedures are exported, for convenience.
+
+
 ==== Database access
 
 <procedure>($db q #!key default values)</procedure>
@@ -200,11 +207,11 @@ The {{rest}} parameters are the same as for {{define-page}}.
 Here's an example (the [[http://www.paulgraham.com/arcchallenge.html|arc challenge]]):
 
 <enscript highlight=scheme>
-(use awful html-utils spiffy-request-vars)
+(use awful html-utils)
 
 (define-session-page "said"
   (lambda ()
-    (with-request-vars* $ (said)
+    (with-request-variables (said)
       (cond (said
              ($session-set! 'said said)
              (link "said" "click here"))

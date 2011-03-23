@@ -1,5 +1,8 @@
 === Version history
 
+; 0.31:
+* Added a tiny wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]], adding the {{with-request-variables}} macro and exporting {{spiffy-request-vars}}'s converters.
+
 ; 0.30:
 * The {{(ajax-library)}} is always linked before any other scripts and javascript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
 * Ajax-related procedures simplifications and bugfix in the session awareness code when called from {{define-session-page}}.

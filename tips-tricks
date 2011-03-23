@@ -5,9 +5,9 @@
 Instead of using {{<a>}} and {{<form>}} for creating links and forms, respectively, consider using the {{link}} and {{form}} procedures instead.  They are specially useful when using sessions, since they transparently handle the session identifier for you.  Even if you don't use sessions, they may save you some work if one day you decide to use sessions (then you won't have do to anything regarding to links and forms).
 
 
-==== Use {{with-request-vars}} when referencing the same request variable multiple times
+==== Use {{with-request-variables}} when referencing the same request variable multiple times
 
-When you need to access the same request variable more than once, consider using [[/egg/spiffy-request-vars|spiffy-request-vars]]' {{with-request-vars}}.
+When you need to access the same request variable more than once, consider using {{with-request-variables}}.
 
 For example, instead of:
 
@@ -23,11 +23,11 @@ For example, instead of:
 consider using something like:
 
 <enscript highlight=scheme>
-(use awful spiffy-request-vars)
+(use awful)
 
 (define-page "save-and-show-user"
   (lambda ()
-    (with-request-vars $ (user)
+    (with-request-variables (user)
       ($session-set! 'user user)
       (++ "Welcome " user))))
 </enscript>
