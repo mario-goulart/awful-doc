@@ -2,57 +2,81 @@
 
 ==== Debugging (parameters)
 
+===== {{debug-file}}
 <parameter>(debug-file [file path])</parameter>
 
-If {{#f}}, indicates that debugging should be disabled.  When set to a string, it should be the path to the file where the debug messages go (when {{debug}} or {{debug-pp}} is used.)
+If {{#f}}, indicates that debugging should be disabled.  When set to a
+string, it should be the path to the file where the debug messages go
+(when {{debug}} or {{debug-pp}} is used.)
 
 The default value is {{#f}}.
 
 
+===== {{debug-db-query?}}
 <parameter>(debug-db-query? [boolean])</parameter>
 
-When not {{#f}}, all queries passed to {{$db}} and to {{$db-row-obj}} are printed to the debug file.
+When not {{#f}}, all queries passed to {{$db}} and to {{$db-row-obj}}
+are printed to the debug file.
 
 The default value is {{#f}}.
 
 
+===== {{debug-db-query-prefix}}
 <parameter>(debug-db-query-prefix [string])</parameter>
 
-Prefix to be used for queries debugging when {{debug-db-query}} is not {{#f}}.
+Prefix to be used for queries debugging when {{debug-db-query}} is not
+{{#f}}.
 
 The default value is {{""}}.
 
 
+===== {{debug-resources}}
 <parameter>(debug-resources [boolean])</parameter>
 
-When {{#t}}, enables debugging of awful's resources table (an alist mapping paths (or regexes) and vhost paths to their corresponding procedures to be executed on the server side upon request).  The debugging data is sent to the file pointed by {{debug-file}}.  The default value is {{#f}}.
+When {{#t}}, enables debugging of awful's resources table (an alist
+mapping paths (or regexes) and vhost paths to their corresponding
+procedures to be executed on the server side upon request).  The
+debugging data is sent to the file pointed by {{debug-file}}.  The
+default value is {{#f}}.
 
 
 ==== Database (parameters)
 
+===== {{db-credentials}}
 <parameter>(db-credentials [boolean or list])</parameter>
 
-Credentials to be used to access the database (see the documentation for the egg corresponding to the database backend you selected.)  When {{#f}}, no database access is performed.
+Credentials to be used to access the database (see the documentation
+for the egg corresponding to the database backend you selected.)  When
+{{#f}}, no database access is performed.
 
 The default value is {{#f}}.
 
 
 ==== Ajax (parameters)
 
+===== {{ajax-library}}
 <parameter>(ajax-library [string])</parameter>
 
-URL or path to the ajax library (currently only [[http://jquery.com|JQuery]] is supported.)
+URL or path to the ajax library (currently only
+[[http://jquery.com|JQuery]] is supported.)
 
-The default value is {{"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}}
+The default value is
+{{"http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"}}
 
 
+===== {{enable-ajax}}
 <parameter>(enable-ajax [boolean])</parameter>
 
-When {{#t}}, makes {{define-page}} link the {{ajax-library}} to the generated page.  It's effect is global, that is, once {{enable-ajax}} is set to {{#t}}, all pages defined via {{define-page}} will be linked to the ajax library, unless when the {{no-ajax}} keyword parameter is explicitly set.
+When {{#t}}, makes {{define-page}} link the {{ajax-library}} to the
+generated page.  It's effect is global, that is, once {{enable-ajax}}
+is set to {{#t}}, all pages defined via {{define-page}} will be linked
+to the ajax library, unless when the {{no-ajax}} keyword parameter is
+explicitly set.
 
 The default value is {{#f}}
 
 
+===== {{ajax-namespace}}
 <parameter>(ajax-namespace [string])</parameter>
 
 Name to be used as a namespace for ajax URL paths.
@@ -60,9 +84,11 @@ Name to be used as a namespace for ajax URL paths.
 The default value is {{"ajax"}}.
 
 
+===== {{ajax-invalid-session-message}}
 <parameter>(ajax-invalid-session-message [string])</parameter>
 
-The message to be used when attempting the make an ajax call using an invalid session identifier.
+The message to be used when attempting the make an ajax call using an
+invalid session identifier.
 
 The default value is {{"Invalid session"}}.
 
@@ -70,6 +96,7 @@ The default value is {{"Invalid session"}}.
 
 ==== Sessions (parameters)
 
+===== {{enable-session}}
 <parameter>(enable-session [boolean])</parameter>
 
 When {{#t}}, session support is enabled.
@@ -77,64 +104,90 @@ When {{#t}}, session support is enabled.
 The default value is {{#f}}.
 
 
+===== {{enable-session-cookie}}
 <parameter>(enable-session-cookie [boolean])</parameter>
 
-When {{#t}}, awful uses cookies to store the session identifier.  Otherwise, the session identifier is passed as a value in the query string or in the request body. The default value is {{#t}}.
+When {{#t}}, awful uses cookies to store the session identifier.
+Otherwise, the session identifier is passed as a value in the query
+string or in the request body. The default value is {{#t}}.
 
 
+===== {{session-cookie-name}}
 <parameter>(session-cookie-name [string])</parameter>
 
-The name of the cookie for storing the session identifier.  The dafult value is {{"awful-cookie"}}.
+The name of the cookie for storing the session identifier.  The dafult
+value is {{"awful-cookie"}}.
 
 
 ==== Access control (parameters)
 
+===== {{page-access-control}}
 <parameter>(page-access-control [procedure])</parameter>
 
-An one-argument (URL path of the current page) procedure which tells whether the access to the page is allowed or not.
+An one-argument (URL path of the current page) procedure which tells
+whether the access to the page is allowed or not.
 
 The default value is {{(lambda (path) #t)}}.
 
 
+===== {{page-access-denied-message}}
 <parameter>(page-access-denied-message [procedure])</parameter>
 
-An one-argument (URL path of the current page) procedure which returns the access denied message.
+An one-argument (URL path of the current page) procedure which returns
+the access denied message.
 
 The default value is {{(lambda (path) (<h3> "Access denied."))}}.
 
 
+===== {{valid-password?}}
 <parameter>(valid-password? [procedure])</parameter>
 
-A two-argument (user and password) procedure which indicates whether the given password is valid for the given user.
+A two-argument (user and password) procedure which indicates whether
+the given password is valid for the given user.
 
 The default value is {{(lambda (user password) #f)}}.
 
 
 ==== Pages (parameters)
 
+===== {{page-doctype}}
 <parameter>(page-doctype [string])</parameter>
 
-The doctype (see the [[/egg/doctype|doctype]] egg) to be applied to all pages defined by {{define-page}}.  It can be overwritten by {{define-page}}'s {{doctype}} keyword parameter.
+The doctype (see the [[/egg/doctype|doctype]] egg) to be applied to
+all pages defined by {{define-page}}.  It can be overwritten by
+{{define-page}}'s {{doctype}} keyword parameter.
 
 The default value is {{""}}.
 
 
+===== {{page-css}}
 <parameter>(page-css [boolean or string])</parameter>
 
-The CSS file to be linked by all pages defined by {{define-page}}.  It can be overwritten by {{define-page}}'s {{css}} keyword parameter.  See [[/egg/html-utils|html-utils]]'s {{html-page}} procedure to know about the {{css}} keyword parameter syntax.
+The CSS file to be linked by all pages defined by {{define-page}}.  It
+can be overwritten by {{define-page}}'s {{css}} keyword parameter.
+See [[/egg/html-utils|html-utils]]'s {{html-page}} procedure to know
+about the {{css}} keyword parameter syntax.
 
 The default value is {{#f}} (no CSS).
 
 
+===== {{page-charset}}
 <parameter>(page-charset [boolean or string])</parameter>
 
-The page charset to be used by all pages defined by {{define-page}}.  It can be overwritten by {{define-page}}'s {{charset}} keyword parameter.
+The page charset to be used by all pages defined by {{define-page}}.
+It can be overwritten by {{define-page}}'s {{charset}} keyword
+parameter.
+
 The default value is {{#f}} (no explicit charset).
 
 
+===== {{page-template}}
 <parameter>(page-template [procedure])</parameter>
 
-An one-mandatory-argument procedure to be used by {{define-page}} (unless {{define-page}}'s {{no-template}} keyword parameter is set to {{#f}}) to generate HTML pages. Although this procedure can take only one mandatory argument, the following keyword arguments are passed:
+An one-mandatory-argument procedure to be used by {{define-page}}
+(unless {{define-page}}'s {{no-template}} keyword parameter is set to
+{{#f}}) to generate HTML pages. Although this procedure can take only
+one mandatory argument, the following keyword arguments are passed:
 
 * css
 * title
@@ -146,12 +199,15 @@ An one-mandatory-argument procedure to be used by {{define-page}} (unless {{defi
 * no-session
 * no-db
 
-The default value is {{html-page}} (see the [[/egg/html-utils|html-utils]] egg documentation.)
+The default value is {{html-page}} (see the
+[[/egg/html-utils|html-utils]] egg documentation.)
 
 
+===== {{page-exception-message}}
 <parameter>(page-exception-message [procedure])</parameter>
 
-An one-argument procedure to be used when an exception occurs while {{define-page}} tries to evaluate its contents.
+An one-argument procedure to be used when an exception occurs while
+{{define-page}} tries to evaluate its contents.
 
 The default value is {{(lambda (exn) (<h3> "An error has accurred while processing your request."))}}
 
@@ -159,6 +215,7 @@ The default value is {{(lambda (exn) (<h3> "An error has accurred while processi
 
 ==== Page paths (parameters)
 
+===== {{main-page-path}}
 <parameter>(main-page-path [string])</parameter>
 
 The URL path to the app main page.
@@ -166,16 +223,27 @@ The URL path to the app main page.
 The default value is {{"/"}}.
 
 
+===== {{app-root-path}}
 <parameter>(app-root-path [string])</parameter>
 
-The base path to be used by the application.  All the pages defined by {{define-page}} will use {{app-root-path}} as the base directory.  For example, if {{app-root-path}} is set to {{"/my-app"}} and {{"my-page"}} is used as first argument to {{define-page}}, the page would be available at {{http://<server>:<port>/my-app/my-page}}.
+The base path to be used by the application.  All the pages defined by
+{{define-page}} will use {{app-root-path}} as the base directory.  For
+example, if {{app-root-path}} is set to {{"/my-app"}} and
+{{"my-page"}} is used as first argument to {{define-page}}, the page
+would be available at {{http://<server>:<port>/my-app/my-page}}.
 
 The default value is {{"/"}}.
 
+'''Important''': this parameter is evaluated both at page definition
+time and page request handling time.
 
+
+===== {{login-page-path}}
 <parameter>(login-page-path [string])</parameter>
 
-The URL path for the login page.  When creating a login page, be sure to set the {{no-session}} keyword parameter for {{define-page}} to {{#t}}, otherwise you'll get an endless loop.
+The URL path for the login page.  When creating a login page, be sure
+to set the {{no-session}} keyword parameter for {{define-page}} to
+{{#t}}, otherwise you'll get an endless loop.
 
 The default value is {{"/login"}}.
 
@@ -183,15 +251,16 @@ The default value is {{"/login"}}.
 
 ==== Headers (parameters)
 
+===== {{awful-response-headers}}
 <parameter>(awful-response-headers [alist])</parameter>
 
-An alist to specify the headers to be used in the response.  If the {{content-length}} header is not provided, awful will calculate it automatically.
+An alist to specify the headers to be used in the response.  If the
+{{content-length}} header is not provided, awful will calculate it
+automatically.
 
 Here's an example:
 
 <enscript highlight=scheme>
-#!/usr/bin/awful
-
 (use awful)
 
 (define (define-json path body)
@@ -211,6 +280,7 @@ Here's an example:
 
 ==== Web REPL (parameters)
 
+===== {{web-repl-access-control}}
 <parameter>(web-repl-access-control [procedure])</parameter>
 
 A no-argument procedure to control access to the web REPL.
@@ -218,6 +288,7 @@ A no-argument procedure to control access to the web REPL.
 The default value is {{(lambda () #f)}}.
 
 
+===== {{web-repl-access-denied-message}}
 <parameter>(web-repl-access-denied-message [string])</parameter>
 
 Message to be printed when the access to the web REPL is denied.
@@ -225,19 +296,28 @@ Message to be printed when the access to the web REPL is denied.
 The default value is {{(<h3> "Access denied.")}}.
 
 
+===== {{enable-web-repl-fancy-editor}}
 <parameter>(enable-web-repl-fancy-editor [boolean])</parameter>
 
-Indicates whether the web REPL should use a fancier editor for the input area.  The editor is based on [[http://codemirror.net|codemirror]].  Without the fancy editor, the input area is a simple HTML textarea.  The default value for {{use-fancy-editor}} is {{#t}}.
+Indicates whether the web REPL should use a fancier editor for the
+input area.  The editor is based on
+[[http://codemirror.net|codemirror]].  Without the fancy editor, the
+input area is a simple HTML textarea.  The default value for
+{{use-fancy-editor}} is {{#t}}.
 
 
+===== {{fancy-editor-base-uri}}
 <parameter>(fancy-editor-base-uri [string])</parameter>
 
-The URI which indicates the fancy editor source files (javascript and CSS) location.  The default value is {{http://parenteses.org/awful/codemirror}}.
+The URI which indicates the fancy editor source files (javascript and
+CSS) location.  The default value is
+{{http://parenteses.org/awful/codemirror}}.
 
 
 
 ==== Session inspector (parameters)
 
+===== {{session-inspector-access-control}}
 <parameter>(session-inspector-access-control [procedure])</parameter>
 
 A no-argument procedure to control access to the session inspector.
@@ -245,6 +325,7 @@ A no-argument procedure to control access to the session inspector.
 The default value is {{(lambda () #f)}}.
 
 
+===== {{session-inspector-access-denied-message}}
 <parameter>(session-inspector-access-denied-message [string])</parameter>
 
 Message to be printed when the access to the session inspector is denied.
@@ -254,57 +335,83 @@ The default value is {{(<h3> "Access denied.")}}.
 
 ==== Javascript (parameters)
 
+===== {{enable-javascript-compression}}
 <parameter>(enable-javascript-compression [boolean])</parameter>
 
-Enable javascript compression support.  When enabled the compressor set by {{javascript-compressor}} is used.
+Enable javascript compression support.  When enabled the compressor
+set by {{javascript-compressor}} is used.
 
 The default value is {{#f}}.
 
 
+===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure (the javascript code) which return the given javascript code compressed.  Only used when {{enable-javascript-compression}} is not {{#f}}.
+An one-argument procedure (the javascript code) which return the given
+javascript code compressed.  Only used when
+{{enable-javascript-compression}} is not {{#f}}.
 
 The default value is the {{identity}} procedure.
 
-A possible value for {{javascript-compressor}} is {{jsmin-string}} (see the [[/egg/jsmin|jsmin]] egg.)
+A possible value for {{javascript-compressor}} is {{jsmin-string}}
+(see the [[/egg/jsmin|jsmin]] egg.)
 
 
+===== {{javascript-position}}
 <parameter>(javascript-position [symbol])</parameter>
 
-A symbol indicating the position of javascript code in the generated pages.  Possible values are {{top}} (in the page headers) and {{bottom}} (right before {{</body>}}).  The default value is {{top}}.
+A symbol indicating the position of javascript code in the generated
+pages.  Possible values are {{top}} (in the page headers) and
+{{bottom}} (right before {{</body>}}).  The default value is {{top}}.
+
 
 
 === List of read-only parameters available to users
 
-Note: these parameters should not be explicitly set and when their use is needed, it's a string sign you're doing something you shouldn't (except for {{db-connection}}, which can be used by procedures from the [[/egg/postgresql|postgresql]] egg API).
+Note: these parameters should not be explicitly set and when their use
+is needed, it's a string sign you're doing something you shouldn't
+(except for {{db-connection}}, which can be used by procedures from
+the [[/egg/postgresql|postgresql]] egg API).
 
 
+===== {{http-request-variables}}
 <parameter>(http-request-variables)</parameter>
 
-The per-request value returned by [[/egg/spiffy-request-vars|spiffy-request-vars]]'s {{request-vars}}.
+The per-request value returned by
+[[/egg/spiffy-request-vars|spiffy-request-vars]]'s {{request-vars}}.
 
 
+===== {{db-connection}}
 <parameter>(db-connection)</parameter>
 
-A per-request databaseconnection object.  The connection is automatically opened and closed by awful in a per-request basis (unless databases are not being used the {{no-db}} keyword parameter for {{define-page}} is {{#t}}.)
+A per-request databaseconnection object.  The connection is
+automatically opened and closed by awful in a per-request basis
+(unless databases are not being used the {{no-db}} keyword parameter
+for {{define-page}} is {{#t}}.)
 
 
+===== {{page-javascript}}
 <parameter>(page-javascript)</parameter>
 
 Javascript code to be added to the pages defined by {{define-page}}.
 
 
+===== {{sid}}
 <parameter>(sid)</parameter>
 
 The session identifier.
 
 
+===== {{awful-apps}}
 <parameter>(awful-apps)</parameter>
 
-The list of awful applications, as given to the awful server when invoked from the command line.
+The list of awful applications, as given to the awful server when
+invoked from the command line.
 
 
+===== {{development-mode?}}
 <parameter>(development-mode?)</parameter>
 
-Indicates whether awful is running in development mode (see the {{--development-mode}} command line option for the awful application server).
+Indicates whether awful is running in development mode (see the
+{{--development-mode}} command line option for the awful application
+server).

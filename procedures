@@ -3,16 +3,17 @@
 
 ==== Miscelaneous
 
+===== {{++}}
 <procedure>(++ string1 string2 ... stringn)</procedure>
 
 A shortcut to {{string-append}}.
 
-
+===== {{concat}}
 <procedure>(concat args #!optional (sep ""))</procedure>
 
 Convert {{args}} to string and intersperse the resulting strings with {{sep}}.
 
-
+===== {{awful-version}}
 <procedure>(awful-version)</procedure>
 
 Return the awful version (a string).
@@ -20,23 +21,28 @@ Return the awful version (a string).
 
 ==== Javascript
 
+===== {{include-javascript}}
 <procedure>(include-javascript . files)</procedure>
 
 A shortcut to {{(<script> type: "text/javascript" src: file)}}.
 
 
+===== {{add-javascript}}
 <procedure>(add-javascript . code)</procedure>
 
-Add arbitrary javascript code to the pages defined by {{define-page}} and {{define-session-page}}.
+Add arbitrary javascript code to the pages defined by {{define-page}}
+and {{define-session-page}}.
 
 
 ==== Debugging
 
+===== {{debug}}
 <procedure>(debug . args)</procedure>
 
 Print {{args}}, concatenated, to the file {{debug-file}}.
 
 
+===== {{debug-pp}}
 <procedure>(debug-pp arg)</procedure>
 
 Pretty-print {{arg}} to the file {{debug-file}}.
@@ -45,16 +51,21 @@ Pretty-print {{arg}} to the file {{debug-file}}.
 
 ==== Sessions and authentication
 
+===== {{$session}}
 <procedure>($session var #!optional default)</procedure>
 
-Return the value of {{var}} in the session (or {{default}} if {{var}} does not exist or is {{#f}}).
+Return the value of {{var}} in the session (or {{default}} if {{var}}
+does not exist or is {{#f}}).
 
 
+===== {{$session-set!}}
 <procedure>($session-set! var #!optional val)</procedure>
 
-If {{var}} is a quoted symbol, set the value of {{var}} to {{val}}.  If {{val}} is not provided, {{var}} will have its value set to {{#f}}.
+If {{var}} is a quoted symbol, set the value of {{var}} to {{val}}.
+If {{val}} is not provided, {{var}} will have its value set to {{#f}}.
 
-{{var}} can be an alist mapping session variable names to their corresponding values.
+{{var}} can be an alist mapping session variable names to their
+corresponding values.
 
 Examples:
 
@@ -67,64 +78,93 @@ Examples:
 </enscript>
 
 
+===== {{link}}
 <procedure>(link url text . rest)</procedure>
 
-Return a session-aware HTML code for a link, using the {{<a>}} procedure from [[/egg/html-tags|html-tags]].
+Return a session-aware HTML code for a link, using the {{<a>}}
+procedure from [[/egg/html-tags|html-tags]].
 
-The {{rest}} arguments are the same as the ones for the {{<a>}} procedure from [[/egg/html-tags|html-tags]], plus the following:
+The {{rest}} arguments are the same as the ones for the {{<a>}}
+procedure from [[/egg/html-tags|html-tags]], plus the following:
 
 ; {{no-session}} : a boolean.  If {{#t}}, forces {{link}} to ignore the session even when {{enable-session}} is {{#t}}.
+
 ; {{arguments}} : an alist mapping variable names to their corresponding values, to be passed to uri-common's {{form-urlencode}} procedure.
 ; {{separator}} : the value to the {{separator}} keyword argument to be passed to to uri-common's {{form-urlencode}} procedure.
 
 When {{enable-session}} is {{#t}}, {{link}} automatically encodes the session identifier in the URI (unless {{no-session}} is {{#t}}).
 
 
+===== {{form}}
 <procedure>(form contents . rest)</procedure>
 
-Return a session-aware HTML code for a form, using the {{<form>}} procedure from [[/egg/html-tags|html-tags]].
+Return a session-aware HTML code for a form, using the {{<form>}}
+procedure from [[/egg/html-tags|html-tags]].
 
-The {{rest}} arguments are the same as the ones for the {{<form>}} procedure from [[/egg/html-tags|html-tags]], plus {{no-session}}, a boolean.  If {{no-session}} is {{#t}}, it forces {{form}} to ignore the session even when {{enable-session}} is {{#t}}.
+The {{rest}} arguments are the same as the ones for the {{<form>}}
+procedure from [[/egg/html-tags|html-tags]], plus {{no-session}}, a
+boolean.  If {{no-session}} is {{#t}}, it forces {{form}} to ignore
+the session even when {{enable-session}} is {{#t}}.
 
-When {{enable-session}} is {{#t}}, {{form}} automatically generates a hidden input field to pass the session identifier (unless {{no-session}} is {{#t}}).
+When {{enable-session}} is {{#t}}, {{form}} automatically generates a
+hidden input field to pass the session identifier (unless
+{{no-session}} is {{#t}}).
 
 
+===== {{define-login-trampoline}}
 <procedure>(define-login-trampoline path #!key vhost-root-path hook)</procedure>
 
-Define a trampoline -- an intermediate page accessed when redirecting from the login page to the main page.
+Define a trampoline -- an intermediate page accessed when redirecting
+from the login page to the main page.
 
-
+===== {{login-form}}
 <procedure>(login-form #!key (user-label "User: ") (password-label "Password: ") (submit-label "Submit") (refill-user #t))</procedure>
 
 Return a user/password login form (e.g., for using in authentication pages).
 
-When the {{refill-user}} is {{#t}}, the User field is reffiled with the value from the {{user}} query string value when either the session or the password is invalid.
+When the {{refill-user}} is {{#t}}, the User field is reffiled with
+the value from the {{user}} query string value when either the session
+or the password is invalid.
 
-The {{user-label}}, {{password-label}} and {{submit-label}} keyword parameters are labels to be used for the user, password and submit form widgets, respectively.
+The {{user-label}}, {{password-label}} and {{submit-label}} keyword
+parameters are labels to be used for the user, password and submit
+form widgets, respectively.
 
 
 
 ==== Request variables and values
 
+===== {{$}}
 <procedure>($ var #!optional default/converter)</procedure>
 
-Return the HTTP request value for the given variable {{var}}.  The variable is looked for in both the query string (GET method) and request body (e.g., POST method).  See the documentation for the procedure returned by [[/eggref/4/spiffy-request-vars|spiffy-request-vars]]'s {{request-vars}} for further details.
+Return the HTTP request value for the given variable {{var}}.  The
+variable is looked for in both the query string (GET method) and
+request body (e.g., POST method).  See the documentation for the
+procedure returned by
+[[/eggref/4/spiffy-request-vars|spiffy-request-vars]]'s
+{{request-vars}} for further details.
 
 
+===== {{with-request-variables}}
 <macro>(with-request-variables (var1 var2 ... varn) expression1 ...)</macro>
 
-A wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]]'s {{with-request-vars*}}.
+A wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]]'s
+{{with-request-vars*}}.
 
-All the [[/egg/spiffy-request-vars|spiffy-request-vars]]'s converter procedures are exported, for convenience.
+All the [[/egg/spiffy-request-vars|spiffy-request-vars]]'s converter
+procedures are exported, for convenience.
 
 
 ==== Database access
 
+===== {{$db}}
 <procedure>($db q #!key default values)</procedure>
 
-Execute the given query ({{q}}) on the database and return the result as a list of lists or {{default}} if the result set is empty.
+Execute the given query ({{q}}) on the database and return the result
+as a list of lists or {{default}} if the result set is empty.
 
-The {{values}} keyword parameter (a list) is a list of values to replace the placehoders in the query.
+The {{values}} keyword parameter (a list) is a list of values to
+replace the placehoders in the query.
 
 Example:
 
@@ -132,9 +172,13 @@ Example:
 ($db "insert into foo (bar, baz) values (?, ?)" values: '("bar-val" "baz-val"))
 </enscript>
 
+
+===== {{$db-row-obj}}
 <procedure>($db-row-obj q)</procedure>
 
-Execute the given query {{q}} on the database and return an one-argument procedure which takes as argument the name of the database field to get the value.
+Execute the given query {{q}} on the database and return an
+one-argument procedure which takes as argument the name of the
+database field to get the value.
 
 Example:
 
@@ -144,43 +188,64 @@ Example:
   (<p> "Phone: " (& 'phone)))
 </enscript>
 
-''Warning'': currently {{$db-row-obj}} is only implemented for Postgresql databases.
+''Warning'': currently {{$db-row-obj}} is only implemented for
+Postgresql databases.
 
 
+===== {{sql-quote}}
 <procedure>(sql-quote . data)</procedure>
 
 Escape and quote the concatenation of {{data}} to be used in SQL queries.
 
-''Warning'': for Sqlite databases, {{sql-quote}} just replaces {{'}} by {{''}} and quotes the {{data}}.  For Postgresql, {{sql-quote}} quotes the result of {{escape-string}}.
+''Warning'': for Sqlite databases, {{sql-quote}} just replaces {{'}}
+by {{''}} and quotes the {{data}}.  For Postgresql, {{sql-quote}}
+quotes the result of {{escape-string}}.
 
+Consider using the API for placeholders of your favorite database egg
+instead od {{sql-quote}} whenever possible.
 
 
 ==== Pages
 
+===== {{define-page}}
 <procedure>(define-page path contents #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression)</procedure>
 
 Define an awful page.
 
-{{path}} is the path to the page.  It can be represented by two types: a string and a regular expression object.  If it is a string, the path used in the URI will be bound to the given no-argument procedure {{contents}}.  If it is a regular expression object, any request whose URL path matches the regular expression will br handled by the one-argument procedure {{contents}}.  This procedure will be given the requested path.
+{{path}} is the path to the page.  It can be represented by two types:
+a string and a regular expression object.  If it is a string, the path
+used in the URI will be bound to the given no-argument procedure
+{{contents}}.  If it is a regular expression object, any request whose
+URL path matches the regular expression will br handled by the
+one-argument procedure {{contents}}.  This procedure will be given the
+requested path.
 
-The {{css}}, {{title}}, {{doctype}}, {{headers}} and {{charset}} keyword parameters have the same meaning as {{html-page}} (from the [[/egg/html-utils|html-utils]] egg).
+The {{css}}, {{title}}, {{doctype}}, {{headers}} and {{charset}}
+keyword parameters have the same meaning as {{html-page}} (from the
+[[/egg/html-utils|html-utils]] egg).
 
-If {{no-ajax}} is {{#t}}, it means that the page won't use ajax, even if the {{enable-ajax}} parameter is {{#t}}.
+If {{no-ajax}} is {{#t}}, it means that the page won't use ajax, even
+if the {{enable-ajax}} parameter is {{#t}}.
 
-If {{use-ajax}} is {{#t}}, it means that the page will be linked to the ajax library, even if the {{enable-ajax}} parameter is {{#f}}.
+If {{use-ajax}} is {{#t}}, it means that the page will be linked to
+the ajax library, even if the {{enable-ajax}} parameter is {{#f}}.
 
-If {{no-template}} is {{#t}}, it means that no page template (see the {{page-template}} parameter) should be used.
+If {{no-template}} is {{#t}}, it means that no page template (see the
+{{page-template}} parameter) should be used.
 
 If {{no-session}} is {{#t}}, it means that the page should not use session.
 
-If {{no-db}} is {{#t}}, it means that the page should not use the database, even when database usage is activated by {{enable-db}} and {{db-credentials}} is not {{#f}}.
+If {{no-db}} is {{#t}}, it means that the page should not use the
+database, even when database usage is activated by {{enable-db}} and
+{{db-credentials}} is not {{#f}}.
 
-If {{no-javascript-compression}} is {{#t}} the javascript code for the page is not compressed, even when {{enable-javascript-compression}} is not {{#f}}.
+If {{no-javascript-compression}} is {{#t}} the javascript code for the
+page is not compressed, even when {{enable-javascript-compression}} is
+not {{#f}}.
 
 Examples:
 
 <enscript highlight=scheme>
-
 (use srfi-1 ;; for filter-map
      regex) ;; for regexp
 
@@ -194,13 +259,16 @@ Examples:
   (lambda (path)
     (let ((numbers (filter-map string->number (string-split path "/"))))
       (number->string (apply + numbers)))))
-
 </enscript>
 
 
+===== {{define-session-page}}
 <procedure>(define-session-page path contents . rest)</procedure>
 
-Define a session-aware page.  When the page is accessed and a correponding session does not exist, it is created.  If the session already exists and is not valid, it is recreated.  If the session already exists and is valid, then it is refreshed.
+Define a session-aware page.  When the page is accessed and a
+correponding session does not exist, it is created.  If the session
+already exists and is not valid, it is recreated.  If the session
+already exists and is valid, then it is refreshed.
 
 The {{rest}} parameters are the same as for {{define-page}}.
 
@@ -225,32 +293,56 @@ Here's an example (the [[http://www.paulgraham.com/arcchallenge.html|arc challen
 </enscript>
 
 
+===== {{undefine-page}}
 <procedure>(undefine-page path #!optional vhost-root-path)</procedure>
 
-Undefine a page whose path is {{path}} (a string or a regular expression object).
+Undefine a page whose path is {{path}} (a string or a regular
+expression object).
 
-The optional parameter {{vhost-root-path}} is the path of virtual host where the page is to be undefined.  If omited, {{(root-path)}} is used.
+The optional parameter {{vhost-root-path}} is the path of virtual host
+where the page is to be undefined.  If omited, {{(root-path)}} is
+used.
 
 
 ==== Ajax
 
+===== {{ajax}}
 <procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache)</procedure>
 
-Generate javascript code to be added to the page defined by {{define-page}}.  Return the generated javascript code (which usually is not useful, so should be discarded).
+Generate javascript code to be added to the page defined by
+{{define-page}}.  Return the generated javascript code (which usually
+is not useful, so should be discarded).
 
-{{path}} is the URL path (a string) of the server side handler. This path is placed under the {{(app-root-path)/(ajax-namespace)}} path.  So, if your {{app-root-path}} is {{"my-app"}}, your {{ajax-namespace}} is {{"ajax"}} and you use {{"do-something"}} as the first argument to {{ajax}}, the URL for the server side handler would be {{"/my-app/ajax/do-something"}}.
+{{path}} is the URL path (a string) of the server side handler. This
+path is placed under the {{(app-root-path)/(ajax-namespace)}} path.
+So, if your {{app-root-path}} is {{"my-app"}}, your {{ajax-namespace}}
+is {{"ajax"}} and you use {{"do-something"}} as the first argument to
+{{ajax}}, the URL for the server side handler would be
+{{"/my-app/ajax/do-something"}}.
 
-{{selector}} is the selector for the DOM element to be observed.  If it is a quoted symbol, awful generates a JQuery selector by DOM id (e.g., {{'my-selector}} generates {{"#my-selector"}}).  If it is a string, awful uses it as-is to generate the JQuery selector (e.g., {{"input[name^=omg]"}} generates {{"input[name^=omg]"}}).
+{{selector}} is the selector for the DOM element to be observed.  If
+it is a quoted symbol, awful generates a JQuery selector by DOM id
+(e.g., {{'my-selector}} generates {{"#my-selector"}}).  If it is a
+string, awful uses it as-is to generate the JQuery selector (e.g.,
+{{"input[name^=omg]"}} generates {{"input[name^=omg]"}}).
 
-{{event}} (a quoted symbol or a list) is the event(s) to be observed. If it is a quoted symbol (e.g., {{'click}}), only this event will be bound.  If {{event}} is a list of events, all the events from the list will be bound.
+{{event}} (a quoted symbol or a list) is the event(s) to be
+observed. If it is a quoted symbol (e.g., {{'click}}), only this event
+will be bound.  If {{event}} is a list of events, all the events from
+the list will be bound.
 
 {{proc}} is a no-argument procedure to be executed on the server side.
 
-The {{target}} keyword parameter is the id of the DOM element to be affected by the result of {{proc}}.
+The {{target}} keyword parameter is the id of the DOM element to be
+affected by the result of {{proc}}.
 
-The {{method}} (a quoted symbol, usually {{'GET}} or {{'POST}}) keyword parameter is the HTTP method to be used by the ajax request.
+The {{method}} (a quoted symbol, usually {{'GET}} or {{'POST}})
+keyword parameter is the HTTP method to be used by the ajax request.
 
-The {{arguments}} keyword parameter is an alist mapping request variables (symbols) to their values (strings).  {{ajax}} uses these arguments to assembly the query string or the request body to send to the server when performing the ajax request.
+The {{arguments}} keyword parameter is an alist mapping request
+variables (symbols) to their values (strings).  {{ajax}} uses these
+arguments to assembly the query string or the request body to send to
+the server when performing the ajax request.
 
 Example:
 
@@ -259,23 +351,33 @@ arguments: '((var1 . "$('#var1').val()")
              (var2 . "$('#var2').val()"))
 </enscript>
 
-If the {{no-session}} keyword parameter is {{#t}}, it means that no session should be considered ({{ajax}} implicit sends the session identifier when {{no-session}} is {{#f}}).
+If the {{no-session}} keyword parameter is {{#t}}, it means that no
+session should be considered ({{ajax}} implicit sends the session
+identifier when {{no-session}} is {{#f}}).
 
-If the {{no-db}} keyword parameter is {{#t}}, it means that the should be no attempt to connect the database, even when database usage is activated by {{enable-db}} and {{db-credentials}} is not {{#f}}.
+If the {{no-db}} keyword parameter is {{#t}}, it means that the should
+be no attempt to connect the database, even when database usage is
+activated by {{enable-db}} and {{db-credentials}} is not {{#f}}.
 
-The {{vhost-root-path}} keyword parameter (a string) is the vhost root path.  It is useful for explicitly separate pages defined using the same path (see {{define-page}}) but for different vhosts.
+The {{vhost-root-path}} keyword parameter (a string) is the vhost root
+path.  It is useful for explicitly separate pages defined using the
+same path (see {{define-page}}) but for different vhosts.
 
-The {{live}} keyword parameter (boolean) indicates wheter ajax should use JQuery's live method (see [[http://api.jquery.com/live/]]).
+The {{live}} keyword parameter (boolean) indicates wheter ajax should
+use JQuery's live method (see [[http://api.jquery.com/live/]]).
 
-The {{prelude}} keyword parameter (string) is an arbitrary piece of javascript code to be placed right before the ajax request.
+The {{prelude}} keyword parameter (string) is an arbitrary piece of
+javascript code to be placed right before the ajax request.
 
-The {{update-targets}} keyword parameter a boolean indicating whether multiple targets should be updated upon ajax response.  When {{update-targets}} is used, the procedure {{proc}} used as argument to {{ajax}} should yield an alist as result.  The alist maps DOM elements identifiers to their corresponding values.
+The {{update-targets}} keyword parameter a boolean indicating whether
+multiple targets should be updated upon ajax response.  When
+{{update-targets}} is used, the procedure {{proc}} used as argument to
+{{ajax}} should yield an alist as result.  The alist maps DOM elements
+identifiers to their corresponding values.
 
 Here's an example:
 
 <enscript highlight=scheme>
-#!/usr/bin/awful
-
 (use awful html-tags)
 
 (enable-ajax #t)
@@ -295,11 +397,12 @@ Here's an example:
      (<div> id: "c"))))
 </enscript>
 
-The {{success}} keyword parameter (string) can be any arbitrary javascript code to be executed on the successful ajax request.  The javascript code can assume that a variable {{response}} is bound and contains the request resulting data.  Here's an example:
+The {{success}} keyword parameter (string) can be any arbitrary
+javascript code to be executed on the successful ajax request.  The
+javascript code can assume that a variable {{response}} is bound and
+contains the request resulting data.  Here's an example:
 
 <enscript highlight=scheme>
-#!/usr/bin/awful
-
 (use awful html-tags)
 
 (enable-ajax #t)
@@ -316,20 +419,29 @@ The {{success}} keyword parameter (string) can be any arbitrary javascript code 
         (<div> id: "bar"))))
 </enscript>
 
-The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will force requested pages not to be cached by the browser.  The default value is not set, leaving it to be set by JQuery. See [[http://api.jquery.com/jQuery.ajax/|JQuery's documentation]] for further details.
+The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will
+force requested pages not to be cached by the browser.  The default
+value is not set, leaving it to be set by JQuery. See
+[[http://api.jquery.com/jQuery.ajax/|JQuery's documentation]] for
+further details.
 
 The {{ajax}} procedure is session, HTTP request and database -aware.
 
 
+===== {{periodical-ajax}}
 <procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets)</procedure>
 
-Periodically execute {{proc}} on the server side, using {{(app-root-path)/(ajax-namespace)/path}} as the URL path for the server side handler.
+Periodically execute {{proc}} on the server side, using
+{{(app-root-path)/(ajax-namespace)/path}} as the URL path for the
+server side handler.
 
-{{interval}} (a number) is the interval between consecutive executions of {{proc}}, in milliseconds.
+{{interval}} (a number) is the interval between consecutive executions
+of {{proc}}, in milliseconds.
 
 The meaning of the keyword parameters is the same as for {{ajax}}'s.
 
 
+===== {{ajax-link}}
 <procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets)</procedure>
 
 A shortcut to
@@ -340,18 +452,30 @@ A shortcut to
   (<a> href: "#" [...other <a> keyword parameters...] id: id text))
 </enscript>
 
-The meaning of the {{target}}, {{action}}, {{method}}, {{arguments}}, {{success}}, {{no-session}}, {{no-db}}, {{event}}, {{vhost-root-path}}, {{update-targets}} and {{live}} keyword parameters is the same as for {{ajax}}'s.
+The meaning of the {{target}}, {{action}}, {{method}}, {{arguments}},
+{{success}}, {{no-session}}, {{no-db}}, {{event}},
+{{vhost-root-path}}, {{update-targets}} and {{live}} keyword
+parameters is the same as for {{ajax}}'s.
 
-The meaning of the {{class}}, {{hreflang}}, {{type}}, {{rel}}, {{rev}}, {{charset}}, {{coords}}, {{shape}}, {{accesskey}}, {{tabindex}} and {{a-target}} are the same as for [[/egg/html-tags|html-tags]]' {{<a>}} procedure (except that {{a-target}} is {{<a>}}'s {{target}}, since {{ajax}} uses the {{target}} keyword parameter).
+The meaning of the {{class}}, {{hreflang}}, {{type}}, {{rel}},
+{{rev}}, {{charset}}, {{coords}}, {{shape}}, {{accesskey}},
+{{tabindex}} and {{a-target}} are the same as for
+[[/egg/html-tags|html-tags]]' {{<a>}} procedure (except that
+{{a-target}} is {{<a>}}'s {{target}}, since {{ajax}} uses the
+{{target}} keyword parameter).
 
-The {{event}} keyword parameter syntax is the same for {{ajax}}'s {{event}} mandatory parameter.
+The {{event}} keyword parameter syntax is the same for {{ajax}}'s
+{{event}} mandatory parameter.
 
 
 ==== Redirection
 
+===== {{redirecto-to}}
 <procedure>(redirect-to uri)</procedure>
 
-Perform an HTTP redirection (code 302) to the given {{uri}} (either a string or a [[/eggref/4/uri-common|uri-common]] uri object).  To be used from {{define-page}} contents.  Example:
+Perform an HTTP redirection (code 302) to the given {{uri}} (either a
+string or a [[/eggref/4/uri-common|uri-common]] uri object).  To be
+used from {{define-page}} contents.  Example:
 
 <enscript highlight=scheme>
 (use awful)
@@ -366,7 +490,9 @@ Perform an HTTP redirection (code 302) to the given {{uri}} (either a string or 
     "foo"))
 </enscript>
 
-The example above shows a redirection from {{/}} to {{/foo}}.  Redirections can also be performed when the origin path is a regular expression:
+The example above shows a redirection from {{/}} to {{/foo}}.
+Redirections can also be performed when the origin path is a regular
+expression:
 
 <enscript highlight=scheme>
 (use awful)
@@ -382,28 +508,83 @@ The example above shows a redirection from {{/}} to {{/foo}}.  Redirections can 
 </enscript>
 
 
+==== Request handler hooks
+
+Awful provides the possibility of plugin hooks to the request handler,
+so that deploying multiple awful applications under the same virtual
+host is possible and easy.
+
+===== {{add-request-handler-hook!}}
+<procedure>(add-request-handler-hook! hook-id proc)</procedure>
+
+Adds a hook identified by {{id}} (can be used to remove the hook if
+necessary). {{proc}} is a two-argument procedure which receives the
+requested path and its handler.
+
+Here's a simple usage example:
+
+<enscript highlight=scheme>
+(add-request-handler-hook!
+ 'foo
+ (lambda (path handler)
+   (when (string-prefix? "/foo" path)
+     (parameterize
+         ((debug-file "/tmp/foo-debug")
+          (enable-ajax #t))
+       (handler))))
+</enscript>
+
+By using request handlers, you can parameterize parameter values in a
+way that they don't affect other applications.
+
+===== {{remove-request-handler-hook!}}
+<procedure>(remove-request-handler-hook! hook-id)</procedure>
+
+Removes the request handler hook identified by {{id}}.
+
+
 ==== Web REPL
 
+===== {{enable-web-repl}}
 <procedure>(enable-web-repl path #!key css title)</procedure>
 
 Enable the web REPL.  {{path}} is the URL path to the web REPL.
 
-The keyword parameter {{css}} is the CSS to be used the the web REPL page (see the documentation for {{html-page}}, from the [[/egg/html-utils|html-utils]] egg, for the {{css}} keyword parameter.)
+The keyword parameter {{css}} is the CSS to be used the the web REPL
+page (see the documentation for {{html-page}}, from the
+[[/egg/html-utils|html-utils]] egg, for the {{css}} keyword
+parameter.)
 
-The keyword parameter {{title}} (a string) is the title for the web REPL page (see the documentation for {{html-page}}, from the [[/egg/html-utils|html-utils]] egg, for the {{title}} keyword parameter.)
+The keyword parameter {{title}} (a string) is the title for the web
+REPL page (see the documentation for {{html-page}}, from the
+[[/egg/html-utils|html-utils]] egg, for the {{title}} keyword
+parameter.)
 
-The web REPL is automatically enabled by the awful application server when the {{--development-mode}} is provided (available from {{/web-repl}}).  By default, the fancy editor is used, but can be disabled with the {{--disable-web-repl-fancy-editor}} command line option for the awful application server.
+The web REPL is automatically enabled by the awful application server
+when the {{--development-mode}} is provided (available from
+{{/web-repl}}).  By default, the fancy editor is used, but can be
+disabled with the {{--disable-web-repl-fancy-editor}} command line
+option for the awful application server.
 
 
 ==== Session inspector
 
+===== {{enable-session-inspector}}
 <procedure>(enable-session-inspector path #!key css title)</procedure>
 
-Enable the session inspector.  {{path}} is the URL path to the session inspector.
+Enable the session inspector.  {{path}} is the URL path to the session
+inspector.
 
-The keyword parameter {{css}} is the CSS to be used the the session inspector page (see the documentation for {{html-page}}, from the [[/egg/html-utils|html-utils]] egg, for the {{css}} keyword parameter.)
+The keyword parameter {{css}} is the CSS to be used the the session
+inspector page (see the documentation for {{html-page}}, from the
+[[/egg/html-utils|html-utils]] egg, for the {{css}} keyword
+parameter.)
 
-The keyword parameter {{title}} (a string) is the title for the session inspector page (see the documentation for {{html-page}}, from the [[/egg/html-utils|html-utils]] egg, for the {{title}} keyword parameter.)
+The keyword parameter {{title}} (a string) is the title for the
+session inspector page (see the documentation for {{html-page}}, from
+the [[/egg/html-utils|html-utils]] egg, for the {{title}} keyword
+parameter.)
 
-The session inspector is automatically enabled by the awful application server when the {{--development-mode}} is provided (available from {{/session-inspector}}).
-
+The session inspector is automatically enabled by the awful
+application server when the {{--development-mode}} is provided
+(available from {{/session-inspector}}).

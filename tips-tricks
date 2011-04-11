@@ -2,12 +2,19 @@
 
 ==== Use {{link}} and {{form}} for links and forms
 
-Instead of using {{<a>}} and {{<form>}} for creating links and forms, respectively, consider using the {{link}} and {{form}} procedures instead.  They are specially useful when using sessions, since they transparently handle the session identifier for you.  Even if you don't use sessions, they may save you some work if one day you decide to use sessions (then you won't have do to anything regarding to links and forms).
+Instead of using {{<a>}} and {{<form>}} for creating links and forms,
+respectively, consider using the {{link}} and {{form}} procedures
+instead.  They are specially useful when using sessions, since they
+transparently handle the session identifier for you.  Even if you
+don't use sessions, they may save you some work if one day you decide
+to use sessions (then you won't have do to anything regarding to links
+and forms).
 
 
 ==== Use {{with-request-variables}} when referencing the same request variable multiple times
 
-When you need to access the same request variable more than once, consider using {{with-request-variables}}.
+When you need to access the same request variable more than once,
+consider using {{with-request-variables}}.
 
 For example, instead of:
 
@@ -35,11 +42,19 @@ consider using something like:
 
 ==== Use the web REPL and the session inspector for debugging
 
-You can simply use the {{--development-mode}} option for the awful application server to enable the web REPL and the session inspector (when {{enable-session}} is {{#t}}).  The development mode allows access to them for the localhost.  When in development mode, the web REPL and the session inspector are available at the {{/web-repl}} and {{/session-inspector}} paths.
+You can simply use the {{--development-mode}} option for the awful
+application server to enable the web REPL and the session inspector
+(when {{enable-session}} is {{#t}}).  The development mode allows
+access to them for the localhost.  When in development mode, the web
+REPL and the session inspector are available at the {{/web-repl}} and
+{{/session-inspector}} paths.
 
-If you want further flexibility, you can customize the web REPL and the session inspector.
+If you want further flexibility, you can customize the web REPL and
+the session inspector.
 
-Here's a simple recipe to allow access for your local machine to the web REPL ({{/repl}}) and to the session inspector ({{/session-inspector}}).
+Here's a simple recipe to allow access for your local machine to the
+web REPL ({{/repl}}) and to the session inspector
+({{/session-inspector}}).
 
 <enscript highlight=scheme>
 (session-inspector-access-control
@@ -56,16 +71,18 @@ Here's a simple recipe to allow access for your local machine to the web REPL ({
 (enable-web-repl "/repl")
 </enscript>
 
-To access them, just point your browser to {{http://localhost:<port>/repl}} and {{http://localhost:<port>/session-inspector}}, respectively.
+To access them, just point your browser to
+{{http://localhost:<port>/repl}} and
+{{http://localhost:<port>/session-inspector}}, respectively.
 
 
 ==== Create custom page definers when {{page-template}} and/or plain {{define-page}} are not enough
 
-You can define your own page definers when {{page-template}} or the plain {{define-page}} is not enough for what you need.  Here's an example:
+You can define your own page definers when {{page-template}} or the
+plain {{define-page}} is not enough for what you need.  Here's an
+example:
 
 <enscript highlight=scheme>
-#!/usr/bin/awful
-
 (use awful html-tags)
 
 (define (define-custom-page path contents)
@@ -86,7 +103,9 @@ If you access {{http://localhost:8080}} you'll get the following HTML code:
 
 ==== Debugging: error messages on the browser window
 
-Error messages right on the browser window can be quite handy for debugging (although not for production environments).  Here's a way to accomplish that:
+Error messages right on the browser window can be quite handy for
+debugging (although not for production environments).  Here's a way to
+accomplish that:
 
 <enscript highlight=scheme>
 (use awful html-tags)
@@ -100,18 +119,28 @@ Error messages right on the browser window can be quite handy for debugging (alt
               (print-error-message exn))))))
 </enscript>
 
-This feature is automatically enabled when the awful application server is used with the {{--development-mode}} option.
+This feature is automatically enabled when the awful application
+server is used with the {{--development-mode}} option.
 
 
 
 ==== Run awful without arguments to quickly share a file
 
-When invoked without arguments, awful (the application) starts the web server using the current directory as root path and keeps listening on port 8080.  So, if you want to quickly share a file (or some files), change to the directory containing the files and execute {{awful}}.  The access {{http://<host>:8080/<the-file-you-want>}}.
+When invoked without arguments, awful (the application) starts the web
+server using the current directory as root path and keeps listening on
+port 8080.  So, if you want to quickly share a file (or some files),
+change to the directory containing the files and execute {{awful}}.
+The access {{http://<host>:8080/<the-file-you-want>}}.
 
 
 ==== Awful & SXML
 
-By default, awful uses [[http://wiki.call-cc.org/egg/html-tags|html-tags]] to generate HTML for pages.  Of course, it can be changed, and you can even use SXML.  Here's an example by setting the {{page-template}} parameter to use SXML (see the [[http://wiki.call-cc.org/egg/sxml-transforms|sxml-transforms egg]]):
+By default, awful uses
+[[http://wiki.call-cc.org/egg/html-tags|html-tags]] to generate HTML
+for pages.  Of course, it can be changed, and you can even use SXML.
+Here's an example by setting the {{page-template}} parameter to use
+SXML (see the
+[[http://wiki.call-cc.org/egg/sxml-transforms|sxml-transforms egg]]):
 
 <enscript highlight=scheme>
 (use awful sxml-transforms)
@@ -127,7 +156,9 @@ By default, awful uses [[http://wiki.call-cc.org/egg/html-tags|html-tags]] to ge
     '(p "Awful SXML example")))
 </enscript>
 
-Alternatively, you can create a {{define-sxml-page}} procedure which calls {{define-page}} (disabling {{page-template}}) and do the SXML transformations in the page definition body:
+Alternatively, you can create a {{define-sxml-page}} procedure which
+calls {{define-page}} (disabling {{page-template}}) and do the SXML
+transformations in the page definition body:
 
 <enscript highlight=scheme>
 (use awful sxml-transforms)
@@ -144,6 +175,26 @@ Alternatively, you can create a {{define-sxml-page}} procedure which calls {{def
   (lambda ()
     '(p "Awful SXML example")))
 </enscript>
+
+Finally, you can create a {{define-sxml-page}} procedure which calls
+{{define-page}} and uses the SXML transformations in the page
+definition body for the <body> section only, using the original
+template to generate the <html> and <head> sections. This allows you
+to use the {{css}}, {{doctype}} and {{charset}} parameters in the
+definition of define-sxml-page.
+
+<enscript highlight=scheme> 
+(use awful sxml-transforms doctype) 
+
+(define (define-sxml-page path contents) 
+ (define-page path 
+   (lambda args 
+     (with-output-to-string 
+       (lambda () 
+         (SXML->HTML `(body ,(apply contents args))) 
+         (awful-response-headers '((content-type "text/html"))))))
+   doctype: doctype-xhtml-1.0-transitional))
+
 
 
 ==== Reloading awful from Emacs

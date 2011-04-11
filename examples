@@ -13,7 +13,7 @@ generated on the server side and the user tries to guess it.  It shows
 some basic ajax features.
 
 <enscript highlight=scheme>
-(use awful html-tags spiffy-request-vars)
+(use awful html-tags)
 
 (enable-ajax #t)
 

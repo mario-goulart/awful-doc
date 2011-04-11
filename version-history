@@ -1,19 +1,24 @@
 === Version history
 
-; 0.31:
+===== version 0.31
 * Added a tiny wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]], adding the {{with-request-variables}} macro and exporting {{spiffy-request-vars}}'s converters.
+* Updated JQuery from version 1.5.1 to 1.5.2.
+* Better support for multiple applications under the same virtual host ({{add-request-handler-hook!}} and {{remove-request-handler-hook!}})
+* {{$db}} checks if database access is enabled via {{(enable-db)}} and throws an error if it is not.
+* Fixed critical bug regarding to parameters and thread reuse by Spiffy
 
-; 0.30:
+
+===== version 0.30
 * The {{(ajax-library)}} is always linked before any other scripts and javascript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
 * Ajax-related procedures simplifications and bugfix in the session awareness code when called from {{define-session-page}}.
 
-; 0.29:
+===== version 0.29
 * Updated JQuery from version 1.5.0 to 1.5.1.
 * {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simultaneously, or {{periodical-ajax}} and {{add-javascript}}).
 * The default URI for {{ajax-library}} is now protocol-relative (thanks to Peter Bex).
 * Added the {{javascript-position}} parameter.
 
-; 0.28:
+===== version 0.28
 * Updated JQuery from version 1.4.3 to 1.5.0.
 * {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (e.g., you don't need to explicitly pass the session identifier).
 * Added the {{cache}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}.
@@ -22,22 +27,23 @@
 * {{define-session-page}} bug fix (it was not properly obtaining the session identifier).
 
 
-; 0.27: Require the {{regex}} egg, for chickens >= 4.6.2
+===== version 0.27
+* Require the {{regex}} egg, for chickens >= 4.6.2
 
-; 0.26:
+===== version 0.26
 * {{define-page}} allows page redefinitions
 * Added the {{undefine-page}} procedure
 * Fancy web REPL (enabled by default).  The awful application server now accepts the {{--disable-web-repl-fancy-editor}} command line option to disable the web REPL fancy editor.
 * Added the following parameters, related to the fancy web REPL: {{enable-web-repl-fancy-editor}} and {{web-repl-fancy-editor-base-uri}}.
 * Bug fix for the development mode: requests to the {{/reload}} path killed {{/web-repl}} and {{/session-inspector}}
 
-; 0.25:
+===== version 0.25
 * The awful application server can now be used with the {{--development-mode}} command line option, which enables the web REPL, the session inspector (when {{enable-session}} is #t) for the localhost and on-browser error messages and backtraces.  When running in development mode, the {{/reload}} path is defined to reload awful apps.
 * The awful application server now supports the {{--ip-address}} and {{--port}} command line options.
 * {{use-ajax}} keyword parameter for {{define-page}} (for when {{enable-ajax}} is {{#f}} and you need ajax for some specific pages only)
 * Added {{awful-response-headers}} and {{development-mode?}} parameters
 
-; 0.24:
+===== version 0.24
 * initial support for storing session identifiers in cookies.  Added the {{enable-session-cookie}} and {{session-cookie-name}} parameters.  By default, cookies-sessions are enabled (relevant only when using sessions, of course). '''Warning''': if your code relies on the availability of session identifiers in the query string or in the request body for whatever reason, it will break.
 * initial support for HTTP redirection via {{redirect-to}}.
 * web-repl and session-inspector beautification
@@ -46,7 +52,7 @@
 * {{ajax}} always prioritizes the {{success}} keyword parameter value (when it's given) to generate code for JQuery's {{success}} attribute, even when {{target}} and {{update-targets}} are given
 * awful (the application) handles the {{-v}} and {{--version}} command line options
 
-; 0.23:
+===== version 0.23
 * added the {{update-targets}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} procedures (multiple targets update support)
 * added the {{debug-resources}} parameter for debugging the resources table
 * the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} has been renamed to {{success}} (to match JQuery's API naming for Ajax). '''Warning''': if your code uses the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} or {{ajax-link}}, this change will break your code.
@@ -55,7 +61,7 @@
 * {{ajax}} bugfix regarding to session identifiers (could cause "Invalid session ID" errors in some cases, specially with {{define-session-page}}).
 * better handling of URI paths regarding to paths as directories (see FAQ's ''How does awful bind URIs to files/directories on the filesystem and procedures?'')
 
-; 0.22:
+===== version 0.22
 * bug fix: fixed unintended shadowing of {{js}} in ajax
 * added the {{prelude}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}}
 * {{$db}} supports the {{values}} keyword parameter (patch by Stephen Eilert)
@@ -63,56 +69,78 @@
 * awful (the application) handles {{-h}} and {{--help}}
 * dropped [[/eggref/4/jsmin|jsmin]] requirement
 
-; 0.21: ajax and main page redirection issues fixes
+===== version 0.21
+* ajax and main page redirection issues fixes
 
-; 0.20:
+===== version 0.20
 * {{page-access-control}} controls access to pages even when no session is in use
 * '''Warning''': the following parameters have been removed: {{enable-reload}}, {{reload-path}} and {{reload-message}}.  Now the way to define reloaders is via {{define-page}}.
 * new parameter: {{awful-apps}} (a list of awful applications as passed to the awful server)
 
-; 0.19: bug fix for {{(reload-path)}} handler
+===== version 0.19
+* bug fix for {{(reload-path)}} handler
 
-; 0.18:
+===== version 0.18
 * support for regex-based page paths (see {{define-page}})
 * {{define-page}} checks whether the second arg is a procedure.
 * use {{-O3 -lambda-lift}} instead of {{-O2}} for compilation
 * {{main-page-path}} redirection made with code stolen from [[/egg/spiffy|spiffy]]'s {{send-response}}
 
-; 0.17 : .meta bug fix.  postgresql is not required as a dependency (thanks to Stephen Pedrosa Eilert for pointing this issue).
-; 0.16 :
+===== version 0.17
+* .meta bug fix.  postgresql is not required as a dependency (thanks to Stephen Pedrosa Eilert for pointing this issue).
+
+===== version 0.16
 * added {{define-session-page}}
 * bug fix for {{link}}
 
-; 0.15 : jquery updated to 1.4.2 ({{ajax-library}}).
-; 0.14 : {{link}}'s {{args}} keyword parameter renamed to {{arguments}} (the same as {{ajax}}'s).
-; 0.13 : Session-aware {{link}} and {{form}} procedures.  Bug fix for {{ajax-link}} (was not passing the {{class}} keyword argument to <a>).
-; 0.12 : Containers for user and password fields ({{login-form}})
-; 0.11 : awful sets Spiffy's {{root-path}} to {{(current-directory)}}
-; 0.10 :
+===== version 0.15
+* jquery updated to 1.4.2 ({{ajax-library}}).
+
+===== version 0.14
+* {{link}}'s {{args}} keyword parameter renamed to {{arguments}} (the same as {{ajax}}'s).
+
+===== version 0.13
+* Session-aware {{link}} and {{form}} procedures.  Bug fix for {{ajax-link}} (was not passing the {{class}} keyword argument to <a>).
+
+===== version 0.12
+* Containers for user and password fields ({{login-form}})
+
+===== version 0.11
+* awful sets Spiffy's {{root-path}} to {{(current-directory)}}
+
+===== version 0.10
 * Multiple database support. Currently Postgresql (via [[/egg/postgresql|postgresql]] egg) and Sqlite3 (via [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs) are supported.  See [[/egg/awful-postgresql|awful-postgresql]], [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs.
-
 * Removed requirement for postgresql
-
 * {{enable-db}} is now a procedure (not a parameter as before) and accepts no arguments
 
-; 0.9 : {{login-form}} gets the {{user}} refilled when the session or passowrd is not valid.  This feature may be disabled by setting the {{refill-user}} keyword parameter for {{login-form}} to {{#f}} (default is {{#t}}).  Thanks to Arthur Maciel for suggesting this feature.
-; 0.8 :
+===== version 0.9
+* {{login-form}} gets the {{user}} refilled when the session or passowrd is not valid.  This feature may be disabled by setting the {{refill-user}} keyword parameter for {{login-form}} to {{#f}} (default is {{#t}}).  Thanks to Arthur Maciel for suggesting this feature.
+
+===== version 0.8
 * jquery updated to 1.4.1 ({{ajax-library}}).
-
 * support for jquery's {{live}} method ({{live}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}).  See [[http://api.jquery.com/live/]]
-
 * bug fixes: {{periodical-ajax}} and {{ajax-link}} propagate {{vhost-root-path}} to {{ajax}}
-
 * added {{awful-start}} and dropped spiffy requirement for awful (the server)
-
 * dropped requirement for miscmacros
-
 * added more ajax tests
 
-; 0.7 : {{ajax-link}} accepts all {{<a>}}'s keyword arguments
-; 0.6 : Explicitly depends on [[/egg/http-session|http-session]] 2.0
-; 0.5 : Reload handler register the reload path after reloading.
-; 0.4 : {{disable-reload?}} renamed to {{enable-reload}}.  {{enable-reload}} is {{#f}} by default.
-; 0.3 : {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}} etc)
-; 0.2 : Added javascript compression support
-; 0.1 : Initial release
+===== version 0.7
+* {{ajax-link}} accepts all {{<a>}}'s keyword arguments
+
+===== version 0.6
+* Explicitly depends on [[/egg/http-session|http-session]] 2.0
+
+===== version 0.5
+* Reload handler register the reload path after reloading.
+
+===== version 0.4
+* {{disable-reload?}} renamed to {{enable-reload}}.  {{enable-reload}} is {{#f}} by default.
+
+===== version 0.3
+* {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}} etc)
+
+===== version 0.2
+* Added javascript compression support
+
+===== version 0.1
+* Initial release
