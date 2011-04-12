@@ -6,7 +6,7 @@
 * Better support for multiple applications under the same virtual host ({{add-request-handler-hook!}} and {{remove-request-handler-hook!}})
 * {{$db}} checks if database access is enabled via {{(enable-db)}} and throws an error if it is not.
 * Fixed critical bug regarding to parameters and thread reuse by Spiffy
-
+* Fixed {{redirect-to}} but introduced in version 0.29
 
 ===== version 0.30
 * The {{(ajax-library)}} is always linked before any other scripts and javascript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
