@@ -191,8 +191,7 @@ definition of define-sxml-page.
    (lambda args 
      (with-output-to-string 
        (lambda () 
-         (SXML->HTML `(body ,(apply contents args))) 
-         (awful-response-headers '((content-type "text/html"))))))
+         (SXML->HTML `(body ,(apply contents args))))))
    doctype: doctype-xhtml-1.0-transitional))
 
 
