@@ -306,8 +306,8 @@ input area is a simple HTML textarea.  The default value for
 {{use-fancy-editor}} is {{#t}}.
 
 
-===== {{fancy-editor-base-uri}}
-<parameter>(fancy-editor-base-uri [string])</parameter>
+===== {{web-repl-fancy-editor-base-uri}}
+<parameter>(web-repl-fancy-editor-base-uri [string])</parameter>
 
 The URI which indicates the fancy editor source files (javascript and
 CSS) location.  The default value is
