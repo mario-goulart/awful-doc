@@ -384,7 +384,7 @@ The per-request value returned by
 ===== {{db-connection}}
 <parameter>(db-connection)</parameter>
 
-A per-request databaseconnection object.  The connection is
+A per-request database connection object.  The connection is
 automatically opened and closed by awful in a per-request basis
 (unless databases are not being used the {{no-db}} keyword parameter
 for {{define-page}} is {{#t}}.)
