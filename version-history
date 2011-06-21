@@ -1,5 +1,11 @@
 === Version history
 
+===== version 0.32
+* Updated JQuery from version 1.5.2 to 1.6.1
+* Added the {{reload-apps}} procedure. {{load-apps}} no longer resets the resources table.
+* {{awful-start}} requires a thunk as argument. With this, awful can be embedded into standalone applications.
+
+
 ===== version 0.31
 * Added a tiny wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]], adding the {{with-request-variables}} macro and exporting {{spiffy-request-vars}}'s converters.
 * Updated JQuery from version 1.5.1 to 1.5.2.
