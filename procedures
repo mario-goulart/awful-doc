@@ -588,3 +588,49 @@ parameter.)
 The session inspector is automatically enabled by the awful
 application server when the {{--development-mode}} is provided
 (available from {{/session-inspector}}).
+
+
+==== Applications
+
+===== {{load-apps}}
+<procedure>(load-apps apps)</procedure>
+
+Load the given applications ({{apps}} - a list) (using
+[[http://wiki.call-cc.org/man/4/Unit%20eval#load|load]]).
+
+
+===== {{reload-apps}}
+<procedure>(reload-apps apps)</procedure>
+
+The same as {{load-apps}} but also reseting the resources table (the
+thing that maps URIs to procedures) before loading applications.
+
+
+==== The awful server
+
+===== {{awful-start}}
+<procedure>(awful-start thunk #!key dev-mode? port ip-address use-fancy-web-repl? privileged-code))</procedure>
+
+Starts awful.  This procedure is only useful for standalone
+applications which intent to embed awful.  For example, the awful
+application server (the awful command line tool) uses it.
+
+This procedure does all the listening, switching user/group and
+entering the accept loop dance.
+
+{{thunk}} is a procedure to be executed upon starting awful.  It can
+be Scheme code just like any other that can be loaded as an awful
+application.
+
+{{dev-mode?}} (boolean) indicates whether awful should run in development mode.
+
+{{port}} (integer) indicates to port to bind to.
+
+{{ip-address}} (string) indicates the IP address to bind to.
+
+{[use-fancy-web-repl?}} (boolean): indicates whether the web REPL
+should use the fancy editor.
+
+{{privileged-code}} (procedure): a thunk that is executed while awful
+is still running with privileged permissions (when run by the
+superuser).
