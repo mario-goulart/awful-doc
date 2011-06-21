@@ -106,7 +106,7 @@ reloads the code:
 
 (define-page "/reload"
   (lambda ()
-    (load-apps (awful-apps))
+    (reload-apps (awful-apps))
     "Reloaded"))
 </enscript>
 
