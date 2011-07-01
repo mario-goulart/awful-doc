@@ -61,7 +61,7 @@ URL or path to the ajax library (currently only
 [[http://jquery.com|JQuery]] is supported.)
 
 The default value is
-{{"http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"}}
+{{"http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"}}
 
 
 ===== {{enable-ajax}}
