@@ -6,7 +6,7 @@ Explanation by example:
 
 When a procedure is bound to a path {{a}} (like {{(define-page "a" (lambda ...))}}) and the request is made to {{a/}}, the awful behavior is the following:
 
-* if the path {{a}} does not exist, the server replies with the result of the evaluation of the procedure bound to {{a}}.
+* if the path {{a}} does not exist in the filesystem (under the {{root-path}}), the server replies with the result of the evaluation of the procedure bound to {{a}}.
 
 * if {{a}} is an existent file, the server replies with the file contents (or the result of processing the file, in case it is a special one like [[/egg/spiffy#web-scheme-handler|web-scheme]] or {{.ssp}} files)
 
