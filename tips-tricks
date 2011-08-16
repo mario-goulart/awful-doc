@@ -224,6 +224,14 @@ Here's a screenshot:
 [[image:http://parenteses.org/mario/img/awful/awful-reload-emacs.png|Reloading awful apps from Emacs]]
 
 
+==== Performance tweaks
+
+* if you don't intend to use static index files, you may configure the
+[[/egg/spiffy|Spiffy]] {{index-files}} parameter to {{'()}}.  That
+will disable the lookup for static index files (or you can configure
+it to contain only the static index files you use).
+
+
 ==== Awful badge
 
 Here's a suggestion:  [[image:http://parenteses.org/mario/img/thats-awful.png|That's awful!]]
