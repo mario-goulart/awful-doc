@@ -208,7 +208,7 @@ instead od {{sql-quote}} whenever possible.
 ==== Pages
 
 ===== {{define-page}}
-<procedure>(define-page path contents #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression)</procedure>
+<procedure>(define-page path contents #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method)</procedure>
 
 Define an awful page.
 
@@ -219,6 +219,10 @@ used in the URI will be bound to the given no-argument procedure
 URL path matches the regular expression will br handled by the
 one-argument procedure {{contents}}.  This procedure will be given the
 requested path.
+
+{{method}} (a symbol) indicates the HTTP method to be used (e.g.,
+{{GET}}, {{POST}}, {{PUT}}).  Pages that use different methods can use
+the same path.
 
 The {{css}}, {{title}}, {{doctype}}, {{headers}} and {{charset}}
 keyword parameters have the same meaning as {{html-page}} (from the
@@ -307,7 +311,7 @@ used.
 ==== Ajax
 
 ===== {{ajax}}
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache error-handler)</procedure>
 
 Generate javascript code to be added to the page defined by
 {{define-page}}.  Return the generated javascript code (which usually
@@ -425,11 +429,17 @@ value is not set, leaving it to be set by JQuery. See
 [[http://api.jquery.com/jQuery.ajax/|JQuery's documentation]] for
 further details.
 
+The {{error-handler}} keyword parameter expects a JavaScript callback
+to be used as the error handler for the Ajax request.  See the
+{{error}} attribute for the {{settings}} object given as argument to
+jQuery.ajax
+([[http://api.jquery.com/jQuery.ajax/|http://api.jquery.com/jQuery.ajax/]]).
+
 The {{ajax}} procedure is session, HTTP request and database -aware.
 
 
 ===== {{periodical-ajax}}
-<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets)</procedure>
+<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets error-handler)</procedure>
 
 Periodically execute {{proc}} on the server side, using
 {{(app-root-path)/(ajax-namespace)/path}} as the URL path for the
@@ -442,7 +452,7 @@ The meaning of the keyword parameters is the same as for {{ajax}}'s.
 
 
 ===== {{ajax-link}}
-<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets)</procedure>
+<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler)</procedure>
 
 A shortcut to
 

@@ -1,9 +1,15 @@
 === Version history
 
 ===== version 0.32
-* Updated JQuery from version 1.5.2 to 1.6.2
-* Added the {{reload-apps}} procedure. {{load-apps}} no longer resets the resources table.
-* {{awful-start}} requires a thunk as argument. With this, awful can be embedded into standalone applications.
+* Added {{method}} keyword parameter for {{define-page}}.  Now the page router takes into account the HTTP method, so it is possible to have two different pages using the same path but different methods.
+* Added {{error-handler}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}} (suggested by Thomas Hintz)
+* {{ajax}} and friends send {{Content-Type: application/json}} when {{update-targets}} is non-#f
+* {{ajax}} bugfix: only opens db connection and refresh session when the page access is allowed
+* The default value for {{awful-backlog}} has been set to 100
+* Updated JQuery from version 1.5.2 to 1.6.3
+* Dropped {{-lambda-lift}} build option
+* Added the {{reload-apps}} procedure. {{load-apps}} no longer resets the resources table
+* {{awful-start}} requires a thunk as argument. With this, awful can be embedded into standalone applications
 
 
 ===== version 0.31
