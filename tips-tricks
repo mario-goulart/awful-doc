@@ -138,63 +138,32 @@ The access {{http://<host>:8080/<the-file-you-want>}}.
 By default, awful uses
 [[http://wiki.call-cc.org/egg/html-tags|html-tags]] to generate HTML
 for pages.  Of course, it can be changed, and you can even use SXML.
-Here's an example by setting the {{page-template}} parameter to use
-SXML (see the
-[[http://wiki.call-cc.org/egg/sxml-transforms|sxml-transforms egg]]):
+Here's an example (see
+[[http://wiki.call-cc.org/egg/sxml-transforms|sxml-transforms egg]]
+for more information about SXML transformation):
 
 <enscript highlight=scheme>
-(use awful sxml-transforms)
+(use awful sxml-transforms doctype)
 
-(page-template
- (lambda (contents . rest)
-   (with-output-to-string
-     (lambda ()
-       (SXML->HTML `(html (body ,contents)))))))
-
-(define-page (main-page-path)
-  (lambda ()
-    '(p "Awful SXML example")))
-</enscript>
-
-Alternatively, you can create a {{define-sxml-page}} procedure which
-calls {{define-page}} (disabling {{page-template}}) and do the SXML
-transformations in the page definition body:
-
-<enscript highlight=scheme>
-(use awful sxml-transforms)
+(define (sxml->html sxml)  
+  ;; Generates an HTML string out of SXML
+  (with-output-to-string
+    (lambda ()
+      (let* ((rules `((literal *preorder* . ,(lambda (t b) b))
+		      . ,universal-conversion-rules*)))
+	(SRV:send-reply (pre-post-order* sxml rules))))))
 
 (define (define-sxml-page path contents)
   (define-page path
     (lambda ()
-      (with-output-to-string
-        (lambda ()
-          (SXML->HTML `(html (body ,(contents)))))))
+      (sxml->html `(html (body ,(contents)))))
+    doctype: doctype-xhtml-1.0-transitional
     no-template: #t))
 
 (define-sxml-page (main-page-path)
   (lambda ()
     '(p "Awful SXML example")))
 </enscript>
-
-Finally, you can create a {{define-sxml-page}} procedure which calls
-{{define-page}} and uses the SXML transformations in the page
-definition body for the <body> section only, using the original
-template to generate the <html> and <head> sections. This allows you
-to use the {{css}}, {{doctype}} and {{charset}} parameters in the
-definition of define-sxml-page.
-
-<enscript highlight=scheme> 
-(use awful sxml-transforms doctype) 
-
-(define (define-sxml-page path contents) 
- (define-page path 
-   (lambda args 
-     (with-output-to-string 
-       (lambda () 
-         (SXML->HTML `(body ,(apply contents args))))))
-   doctype: doctype-xhtml-1.0-transitional))
-
-
 
 ==== Reloading awful from Emacs
 
