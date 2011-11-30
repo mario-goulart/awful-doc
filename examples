@@ -6,7 +6,7 @@ Here are some simple examples using assorted awful features.
 ==== Number guessing game
 
 A screencast showing this example is available at
-[[http://wiki.call-cc.org/video/awful-guess.ogv|http://wiki.call-cc.org/video/awful-guess.ogv]]
+[[http://parenteses.org/mario/awful/awful-guess.ogv|http://parenteses.org/mario/awful/awful-guess.ogv]]
 
 This examples shows a simple guessing game. A random number is
 generated on the server side and the user tries to guess it.  It shows
