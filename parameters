@@ -119,6 +119,20 @@ The name of the cookie for storing the session identifier.  The dafult
 value is {{"awful-cookie"}}.
 
 
+===== {{session-cookie-setter}}
+<parameter>session-cookie-setter</parameter>
+
+A one-argument procedure (the sid) that is called when
+creating/refreshing the session.
+
+The default value is the following procedure:
+
+<enscript highlight=scheme>
+(lambda (sid)
+  (set-cookie! (session-cookie-name) sid))
+</enscript>
+
+
 ==== Access control (parameters)
 
 ===== {{page-access-control}}
