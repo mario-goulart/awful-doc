@@ -1,5 +1,11 @@
 === Version history
 
+===== version 0.33
+* jQuery updated to version 1.7.1
+* Added {{session-cookie-setter}} (thanks to Thomas Hintz)
+* Added {{event}} argument to anonymous javascript function given as argument to {{bind}}/{{live}} ({{ajax}} and friends).  Patch by Thomas Hintz.
+* The {{method}} keyword parameter for {{define-page}} and {{ajax}} & friends can be bound to a list of methods.  Methods are now case insensitive.
+
 ===== version 0.32
 * Added {{method}} keyword parameter for {{define-page}}.  Now the page router takes into account the HTTP method, so it is possible to have two different pages using the same path but different methods.
 * Added {{error-handler}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}} (suggested by Thomas Hintz)
