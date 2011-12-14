@@ -318,23 +318,25 @@ Here's the code for the fortune server:
 
 The contents of the {{fortune.css}} file are:
 
-  body
-  { font-family: arial, verdana, sans-serif;
-  }
-  
-  #sentence
-  { width: 20em;
-    background-color: #DEE7EC;
-    padding: 6px;
-    min-height: 7em;
-  }
-  
-  #author
-  { width: 20em;
-    min-height: 2em;
-    padding: 6px;
-    background-color: #eee;
-  }
+<enscript highlight=css>
+body
+{ font-family: arial, verdana, sans-serif;
+}
+
+#sentence
+{ width: 20em;
+  background-color: #DEE7EC;
+  padding: 6px;
+  min-height: 7em;
+}
+
+#author
+{ width: 20em;
+  min-height: 2em;
+  padding: 6px;
+  background-color: #eee;
+}
+</enscript>
 
 Here's a screenshot:
 
