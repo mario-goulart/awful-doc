@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.34
+* Don't check {{current-effective-user-id}} on windows, since it is not available on that platform.  Reported by Karl_H on #chicken.
+* Use {{<label>}} instead of {{<span>}} for login form labels (patch by Arthur Maciel).  Warning: this change may break your login form layout if you rely on the specific {{<span>}} tags for form labels.
+
+
 ===== version 0.33
 * jQuery updated to version 1.7.1
 * Added {{session-cookie-setter}} (thanks to Thomas Hintz)
