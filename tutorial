@@ -176,7 +176,7 @@ generic one ({{ajax}}) to reply the page greetings when we click
 
 (define-page (main-page-path)
   (lambda ()
-    (ajax "greetings" 'greetings 'click "Hello, awful!"
+    (ajax "greetings" 'greetings 'click
           (lambda ()
             (<b> "Hello, awful!"))
           target: "greetings-reply")
@@ -214,7 +214,7 @@ example could be coded like:
 
 (define-page (main-page-path)
   (lambda ()
-    (++ (ajax-link "greetings" 'greetings
+    (++ (ajax-link "greetings" 'greetings  "Hello, awful!"
                    (lambda ()
                      (<b> "Hello, awful!"))
                    target: "greetings-reply")
