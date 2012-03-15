@@ -213,12 +213,16 @@ instead od {{sql-quote}} whenever possible.
 Define an awful page.
 
 {{path}} is the path to the page.  It can be represented by two types:
-a string and a regular expression object.  If it is a string, the path
-used in the URI will be bound to the given no-argument procedure
-{{contents}}.  If it is a regular expression object, any request whose
-URL path matches the regular expression will br handled by the
-one-argument procedure {{contents}}.  This procedure will be given the
-requested path.
+a string and a regular expression object.
+
+If it is a string, the path used in the URI will be bound to the given
+no-argument procedure {{contents}}.
+
+If it is a regular expression object, any request whose URL path
+matches the regular expression will br handled by the one-argument
+procedure {{contents}}. Both the [[/egg/regex|regex egg]] and the
+[[/manual/Unit irregex|irregex unit]] are supported. This procedure
+will be given the requested path.
 
 {{method}} (a symbol or a list) indicates the HTTP method to be used
 (e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
