@@ -486,7 +486,7 @@ The {{event}} keyword parameter syntax is the same for {{ajax}}'s
 
 ==== Redirection
 
-===== {{redirecto-to}}
+===== {{redirect-to}}
 <procedure>(redirect-to uri)</procedure>
 
 Perform an HTTP redirection (code 302) to the given {{uri}} (either a
