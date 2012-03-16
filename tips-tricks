@@ -209,6 +209,74 @@ page]] for other options):
   $ awful -:s1m my-app.so
 
 
+
+==== Binding URI paths as arguments to page handler procedures
+
+<enscript highlight=scheme>
+(use awful regex srfi-13)
+
+(define (define-page* page-path content)
+  (define-page (regexp (string-append page-path "/*.*"))
+    (lambda (path)
+      (let ((url-args
+             (string-split
+              ;; Removing `page-path' from the requested path
+              (string-drop path (string-length page-path))
+              "/")))
+        (condition-case
+         (apply content url-args)
+         ((exn arity) "invalid arity")
+         (exn () (signal exn)))))))
+
+
+;;;
+;;; /page1 ignores all arguments
+;;;
+;; http://<server>:<port>/page1 => "no args"
+;; http://<server>:<port>/page1/1 => "no args"
+;; http://<server>:<port>/page1/1/2 => "no args"
+(define-page* "/page1"
+  (lambda _
+    "no args"))
+
+
+;;;
+;;; /page2 requires exactly one argument
+;;;
+;; http://<server>:<port>/page2 => "invalid arity"
+;; http://<server>:<port>/page2/1 => "foo=1"
+;; http://<server>:<port>/page1/1/2 => "invalid arity"
+(define-page* "/page2"
+  (lambda (foo)
+    (conc "foo=" foo)))
+
+
+;;;
+;;; /page3 requires one argument (the other is optional).  Ignores the
+;;; rest.
+;;;
+;; http://<server>:<port>/page3 => "invalid arity"
+;; http://<server>:<port>/page3/1 => "foo=1, bar=#f"
+;; http://<server>:<port>/page1/1/2 => "foo=1, bar=2"
+;; http://<server>:<port>/page1/1/2/3 => "foo=1, bar=2"
+(define-page* "/page3"
+  (lambda (foo #!optional bar)
+    (conc "foo=" foo ", bar=" bar)))
+
+
+;;;
+;;; /page4: all arguments are optional (get bound if given).
+;;;
+;; http://<server>:<port>/page4 => "foo=#f, bar=#f"
+;; http://<server>:<port>/page4/1 => "foo=1, bar=#f"
+;; http://<server>:<port>/page4/1/2 => "foo=1, bar=2"
+;; http://<server>:<port>/page4/1/2/3 => "foo=1, bar=2"
+(define-page* "/page4"
+  (lambda (#!optional foo bar)
+    (conc "foo=" foo ", bar=" bar)))
+</enscript>
+
+
 ==== Awful badge
 
 Here's a suggestion:  [[image:http://parenteses.org/mario/img/thats-awful.png|That's awful!]]
