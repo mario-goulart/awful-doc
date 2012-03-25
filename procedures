@@ -219,7 +219,7 @@ If it is a string, the path used in the URI will be bound to the given
 no-argument procedure {{contents}}.
 
 If it is a regular expression object, any request whose URL path
-matches the regular expression will br handled by the one-argument
+matches the regular expression will be handled by the one-argument
 procedure {{contents}}. Both the [[/egg/regex|regex egg]] and the
 [[/manual/Unit irregex|irregex unit]] are supported. This procedure
 will be given the requested path.
