@@ -210,7 +210,7 @@ code when clicked, awful provides the {{ajax-link}} procedure.  So our
 example could be coded like:
 
 <enscript highlight=scheme>
-(use awful)
+(use awful html-tags)
 
 (define-page (main-page-path)
   (lambda ()
@@ -232,7 +232,7 @@ an example using javascript's {{alert}} and our "Hello, world!"
 example:
 
 <enscript highlight=scheme>
-(use awful)
+(use awful html-tags)
 
 (define-page (main-page-path)
   (lambda ()
