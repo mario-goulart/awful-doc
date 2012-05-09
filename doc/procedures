@@ -314,6 +314,29 @@ where the page is to be undefined.  If omited, {{(root-path)}} is
 used.
 
 
+
+===== {{set-page-title!}}
+<procedure>(set-page-title! title)</procedure>
+
+Set the title for the requested page.  This procedure is useful to set
+the page title dynamically from the page handler (instead of
+statically, via {{define-page}}'s {{title}} keyword parameter).
+
+This procedure has been introduced in awful 0.35.
+
+Example:
+
+<enscript highlight=scheme>
+(use awful)
+
+(define-page (main-page-path)
+  (lambda ()
+    (set-page-title! "a title")
+    "Hi!"))
+</enscript>
+
+
+
 ==== Ajax
 
 ===== {{ajax}}
