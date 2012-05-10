@@ -224,6 +224,14 @@ procedure {{contents}}. Both the [[/egg/regex|regex egg]] and the
 [[/manual/Unit irregex|irregex unit]] are supported. This procedure
 will be given the requested path.
 
+{{contents}} should return either a string or a no-argument procedure.
+If it returns a string, it will be given as argument to
+{{(page-template)}}, unless {{no-template}} is not false. If
+{{contents}} returns a procedure, awful won't do anything besides
+evaluating the returned procedure.  It can be useful, for example, to
+serve static files out of the web server document directory (see the
+examples in this section).
+
 {{method}} (a symbol or a list) indicates the HTTP method to be used
 (e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
 methods.  In this case, awful will define a page for each method of
@@ -256,8 +264,10 @@ not {{#f}}.
 Examples:
 
 <enscript highlight=scheme>
-(use srfi-1 ;; for filter-map
-     regex) ;; for regexp
+(use awful
+     srfi-1  ;; for filter-map
+     regex   ;; for regexp
+     spiffy) ;; for send-static-file
 
 ;; http://host:port/foo => "bar"
 (define-page "/foo"
@@ -269,6 +279,14 @@ Examples:
   (lambda (path)
     (let ((numbers (filter-map string->number (string-split path "/"))))
       (number->string (apply + numbers)))))
+
+;; Serving a static file out of the web server documents directory
+(define-page "/my-dot-emacs"
+  (lambda ()
+    (lambda ()
+      (parameterize ((root-path (get-environment-variable "HOME")))
+        (send-static-file ".emacs"))))
+  no-template: #t)
 </enscript>
 
 
