@@ -76,11 +76,11 @@ Set up an init script for your system.  Basically, it should call
 
 If awful doesn't start, take a look at {{/var/log/awful/init.log}}
 
-You can find an [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-debian-init|init script]] for [[http://www.debian.org|Debian]] systems (or derivatives, like [[http://www.ubuntulinux.com|Ubuntu]]) at the [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/trunk|awful source repository]].  Here are the steps to install it:
+You can find an [[https://raw.github.com/mario-goulart/awful-init-scripts/master/debian|init script]] for [[http://www.debian.org|Debian]] systems (or derivatives, like [[http://www.ubuntulinux.com|Ubuntu]]) at the [[https://github.com/mario-goulart/awful-init-scripts|awful-init-scripts repository]].  Here are the steps to install it:
 
   # cd /etc/init.d
-  # wget --user=anonymous --password='' http://code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-debian-init -O awful
+  # wget https://raw.github.com/mario-goulart/awful-init-scripts/master/debian -O awful
   # chmod 755 awful
   # update-rc.d awful defaults
 
-There's also an [[http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/awful/extra/awful-gentoo-init|init script for Gentoo]] (by [[/users/david-krentzlin|David Krentzlin]]).
+There's also an [[https://raw.github.com/mario-goulart/awful-init-scripts/master/gentoo|init script for Gentoo]] (by [[/users/david-krentzlin|David Krentzlin]]).
