@@ -1,5 +1,26 @@
 === Tips and tricks
 
+==== Reload applications' code on every request
+
+You can use {{add-request-handler-hook!}} to reload the applications'
+code every time a request is handled by awful.  Here's a simple
+example:
+
+<enscript highlight=scheme>
+(use awful)
+
+(add-request-handler-hook!
+ 'reload-on-request
+ (lambda (path handler)
+   (reload-apps (awful-apps))
+   (handler)))
+
+(define-page (main-page-path)
+  (lambda ()
+    "1"))
+</enscript>
+
+
 ==== Use {{link}} and {{form}} for links and forms
 
 Instead of using {{<a>}} and {{<form>}} for creating links and forms,
