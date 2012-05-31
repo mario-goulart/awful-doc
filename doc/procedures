@@ -18,6 +18,15 @@ Convert {{args}} to string and intersperse the resulting strings with {{sep}}.
 
 Return the awful version (a string).
 
+===== {{awful-resources-table}}
+
+Return the resources table used by awful.  The resources table is
+represented by a hash table whose format is described below:
+
+; keys: lists in the following format: {{(path-matcher vhost-root-path method)}}. {{patch-matcher}}, the first argument given to {{define-page}}, can be either a string or a regular expression obejct. {{vhost-root-path}}, the documents root path for the virtual host, is a string.  {{method}}, a symbol, is the HTTP method bound to the resource.
+
+; values: procedures representing the page handlers (the second argument given to {{define-page}}).
+
 
 ==== Javascript
 
