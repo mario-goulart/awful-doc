@@ -46,7 +46,7 @@ are not required to use awful):
 
 * [[https://github.com/mario-goulart/awful-init-scripts|awful-init-scripts]]: init scripts for some operating systems
 * [[https://github.com/mario-goulart/awful-doc|awful-doc]]: the source code for this document
-* [[https://github.com/mario-goulart/awful-codemirror|codemirror]]: the javascript files used by the web REPL
+* [[https://github.com/mario-goulart/awful-codemirror|awful-codemirror]]: the javascript files used by the web REPL
 
 
 
