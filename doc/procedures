@@ -217,26 +217,20 @@ instead od {{sql-quote}} whenever possible.
 ==== Pages
 
 ===== {{define-page}}
-<procedure>(define-page path contents #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method)</procedure>
+<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method)</procedure>
 
 Define an awful page.
 
-{{path}} is the path to the page.  It can be represented by two types:
-a string and a regular expression object.
+{{path-matcher}} matches requested paths.  It can be represented by three types:
+; string: a literal path. When the path matcher is a string, the handler procedure must be a thunk.
+; regex: a regular expression to match the requested path (regexes created by both regex egg and irregex unit are valid values).  When the path matcher is a regular expression, the page handler procedure must be a one-argument procedure which will be given the requested path.
+; procedure: a one-argument procedure to match the requested path (feature introduced in awful 0.35). If the procedure matches the requested path, it should return a list to be applied to the page handler.  When the path matcher is a procedure, the arity of the page handler procedure must match the length of the list returned by the path matcher. {{#f}} indicates that there was no match.  Values which are not {{#f}} or a list will cause an invalid argument type error.
 
-If it is a string, the path used in the URI will be bound to the given
-no-argument procedure {{contents}}.
 
-If it is a regular expression object, any request whose URL path
-matches the regular expression will be handled by the one-argument
-procedure {{contents}}. Both the [[/egg/regex|regex egg]] and the
-[[/manual/Unit irregex|irregex unit]] are supported. This procedure
-will be given the requested path.
-
-{{contents}} should return either a string or a no-argument procedure.
+{{handler}} should return either a string or a no-argument procedure.
 If it returns a string, it will be given as argument to
 {{(page-template)}}, unless {{no-template}} is not false. If
-{{contents}} returns a procedure (feature introduced in awful 0.35),
+{{handler}} returns a procedure (feature introduced in awful 0.35),
 awful won't do anything besides evaluating the returned procedure.  It
 can be useful, for example, to serve static files out of the web
 server document directory (see the examples in this section).
@@ -278,16 +272,59 @@ Examples:
      regex   ;; for regexp
      spiffy) ;; for send-static-file
 
+
+;;
+;; Path matcher as a string
+;;
+
 ;; http://host:port/foo => "bar"
 (define-page "/foo"
   (lambda ()
     "bar"))
+
+
+;;
+;; Path matcher as a regular expression
+;;
 
 ;; http://host:port/add/1/2/3 => 6
 (define-page (regexp "/add/.*")
   (lambda (path)
     (let ((numbers (filter-map string->number (string-split path "/"))))
       (number->string (apply + numbers)))))
+
+;;
+;; Path matcher as a procedure
+;;
+(define (ticket-id path)
+  (and (string-prefix? "/ticket/" path)
+       (and-let* ((tokens (string-split path "/"))
+                  (_ (not (null? (cdr tokens))))
+                  (id (string->number (cadr tokens))))
+         (and id (list id)))))
+
+(define-page ticket-id
+  (lambda (id)
+    (conc "This is ticket " id)))
+
+
+(define (ticket-reporter+severity path)
+  (and (string-prefix? "/ticket/" path)
+       (and-let* ((tokens (string-split path "/"))
+                  (_ (> (length tokens) 2)))
+         (list (cadr tokens)
+               (caddr tokens)))))
+
+(define-page ticket-reporter+severity
+  (lambda (reporter severity)
+    (sprintf "Reporter=~a, severity=~a"
+             reporter
+             severity)))
+
+
+;;
+;; Page handler returning a procedure
+;;
 
 ;; Serving a static file out of the web server documents directory
 (define-page "/my-dot-emacs"
@@ -300,7 +337,7 @@ Examples:
 
 
 ===== {{define-session-page}}
-<procedure>(define-session-page path contents . rest)</procedure>
+<procedure>(define-session-page path-matcher handlerr . rest)</procedure>
 
 Define a session-aware page.  When the page is accessed and a
 correponding session does not exist, it is created.  If the session
@@ -541,7 +578,7 @@ The {{event}} keyword parameter syntax is the same for {{ajax}}'s
 
 Perform an HTTP redirection (code 302) to the given {{uri}} (either a
 string or a [[/eggref/4/uri-common|uri-common]] uri object).  To be
-used from {{define-page}} contents.  Example:
+used from {{define-page}} handler.  Example:
 
 <enscript highlight=scheme>
 (use awful)

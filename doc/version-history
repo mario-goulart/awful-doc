@@ -4,6 +4,7 @@
 
 * Added {{awful-resources-table}}
 * Added {{set-page-title!}} (thanks to John J. Foerch for suggesting that)
+* {{define-page}}'s first argument (the path matcher) can now be a procedure (thanks to John J. Foerch for suggesting that)
 * The return value of the second argument to {{define-page}} can now be a procedure
 * {{add-request-handler-hook!}} overwrites hooks with the same name instead of adding multiple copies
 * {{define-page}}'s {{use-ajax}} keyword parameter can also be bound to a string indicating the path to the ajax library
