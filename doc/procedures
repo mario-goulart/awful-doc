@@ -731,7 +731,7 @@ application.
 
 {{ip-address}} (string) indicates the IP address to bind to.
 
-{[use-fancy-web-repl?}} (boolean): indicates whether the web REPL
+{{use-fancy-web-repl?}} (boolean): indicates whether the web REPL
 should use the fancy editor.
 
 {{privileged-code}} (procedure): a thunk that is executed while awful
