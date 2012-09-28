@@ -5,6 +5,8 @@ Here's a "Hello, world!" example to be run by awful ({{hello-world.scm}}).
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
+
 (define-page (main-page-path)
   (lambda ()
     "Hello, world!"))
@@ -33,14 +35,9 @@ If you look at the page source code, you'll see that awful created an
 HTML page for you.  Awful uses the [[/egg/html-utils|html-tags]]'s
 {{html-page}} procedure behind the scenes.  You can customize the page
 either by passing {{html-page}}'s keyword parameters to
-{{define-page}} or by setting the {{page-template}} parameter with
-your favourite procedure to generate pages. {{page-template}} is a
-one-mandatory-argument procedure which receives the page contents and
-returns a string representing the formatted contents. {{define-page}}
-would still pass the {{html-page}} keyword parameters, so you can make
-use of them (the {{page-template}} procedure should be defined
-considering them -- if you don't need them, just ignore them by
-defining {{(lambda (contents . args) ...)}}).
+{{define-page}} or by creating you own page definer based on
+{{define-page}} (see more information on how to do that in the Tips &
+Tricks section).
 
 You can also use some global page-related parameters if all pages use
 the same CSS, doctype and charset ({{page-css}}, {{page-doctype}} and
@@ -54,6 +51,8 @@ An alternative way to write Awful '''scripts''' is by using the
 #! /usr/bin/awful
 
 (use awful)
+
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
@@ -78,13 +77,12 @@ of the whole world:
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
+
 (define-page (main-page-path)
   (lambda ()
-    (++ "Hello, " ($ 'person "world") "!")))
+    `("Hello, " ,($ 'person "world") "!")))
 </enscript>
-
-The {{++}} procedure is an alias to {{string-append}} (name inspired
-by Haskell's operator to concatenate strings).
 
 So, restart the web server to reload the code, then access the main
 page using an argument, represented by the {{person}} query string
@@ -103,6 +101,8 @@ reloads the code:
 
 <enscript highlight=scheme>
 (use awful)
+
+(enable-sxml #t)
 
 (define-page "/reload"
   (lambda ()
@@ -159,31 +159,34 @@ So, if we now change our code to
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
+
 (define-page (main-page-path)
   (lambda ()
-    (++ "Hello, " ($ 'person "world") "!"))
+    `("Hello, " ,($ 'person "world") "!"))
   use-ajax: #t)
 </enscript>
 
-and reload the application, we'll have our page linked to JQuery.
+and reload the application, we'll have our page linked to jQuery.
 
 Awful provides some procedures to do ajax.  We start by the more
 generic one ({{ajax}}) to reply the page greetings when we click
 "Hello, <person>!".
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
+
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
     (ajax "greetings" 'greetings 'click
           (lambda ()
-            (<b> "Hello, awful!"))
+            '(b "Hello, awful!"))
           target: "greetings-reply")
-    (++ (<a> href: "#"
-             id: "greetings"
-             (++ "Hello, " ($ 'person "world") "!"))
-        (<div> id: "greetings-reply")))
+    `((a (@ (href "#") (id "greetings"))
+         "Hello, " ,($ 'person "world") "!")
+      (div (@ (id "greetings-reply")))))
   use-ajax: #t)
 </enscript>
 
@@ -210,18 +213,19 @@ code when clicked, awful provides the {{ajax-link}} procedure.  So our
 example could be coded like:
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
+
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
-    (++ (ajax-link "greetings" 'greetings  "Hello, awful!"
-                   (lambda ()
-                     (<b> "Hello, awful!"))
-                   target: "greetings-reply")
-        (<div> id: "greetings-reply")))
+    `(,(ajax-link "greetings" 'greetings  "Hello, awful!"
+                  (lambda ()
+                    '(b "Hello, awful!"))
+                  target: "greetings-reply")
+      (div (@ (id "greetings-reply")))))
   use-ajax: #t)
 </enscript>
-
 
 
 === Adding arbitrary javascript code to pages
@@ -232,16 +236,18 @@ an example using javascript's {{alert}} and our "Hello, world!"
 example:
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
+
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
     (add-javascript "alert('Hello!');")
-    (++ (ajax-link "greetings" 'greetings
-                   (lambda ()
-                     (<b> "Hello, awful!"))
-                   target: "greetings-reply")
-        (<div> id: "greetings-reply")))
+    `(,(ajax-link "greetings" 'greetings "Hello, awful!"
+                  (lambda ()
+                    '(b "Hello, awful!"))
+                  target: "greetings-reply")
+      (div (@ (id "greetings-reply")))))
   use-ajax: #t)
 </enscript>
 
@@ -282,6 +288,8 @@ an usage example:
 (use awful awful-postgresql)
 
 (enable-db)
+(enable-sxml #t)
+
 (db-credentials '((dbname . "my-db")
                   (user . "mario")
                   (password . "secret")
@@ -289,9 +297,7 @@ an usage example:
 
 (define-page "db-example"
   (lambda ()
-    (with-output-to-string
-      (lambda ()
-        (pp ($db "select full_name, phone from users"))))))
+    ($db "select full_name, phone from users")))
 </enscript>
 
 ''Hint'': for Sqlite3 databases, {{db-credentials}} should be the path
@@ -306,8 +312,8 @@ default value to be used in case the field value is {{#f}}.
 (define-page "db-example"
   (lambda ()
     (let ((& ($db-row-obj "select full_name, phone from users where user_id=1")))
-      (<p> "Full name: " (& 'full_name))
-      (<p> "Phone: " (& 'phone)))))
+      `((p "Full name: " ,(& 'full_name))
+        (p "Phone: " ,(& 'phone)))))
 </enscript>
 
 ''Warning'': currently {{$db-row-obj}} is only implemented for Postgresql.
@@ -350,6 +356,7 @@ The basic things you have to do is:
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
 (enable-session #t)
 
 (define-login-trampoline "/login-trampoline")
@@ -388,7 +395,7 @@ and retrieve it to make the greetings message:
 (define-page (main-page-path)
   (lambda ()
     ($session-set! 'user ($ 'user))
-    (++ "Hello " ($session 'user "world") "!")))
+    `("Hello " ,($session 'user "world") "!"))
 </enscript>
 
 Here we can see the two procedures to access the session: {{$session}}
@@ -494,6 +501,7 @@ it only allows the access when the value of the request variable
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
 (enable-session #t)
 
 (define-login-trampoline "/login-trampoline")

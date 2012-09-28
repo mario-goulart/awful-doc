@@ -1,5 +1,33 @@
 === List of user configurable parameters
 
+==== SXML (parameters)
+
+===== {{enable-sxml}}
+<parameter>(enable-sxml [boolean])</parameter>
+
+If {{#t}} specifies that awful should assume that page handlers always
+produce SXML.  If {{#f}} specifies that awful should assume that page
+handlers always produce SXML.
+
+The default value is {{#f}} (likely to be changed in future versions,
+since supporting SXML by default is a goal).
+
+
+===== {{sxml->html}}
+<parameter>(sxml->html [procedure])</parameter>
+
+The procedure used to transform SXML into HTML. The default value is:
+
+<enscript highlight=scheme>
+(let ((rules `((literal *preorder* . ,(lambda (t b) b))
+               . ,universal-conversion-rules*)))
+  (lambda (sxml)
+    (with-output-to-string
+      (lambda ()
+        (SRV:send-reply (pre-post-order* sxml rules))))))
+</enscript>
+
+
 ==== Debugging (parameters)
 
 ===== {{debug-file}}
@@ -61,7 +89,7 @@ URL or path to the ajax library (currently only
 [[http://jquery.com|JQuery]] is supported.)
 
 The default value is
-{{"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}}
+{{"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"}}
 
 
 ===== {{enable-ajax}}
@@ -277,6 +305,8 @@ Here's an example:
 <enscript highlight=scheme>
 (use awful)
 
+(enable-sxml #t)
+
 (define (define-json path body)
   (define-page path
     (lambda ()
@@ -287,7 +317,7 @@ Here's an example:
 
 (define-json (main-page-path)
   (lambda ()
-    "{a: 1}"))
+    '("{a: 1}")))
 </enscript>
 
 
