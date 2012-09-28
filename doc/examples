@@ -13,12 +13,12 @@ generated on the server side and the user tries to guess it.  It shows
 some basic ajax features.
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
 
-(enable-ajax #t)
+(enable-sxml #t)
 
 (define (prompt-guess)
-  (<input> type: "text" id: "guess"))
+  '(input (@ (type "text") (id "guess"))))
 
 (define-page (main-page-path)
   (lambda ()
@@ -26,14 +26,15 @@ some basic ajax features.
           (lambda ()
             (let ((guess ($ 'guess as-number))
                   (thinking (random 10)))
-              (<p> (if (and guess (= guess thinking))
+              `(p ,(if (and guess (= guess thinking))
                        "You guessed it right!"
-                       (conc "You guessed it wrong. I'm thinking " thinking ".")))))
-            target: "verdict"
-            arguments: '((guess . "$('#guess').val()")))
-    (++ (<p> "Guess the number I'm thinking:")
-        (prompt-guess)
-        (<div> id: "verdict"))))
+                       `("You guessed it wrong. I'm thinking " ,thinking ".")))))
+          target: "verdict"
+          arguments: '((guess . "$('#guess').val()")))
+    `((p "Guess the number I'm thinking:")
+      ,(prompt-guess)
+      (div (@ (id "verdict")))))
+  use-ajax: #t)
 </enscript>
 
 To run it, execute:
@@ -46,9 +47,6 @@ To run it, execute:
 
 
 ==== Sandboxed Chicken Web REPL
-
-This example was featured in the
-[[http://gazette.call-cc.org/issues/10.html|Chicken Gazette #10]].
 
 It shows how to implement a very simple web-based Chicken REPL using a
 sandbox environment (see the
@@ -63,7 +61,9 @@ results.
 Here's the commented code:
 
 <enscript highlight=scheme>
-(use html-tags awful sandbox)
+(use awful sandbox)
+
+(enable-sxml #t)
 
 ;; Here we define the REPL page.  It uses the session to store the
 ;; sandboxed environment.  By default, the `main-page-path' parameter
@@ -98,16 +98,14 @@ Here's the commented code:
                exn
                ;; If something goes wrong, we print the error message
                ;; and the call chain.
-               (<pre> convert-to-entities?: #t
-                      (with-output-to-string
+               `(pre ,(with-output-to-string
                         (lambda ()
                           (print-error-message exn)
                           (print-call-chain))))
                ;; Here we try to evaluate the given expression in the
                ;; sandboxed environment stored in the user session. 
                ;; The `repl-output' page div is updated with the result.
-               (<pre> convert-to-entities?: #t
-                      (safe-eval
+               `(pre ,(safe-eval
                        (with-input-from-string repl-input read)
                        fuel: 100
                        allocation-limit: 100
@@ -122,9 +120,9 @@ Here's the commented code:
           target: "repl-output")
 
     ;; Here's what is displayed to users
-    (++ (<h1> "Sandboxed Chicken web REPL")
-        (<input> type: "text" id: "repl-input")
-        (<div> id: "repl-output")))
+    `((h1 "Sandboxed Chicken web REPL")
+      (input (@ (type "text") (id "repl-input")))
+      (div (@ (id "repl-output")))))
 
   ;; This tells `define-session-page' to link the page to JQuery
   use-ajax: #t)
@@ -161,18 +159,21 @@ Here's an example provided by
 [[http://wiki.call-cc.org/users/christian-kellermann|Christian Kellermann]] demonstrating an ajax-based color chooser:
 
 <enscript highlight=scheme>
-(use awful html-utils html-tags)
+(use awful)
+
+(enable-sxml #t)
 
 (define color-table
   '("f63353" "fead76" "107279" "10fabc" "1181bf" "120902" "129105"
     "131848" "13a04b" "1427ee" "14a8b1" "1532d4" "15bcf7" "16671a"
     "16c13d" "175b60" "17d583" "186fa6" "18ecc9" "1973ec"))
 
-(enable-ajax #t)
-
 (define (color-picker counter color)
-  (<div> class: "color-box" style: (conc  "background-color: " (conc "#" color))
-         (text-input (conc "change-color-" counter) value: color)))
+  `(div (@ (class "color-box")
+           (style ,(string-append "background-color: #" color)))
+        (input (@ (type "text")
+                  (id ,(conc "change-color-" counter))
+                  (value ,color)))))
 
 (define (make-color-chooser counter c)
   (ajax "ajax" (conc "#change-color-" counter) 'change
@@ -184,16 +185,17 @@ Here's an example provided by
         arguments: `((color . ,(conc  "$('#change-color-" counter "').val()"))
                      (counter . ,counter))
         live: #t)
-  (<div> id: (conc "color-box-" counter) (color-picker counter c)))
+  `(div (@ (id ,(conc "color-box-" counter)))
+        ,(color-picker counter c)))
 
 (define-page (main-page-path)
   (lambda ()
-    (concat (map (let ((counter -1))
-                   (lambda (c)
-                     (set! counter (add1 counter))
-                     (make-color-chooser counter c)))
-                 color-table))))
-
+    (map (let ((counter -1))
+           (lambda (c)
+             (set! counter (add1 counter))
+             (make-color-chooser counter c)))
+         color-table))
+  use-ajax: #t)
 </enscript>
 
 Here's a screenshot:
@@ -288,8 +290,9 @@ Here's the code for {{create-database.scm}} which creates and populates the fort
 Here's the code for the fortune server:
 
 <enscript highlight=scheme>
-(use awful html-tags awful-sql-de-lite)
+(use awful awful-sql-de-lite)
 
+(enable-sxml #t)
 (enable-db)
 (db-credentials "fortunes.db")
 
@@ -305,11 +308,11 @@ Here's the code for the fortune server:
                 (author . ,(cadr fortune)))))
           update-targets: #t)
 
-    (<div> id: "content"
-           (<div> id: "sentence" "Click the button below to get a new fortune")
-           (<div> id: "author")
-           (<button> id: "new-fortune" "New fortune")))
-
+    `(div (@ (id "content"))
+          (div (@ (id "sentence"))
+               "Click the button below to get a new fortune")
+          (div (@ (id "author")))
+          (button (@ (id "new-fortune")) "New fortune")))
   css: "fortune.css"
   use-ajax: #t
   charset: "utf-8")

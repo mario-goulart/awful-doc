@@ -16,7 +16,7 @@ Here's a short summary of awful features:
 * Compiled pages made easy
 * Session inspector
 * Web REPL
-
+* SXML support
 
 
 ==== Screencasts
@@ -40,7 +40,6 @@ Here are some screencasts about awful:
 The git repository for the awful source code is hosted by github:
 [[https://github.com/mario-goulart/awful|https://github.com/mario-goulart/awful]].
 
-
 Additionally, there are some extra repositories related to awful (they
 are not required to use awful):
 
@@ -61,9 +60,10 @@ The following eggs are required:
 * [[/egg/html-utils|html-utils]]
 * [[/egg/json|json]]
 * [[/egg/http-session|http-session]]
-
+* [[/egg/sxml-transforms|sxml-transforms]]
 
 === Components
 
-awful is composed by two parts: an application, which can be thought as a web server; and an extension, which provides most of the supported features.
-
+awful is composed by two parts: an application, which can be thought
+as a web server; and an extension, which provides most of the
+supported features.

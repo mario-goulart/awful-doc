@@ -1,5 +1,12 @@
 === Version history
 
+===== version 0.36
+
+* SXML support.  The use of SXML mode (i.e., {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
+* {{++}} and {{concat}} have been decrecated (they are still available, but will be removed in future versions).
+* jQuery updated to version 1.8.2
+
+
 ===== version 0.35
 
 * Added {{awful-resources-table}}

@@ -8,10 +8,19 @@
 
 A shortcut to {{string-append}}.
 
+This procedure has been deprecated in awful 0.36 and will be removed
+in future versions.
+
+
 ===== {{concat}}
 <procedure>(concat args #!optional (sep ""))</procedure>
 
 Convert {{args}} to string and intersperse the resulting strings with {{sep}}.
+
+
+This procedure has been deprecated in awful 0.36 and will be removed
+in future versions.
+
 
 ===== {{awful-version}}
 <procedure>(awful-version)</procedure>
@@ -217,7 +226,7 @@ instead od {{sql-quote}} whenever possible.
 ==== Pages
 
 ===== {{define-page}}
-<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method)</procedure>
+<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method use-sxml)</procedure>
 
 Define an awful page.
 
@@ -234,6 +243,11 @@ If it returns a string, it will be given as argument to
 awful won't do anything besides evaluating the returned procedure.  It
 can be useful, for example, to serve static files out of the web
 server document directory (see the examples in this section).
+
+{{use-sxml}} (boolean): specifies whether awful should assume that the
+handler produces SXML code or strings.  In case the handler produces
+SXML code, the parameter {{sxml->html}} yields the procedure used to
+generate HTML out of SXML.
 
 {{method}} (a symbol or a list) indicates the HTTP method to be used
 (e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
@@ -272,6 +286,7 @@ Examples:
      regex   ;; for regexp
      spiffy) ;; for send-static-file
 
+(enable-sxml #t)
 
 ;;
 ;; Path matcher as a string
@@ -291,21 +306,19 @@ Examples:
 (define-page (regexp "/add/.*")
   (lambda (path)
     (let ((numbers (filter-map string->number (string-split path "/"))))
-      (number->string (apply + numbers)))))
+      `(,(apply + numbers)))))
+
 
 ;;
-;; Path matcher as a procedure
+;; Path matchers as procedures
 ;;
+
 (define (ticket-id path)
   (and (string-prefix? "/ticket/" path)
        (and-let* ((tokens (string-split path "/"))
                   (_ (not (null? (cdr tokens))))
                   (id (string->number (cadr tokens))))
          (and id (list id)))))
-
-(define-page ticket-id
-  (lambda (id)
-    (conc "This is ticket " id)))
 
 
 (define (ticket-reporter+severity path)
@@ -315,11 +328,17 @@ Examples:
          (list (cadr tokens)
                (caddr tokens)))))
 
+;; http://host:port/ticket/4
 (define-page ticket-reporter+severity
   (lambda (reporter severity)
-    (sprintf "Reporter=~a, severity=~a"
-             reporter
-             severity)))
+    `(,(sprintf "Reporter=~a, severity=~a"
+                reporter
+                severity))))
+
+;; http://host:port/ticket/4/5
+(define-page ticket-id
+  (lambda (id)
+    `("This is ticket " ,id)))
 
 
 ;;
@@ -349,21 +368,24 @@ The {{rest}} parameters are the same as for {{define-page}}.
 Here's an example (the [[http://www.paulgraham.com/arcchallenge.html|arc challenge]]):
 
 <enscript highlight=scheme>
-(use awful html-utils)
+(use awful)
+
+(enable-sxml #t)
 
 (define-session-page "said"
   (lambda ()
     (with-request-variables (said)
       (cond (said
              ($session-set! 'said said)
-             (link "said" "click here"))
+             `(,(link "said" "click here")))
             (($session 'said)
              => (lambda (said)
-                  (++ "You said: " said)))
-            (else (form (++ (text-input 'said)
-                            (submit-input))
-                        action: "said"
-                        method: 'post))))))
+                  `("You said: " ,said)))
+            (else `(,(form '((input (@ (type "text") (name "said")))
+                             (input (@ (type "submit"))))
+                           action: "said"
+                           method: 'post))))))
+  method: '(GET POST))
 </enscript>
 
 
@@ -404,7 +426,7 @@ Example:
 ==== Ajax
 
 ===== {{ajax}}
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache error-handler)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache error-handler use-sxml)</procedure>
 
 Generate javascript code to be added to the page defined by
 {{define-page}}.  Return the generated javascript code (which usually
@@ -441,6 +463,10 @@ variables (symbols) to their values (strings).  {{ajax}} uses these
 arguments to assembly the query string or the request body to send to
 the server when performing the ajax request.
 
+If {{use-sxml}} is {{#t}}, it specifies that the ajax handler produces
+SXML code instead of strings.
+
+
 Example:
 
 <enscript highlight=scheme>
@@ -475,9 +501,9 @@ identifiers to their corresponding values.
 Here's an example:
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
 
-(enable-ajax #t)
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
@@ -487,11 +513,11 @@ Here's an example:
             '((a . 1) (b . 2) (c . 3)))
           update-targets: #t)
 
-    (<div>
-     (link "#" "foo" id: "foo")
-     (<div> id: "a")
-     (<div> id: "b")
-     (<div> id: "c"))))
+    `(,(link "#" "Click me" id: "foo")
+      (div (@ (id "a")))
+      (div (@ (id "b")))
+      (div (@ (id "c")))))
+  use-ajax: #t)
 </enscript>
 
 The {{success}} keyword parameter (string) can be any arbitrary
@@ -500,9 +526,9 @@ javascript code can assume that a variable {{response}} is bound and
 contains the request resulting data.  Here's an example:
 
 <enscript highlight=scheme>
-(use awful html-tags)
+(use awful)
 
-(enable-ajax #t)
+(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
@@ -512,8 +538,9 @@ contains the request resulting data.  Here's an example:
             "hey")
           success: "$('#bar').html(response + ' you!')")
 
-    (++ (link "#" "foo" id: "foo")
-        (<div> id: "bar"))))
+    `(,(link "#" "Click me" id: "foo")
+      (div (@ (id "bar")))))
+  use-ajax: #t)
 </enscript>
 
 The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will
@@ -532,7 +559,7 @@ The {{ajax}} procedure is session, HTTP request and database -aware.
 
 
 ===== {{periodical-ajax}}
-<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets error-handler)</procedure>
+<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets error-handler use-sxml)</procedure>
 
 Periodically execute {{proc}} on the server side, using
 {{(app-root-path)/(ajax-namespace)/path}} as the URL path for the
@@ -545,7 +572,7 @@ The meaning of the keyword parameters is the same as for {{ajax}}'s.
 
 
 ===== {{ajax-link}}
-<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler)</procedure>
+<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler use-sxml)</procedure>
 
 A shortcut to
 
