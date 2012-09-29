@@ -32,7 +32,7 @@ In the example we use the {{main-page-path}} parameter, which is one
 of the awful configuration parameters.  The default is {{"/"}}.
 
 If you look at the page source code, you'll see that awful created an
-HTML page for you.  Awful uses the [[/egg/html-utils|html-tags]]'s
+HTML page for you.  Awful uses the [[/egg/html-utils|html-utils]]'s
 {{html-page}} procedure behind the scenes.  You can customize the page
 either by passing {{html-page}}'s keyword parameters to
 {{define-page}} or by creating you own page definer based on
