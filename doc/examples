@@ -344,3 +344,15 @@ body
 Here's a screenshot:
 
 [[image:http://parenteses.org/mario/img/awful/fortune-server.png|Awful fortune server]]
+
+
+==== I-wonder
+
+I-wonder is a simple awful example application which uses SQLite as
+storage (with the [[/egg/sql-de-lite|sql-de-lite]] egg).
+
+You can find the code for that application on github: [[https://github.com/mario-goulart/i-wonder|https://github.com/mario-goulart/i-wonder]]
+
+Here's a screenshot
+
+[[image:http://parenteses.org/mario/img/awful/i-wonder.png|I-wonder]]
