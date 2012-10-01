@@ -12,6 +12,8 @@ handlers always produce SXML.
 The default value is {{#f}} (likely to be changed in future versions,
 since supporting SXML by default is a goal).
 
+This parameter has been introduced in awful 0.36.
+
 
 ===== {{sxml->html}}
 <parameter>(sxml->html [procedure])</parameter>
@@ -27,6 +29,7 @@ The procedure used to transform SXML into HTML. The default value is:
         (SRV:send-reply (pre-post-order* sxml rules))))))
 </enscript>
 
+This parameter has been introduced in awful 0.36.
 
 ==== Debugging (parameters)
 
