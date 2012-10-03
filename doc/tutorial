@@ -148,7 +148,7 @@ ajax support), you can use the {{use-ajax}} keyword parameter for
 ajax support.
 
 When you have ajax enabled and you want to disable it for specific
-pages, you can pass {{#f}} as the value for the {{define-page}}
+pages, you can pass {{#t}} as the value for the {{define-page}}
 keyword parameter {{no-ajax}}.
 
 The URL of the JQuery file can be customized by setting the
