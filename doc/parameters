@@ -394,7 +394,7 @@ The default value is {{#f}}.
 ===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure (the javascript code) which return the given
+An one-argument procedure (the javascript code) which returns the given
 javascript code compressed.  Only used when
 {{enable-javascript-compression}} is not {{#f}}.
 
@@ -433,8 +433,8 @@ The per-request value returned by
 
 A per-request database connection object.  The connection is
 automatically opened and closed by awful in a per-request basis
-(unless databases are not being used the {{no-db}} keyword parameter
-for {{define-page}} is {{#t}}.)
+(unless databases are not being used or the {{no-db}} keyword
+parameter for {{define-page}} is {{#t}}.)
 
 
 ===== {{page-javascript}}
