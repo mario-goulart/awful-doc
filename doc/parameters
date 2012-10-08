@@ -394,9 +394,9 @@ The default value is {{#f}}.
 ===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure (the javascript code) which returns the given
-javascript code compressed.  Only used when
-{{enable-javascript-compression}} is not {{#f}}.
+An one-argument procedure which receives javascript code and returns
+it compressed.  Only used when {{enable-javascript-compression}} is
+not {{#f}}.
 
 The default value is the {{identity}} procedure.
 
