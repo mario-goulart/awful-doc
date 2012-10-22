@@ -148,7 +148,7 @@ ajax support), you can use the {{use-ajax}} keyword parameter for
 ajax support.
 
 When you have ajax enabled and you want to disable it for specific
-pages, you can pass {{#f}} as the value for the {{define-page}}
+pages, you can pass {{#t}} as the value for the {{define-page}}
 keyword parameter {{no-ajax}}.
 
 The URL of the JQuery file can be customized by setting the
@@ -337,7 +337,12 @@ The basic things you have to do is:
 (enable-session #t)
 </enscript>
 
-2. Set the password validation parameter.  This parameter is a two argument procedure (user and password) which returns a value (usually {{#t}} or {{#f}}) indicating whether the password is valid for the given user.  The default is a password which returns {{#f}}.  Let's set it to a procedure which returns {{#t}} is the user and the password are the same:
+2. Set the password validation parameter.  This parameter is a two
+argument procedure (user and password) which returns a value (usually
+{{#t}} or {{#f}}) indicating whether the password is valid for the
+given user.  The default is a procedure which returns {{#f}}.  Let's
+set it to a procedure which returns {{#t}} if the user and the
+password are the same:
 
 <enscript highlight=scheme>
 (valid-password?
@@ -428,11 +433,11 @@ denied page.
 
 Awful provides a way to control access to the session inspector
 ({{session-inspector-access-control}} parameter).  The
-{{session-inspector-access-control}} parameter is an one-argument
-procedure which returns {{#f}} or some other value to indicate whether
-the access to the session inspector is allowed or not. By default, it
-blocks all access.  Let's configure it so we can access the session
-inspector from the local machine (whose IP number is 127.0.0.1):
+{{session-inspector-access-control}} parameter is a thunk which
+returns {{#f}} or some other value to indicate whether the access to
+the session inspector is allowed or not. By default, it blocks all
+access.  Let's configure it so we can access the session inspector
+from the local machine (whose IP number is 127.0.0.1):
 
 <enscript highlight=scheme>
 (session-inspector-access-control
@@ -448,7 +453,7 @@ the session contents.
 
 ''Note'': if {{enable-session-cookie}} is {{#f}}, you need to pass the
 session identifier in the query string (e.g.,
-{{http://localhost:8080/session-inspector?sid=the-session-cookie-here}}).
+{{http://localhost:8080/session-inspector?sid=the-session-id-here}}).
 
 Here's a screenshot:
 

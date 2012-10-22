@@ -12,6 +12,8 @@ handlers always produce SXML.
 The default value is {{#f}} (likely to be changed in future versions,
 since supporting SXML by default is a goal).
 
+This parameter has been introduced in awful 0.36.
+
 
 ===== {{sxml->html}}
 <parameter>(sxml->html [procedure])</parameter>
@@ -27,6 +29,7 @@ The procedure used to transform SXML into HTML. The default value is:
         (SRV:send-reply (pre-post-order* sxml rules))))))
 </enscript>
 
+This parameter has been introduced in awful 0.36.
 
 ==== Debugging (parameters)
 
@@ -101,7 +104,7 @@ is set to {{#t}}, all pages defined via {{define-page}} will be linked
 to the ajax library, unless when the {{no-ajax}} keyword parameter is
 explicitly set.
 
-The default value is {{#f}}
+The default value is {{#f}}.
 
 
 ===== {{ajax-namespace}}
@@ -150,7 +153,7 @@ value is {{"awful-cookie"}}.
 ===== {{session-cookie-setter}}
 <parameter>session-cookie-setter</parameter>
 
-A one-argument procedure (the sid) that is called when
+An one-argument procedure (the sid) that is called when
 creating/refreshing the session.
 
 The default value is the following procedure:
@@ -391,9 +394,9 @@ The default value is {{#f}}.
 ===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure (the javascript code) which return the given
-javascript code compressed.  Only used when
-{{enable-javascript-compression}} is not {{#f}}.
+An one-argument procedure which receives javascript code and returns
+it compressed.  Only used when {{enable-javascript-compression}} is
+not {{#f}}.
 
 The default value is the {{identity}} procedure.
 
@@ -430,8 +433,8 @@ The per-request value returned by
 
 A per-request database connection object.  The connection is
 automatically opened and closed by awful in a per-request basis
-(unless databases are not being used the {{no-db}} keyword parameter
-for {{define-page}} is {{#t}}.)
+(unless databases are not being used or the {{no-db}} keyword
+parameter for {{define-page}} is {{#t}}.)
 
 
 ===== {{page-javascript}}

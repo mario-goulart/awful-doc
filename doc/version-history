@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.37
+
+* Fix {{page-exception-message}} when in development mode and using SXML (thanks to sECuRE for catching that)
+
+
 ===== version 0.36
 
 * SXML support.  The use of SXML mode (i.e., {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
