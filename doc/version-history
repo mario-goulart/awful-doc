@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.38
+
+* Fix bug in {{define-page}} when page handlers return procedures
+
+
 ===== version 0.37
 
 * Fix {{page-exception-message}} when in development mode and using SXML (thanks to sECuRE for catching that)
