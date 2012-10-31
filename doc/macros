@@ -42,7 +42,7 @@ since it can do anything before {{body}} is evaluated, including
 setting parameters (e.g., using {{parameterize}}).
 
 Notice that {{matcher}}, {{parameters}} and {{handler-hook}} are not
-keyword parameters, they are part of {{define-app}'s syntax.
+keyword parameters, they are part of {{define-app}}'s syntax.
 
 {{body}} represents the expressions to be evaluated when matcher
 returns a truthy value.
