@@ -545,6 +545,8 @@ and pass the generated {{.so}} to the {{awful}} application:
   $ csc -s hello-world.scm
   $ awful hello-world.so
 
+Notice that Chicken doesn't support reloading {{.so}} files, so, to
+reload your application, you'll have to restart awful.
 
 
 === Multiple applications support
