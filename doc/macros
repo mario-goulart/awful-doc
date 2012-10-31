@@ -17,9 +17,17 @@ given body expressions.
 
 {{id}} (a symbol) is an identifier for the application.
 
-{{matcher}} is an one-argument procedure that is given the requested
-path. When it returns a non-{{#f}} value, the given parameters or
-handler-hook are bound/evaluated for the evaluation of body.
+{{matcher}} is a Scheme object that is matched against requested
+paths.  When there is a match, the given parameters or handler-hook
+are bound/evaluated during the evaluation of {{body}}.  The following
+types are supported:
+
+; lists of strings : lists of strings can be used to represent paths to be matched against requested paths.  For example, if the matcher is {{'("/" "/foo")}}, it'll match requests for {{"/foo"}} and {{"/foo/"}}.
+
+; one-argument procedures : if the matcher is an one-argument procedure, it will be given the requested path as argument.  If it returns a non-{{#f}} value, it indicates a match.
+
+; a regular expression object : if the matcher is a regular expression object (e.g., {{(regexp "/foo.*")}}), awful will try to match the requested path against the given regex.
+
 
 {{parameters}} and {{handler-hook}} are mutually exclusive and
 optional.
