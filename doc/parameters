@@ -7,7 +7,7 @@
 
 If {{#t}} specifies that awful should assume that page handlers always
 produce SXML.  If {{#f}} specifies that awful should assume that page
-handlers always produce SXML.
+handlers always produce strings.
 
 The default value is {{#f}} (likely to be changed in future versions,
 since supporting SXML by default is a goal).
