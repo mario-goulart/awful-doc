@@ -1,5 +1,11 @@
 === Version history
 
+===== version 0.38.1
+
+* Fix bug in handler for {{/reload}} when in development mode and in SXML mode
+* Versions now have a second dot for bugfix releases
+
+
 ===== version 0.38
 
 * Fix bug in {{define-page}} when page handlers return procedures
