@@ -410,6 +410,15 @@ pages.  Possible values are {{top}} (in the page headers) and
 {{bottom}} (right before {{</body>}}).  The default value is {{top}}.
 
 
+===== {{literal-script/style?}}
+<parameter>(literal-script/style? [boolean])</parameter>
+
+When {{#f}} (the default value), convert special HTML characters in
+JavaScript and in CSS code to their corresponding HTML entities.  When
+non-{{#f}}, leave the special HTML characters untouched.
+
+This parameter was introduced in version 0.39.
+
 
 === List of read-only parameters available to users
 
