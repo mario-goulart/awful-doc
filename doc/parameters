@@ -231,18 +231,16 @@ The default value is {{#f}} (no explicit charset).
 
 An one-mandatory-argument procedure to be used by {{define-page}}
 (unless {{define-page}}'s {{no-template}} keyword parameter is set to
-{{#f}}) to generate HTML pages. Although this procedure can take only
-one mandatory argument, the following keyword arguments are passed:
+{{#f}}) to generate HTML pages. Although the procedure yield by this
+parameter takes only one mandatory argument, the following keyword
+arguments are passed:
 
 * css
 * title
 * doctype
 * headers
 * charset
-* no-ajax
-* no-template
-* no-session
-* no-db
+* literal-style?
 
 The default value is {{html-page}} (see the
 [[/egg/html-utils|html-utils]] egg documentation.)
