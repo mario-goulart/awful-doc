@@ -52,6 +52,9 @@ each file in {{files}}.
 Add arbitrary javascript code to the pages defined by {{define-page}}
 and {{define-session-page}}.
 
+Note that the {{literal-script/style?}} parameter may affect special
+characters in JavaScript code.
+
 
 ==== Debugging
 
