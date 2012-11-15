@@ -56,6 +56,17 @@ Note that the {{literal-script/style?}} parameter may affect special
 characters in JavaScript code.
 
 
+==== CSS
+===== {{add-css}}
+<procedure>(add-css . code)</procedure>
+
+Add arbitrary CSS code to the pages defined by {{define-page}}
+and {{define-session-page}}.
+
+Note that the {{literal-script/style?}} parameter may affect special
+characters in CSS code.
+
+
 ==== Debugging
 
 ===== {{debug}}
