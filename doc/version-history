@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.38.2
+
+* Fix bug related to path matchers as procedures and sessions which caused errors, for example, on redirections from pages defined with path matchers as procedures to the login page
+
+
 ===== version 0.38.1
 
 * Fix bug in handler for {{/reload}} when in development mode and in SXML mode
