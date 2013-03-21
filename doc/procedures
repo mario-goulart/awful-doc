@@ -268,7 +268,8 @@ generate HTML out of SXML.
 (e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
 methods.  In this case, awful will define a page for each method of
 the list.  Methods are case-insensitive.  Pages that use different
-methods can use the same path.
+methods can use the same path.  The default value is {{(GET HEAD)}}
+(prior to version 0.39, the default value was just {{GET}}).
 
 The {{css}}, {{title}}, {{doctype}}, {{headers}} and {{charset}}
 keyword parameters have the same meaning as {{html-page}} (from the
