@@ -66,6 +66,8 @@ and {{define-session-page}}.
 Note that the {{literal-script/style?}} parameter may affect special
 characters in CSS code.
 
+This procedure was introduced in version 0.39.
+
 
 ==== Debugging
 
