@@ -1,5 +1,14 @@
 === Version history
 
+===== version 0.39
+
+* The default methods for {{define-page}} are now HEAD and GET (thanks to Thomas Hintz)
+* Bug fix for {{link}} in SXML mode
+* Add {{define-app}} macro
+* Add {{literal-script/style?}} parameter (suggested by John J. Foerch)
+* Add {{add-css}} procedure (suggested by John J. Foerch)
+
+
 ===== version 0.38.2
 
 * Fix bug related to path matchers as procedures and sessions which caused errors, for example, on redirections from pages defined with path matchers as procedures to the login page
