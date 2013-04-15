@@ -18,7 +18,6 @@ Here's a short summary of awful features:
 * Web REPL
 * SXML support
 
-
 ==== Screencasts
 
 Here are some screencasts about awful:
@@ -27,6 +26,13 @@ Here are some screencasts about awful:
 
 ; [[http://parenteses.org/mario/awful/awful-guess.ogv|Number guessing game]] : a video demonstrating the development of a very simple number guessing game using ajax and the web REPL
 
+=== Mailing list
+
+To subscribe to the awful mailing list, just send a message to
+[[awful@librelist.com|awful@librelist.com]].  Your first message will
+only serve for subscription purposes and will not hit the actual
+mailing list.  You then will receive a confirmation message you should
+reply to.
 
 
 === Author
