@@ -275,7 +275,7 @@ it to contain only the static index files you use).
 * awful usually performs better with a larger stack size (1MB is a
 reasonable value).  You can set the runtime stack size with the
 {{-:s}} command line option (see
-[[/manual/Using%20the%20compiler#runtime-options|the CHICKEN manual
+[[/manual/Using the compiler#runtime-options|the CHICKEN manual
 page]] for other options):
 
   $ awful -:s1m my-app.so

@@ -50,7 +50,7 @@ To run it, execute:
 
 It shows how to implement a very simple web-based Chicken REPL using a
 sandbox environment (see the
-[[http://wiki.call-cc.org/egg/sandbox|sandbox egg]] documentation) for
+[[/egg/sandbox|sandbox egg]] documentation) for
 safe evaluation.
 
 The idea is to have a web page with an input box. Users type the forms
@@ -156,7 +156,7 @@ We can also compile the web application:
 ==== Color chooser
 
 Here's an example provided by
-[[http://wiki.call-cc.org/users/christian-kellermann|Christian Kellermann]] demonstrating an ajax-based color chooser:
+[[/users/christian-kellermann|Christian Kellermann]] demonstrating an ajax-based color chooser:
 
 <enscript highlight=scheme>
 (use awful)
@@ -214,13 +214,13 @@ editing the input boxes then pressing enter.
 
 This example is a fortune server in awful.  It demonstrates some handy
 awful features like database access and ajax.  You'll need the
-[[http://wiki.call-cc.org/egg/awful-sql-de-lite|awful-sql-de-lite]]
+[[/egg/awful-sql-de-lite|awful-sql-de-lite]]
 egg and its dependencies (which should be automatically installed by
 {{chicken-install}}).
 
 Here are instructions to install and use it:
 
-1. Install [[http://wiki.call-cc.org/egg/awful-sql-de-lite|awful-sql-de-lite]]
+1. Install [[/egg/awful-sql-de-lite|awful-sql-de-lite]]
 
    $ chicken-install awful-sql-de-lite
 

@@ -727,7 +727,7 @@ application server when the {{--development-mode}} is provided
 <procedure>(load-apps apps)</procedure>
 
 Load the given applications ({{apps}} - a list) (using
-[[http://wiki.call-cc.org/man/4/Unit%20eval#load|load]]).
+[[/man/4/Unit eval#load|load]]).
 
 
 ===== {{reload-apps}}
