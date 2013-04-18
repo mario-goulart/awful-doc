@@ -231,18 +231,16 @@ The default value is {{#f}} (no explicit charset).
 
 An one-mandatory-argument procedure to be used by {{define-page}}
 (unless {{define-page}}'s {{no-template}} keyword parameter is set to
-{{#f}}) to generate HTML pages. Although this procedure can take only
-one mandatory argument, the following keyword arguments are passed:
+{{#f}}) to generate HTML pages. Although the procedure yield by this
+parameter takes only one mandatory argument, the following keyword
+arguments are passed:
 
 * css
 * title
 * doctype
 * headers
 * charset
-* no-ajax
-* no-template
-* no-session
-* no-db
+* literal-style?
 
 The default value is {{html-page}} (see the
 [[/egg/html-utils|html-utils]] egg documentation.)
@@ -411,6 +409,15 @@ A symbol indicating the position of javascript code in the generated
 pages.  Possible values are {{top}} (in the page headers) and
 {{bottom}} (right before {{</body>}}).  The default value is {{top}}.
 
+
+===== {{literal-script/style?}}
+<parameter>(literal-script/style? [boolean])</parameter>
+
+When {{#f}} (the default value), convert special HTML characters in
+JavaScript and in CSS code to their corresponding HTML entities.  When
+non-{{#f}}, leave the special HTML characters untouched.
+
+This parameter was introduced in version 0.39.
 
 
 === List of read-only parameters available to users

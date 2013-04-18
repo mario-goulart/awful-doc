@@ -52,6 +52,22 @@ each file in {{files}}.
 Add arbitrary javascript code to the pages defined by {{define-page}}
 and {{define-session-page}}.
 
+Note that the {{literal-script/style?}} parameter may affect special
+characters in JavaScript code.
+
+
+==== CSS
+===== {{add-css}}
+<procedure>(add-css . code)</procedure>
+
+Add arbitrary CSS code to the pages defined by {{define-page}}
+and {{define-session-page}}.
+
+Note that the {{literal-script/style?}} parameter may affect special
+characters in CSS code.
+
+This procedure was introduced in version 0.39.
+
 
 ==== Debugging
 
@@ -254,7 +270,8 @@ generate HTML out of SXML.
 (e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
 methods.  In this case, awful will define a page for each method of
 the list.  Methods are case-insensitive.  Pages that use different
-methods can use the same path.
+methods can use the same path.  The default value is {{(GET HEAD)}}
+(prior to version 0.39, the default value was just {{GET}}).
 
 The {{css}}, {{title}}, {{doctype}}, {{headers}} and {{charset}}
 keyword parameters have the same meaning as {{html-page}} (from the

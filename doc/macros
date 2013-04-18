@@ -1,0 +1,124 @@
+=== List of macros
+
+==== Applications definition
+
+===== define-app
+<syntax>(define-app id matcher: matcher [ parameters: parameters | handler-hook: handler-hook ] body ...)</syntax>
+
+This macro can be used to define an awful application. It's a wrapper
+around {{add-request-handler-hook!}} and should be used when you have
+multiple awful applications running under the same server, so
+parameters set for one application don't interfere with other
+applications' parameters.
+
+The idea is that the application's matcher controls when the given
+parameters or handler-hook will be applied to take effect over the
+given body expressions.
+
+{{id}} (a symbol) is an identifier for the application.
+
+{{matcher}} is a Scheme object that is matched against requested
+paths.  When there is a match, the given parameters or handler-hook
+are bound/evaluated during the evaluation of {{body}}.  The following
+types are supported:
+
+; lists of strings : lists of strings can be used to represent paths to be matched against requested paths.  For example, if the matcher is {{'("/" "/foo")}}, it'll match requests for {{"/foo"}} and {{"/foo/"}}.
+
+; one-argument procedures : if the matcher is an one-argument procedure, it will be given the requested path as argument.  If it returns a non-{{#f}} value, it indicates a match.
+
+; a regular expression object : if the matcher is a regular expression object (e.g., {{(regexp "/foo.*")}}), awful will try to match the requested path against the given regex.
+
+
+{{parameters}} and {{handler-hook}} are mutually exclusive and
+optional.
+
+{{parameters}} is a list of parameter bindings (same syntax as the
+list given as first argument to {{parameterize}}) that are bound when
+body is evaluated.
+
+{{handler-hook}} is an one-argument procedure which is given the
+request handler continuation. It is more flexible than {{parameters}},
+since it can do anything before {{body}} is evaluated, including
+setting parameters (e.g., using {{parameterize}}).
+
+Notice that {{matcher}}, {{parameters}} and {{handler-hook}} are not
+keyword parameters, they are part of {{define-app}}'s syntax.
+
+{{body}} represents the expressions to be evaluated when matcher
+returns a truthy value.
+
+Notice that {{define-app}}'s matcher does not affect the
+'''definition''' of pages -- they are defined just as if they were
+defined outside {{define-app}}'s body.
+
+Here are some examples, assuming we have three applications, foo, bar
+and baz, running on the same awful server. The way we "separate"
+applications is by checking the path prefix, so foo is available from
+{{/foo}}, bar from {{/bar}} and baz from {{/baz}}. Other criteria can
+be used, but for simplicity, we'll just use path prefixes.
+
+<enscript highlight=scheme>
+(use awful srfi-13 html-tags awful-sql-de-lite)
+
+;;;
+;;; App foo
+;;;
+(define-app foo
+  matcher: (lambda (path)
+             (string-prefix? "/foo" path))
+
+  parameters: ((enable-ajax #t)
+               (enable-sxml #t)
+               (ajax-library "/js/foo.js"))
+
+  (define-page "/foo/baz"
+    (lambda ()
+      '(p "baz from foo")))
+
+  (define-page "/foo/quux"
+    (lambda ()
+      '(p "quux from foo")))
+
+  )
+
+;;;
+;;; App bar
+;;;
+(define-app bar
+  matcher: (lambda (path)
+             (string-prefix? "/bar" path))
+
+  handler-hook: (lambda (handler)
+                  (switch-to-sql-de-lite-database)
+                  (parameterize ((enable-ajax #t)
+                                 (ajax-library "/js/bar.js")
+                                 (db-credentials "/var/bar/bar.db"))
+                    (handler)))
+
+  (define-page "/bar/baz"
+    (lambda ()
+      (<p> "baz from bar")))
+
+  (define-page "/bar/quux"
+    (lambda ()
+      (<p> "quux from bar")))
+
+  )
+
+;;;
+;;; App baz
+;;;
+(define-app baz
+  matcher: (lambda (path)
+             (string-prefix? "/baz" path))
+
+  (define-page "/baz/foo"
+    (lambda ()
+      "foo from baz"))
+
+  (define-page "/baz/bar"
+    (lambda ()
+      "bar from baz"))
+
+  )
+</enscript>

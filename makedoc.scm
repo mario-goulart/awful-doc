@@ -13,6 +13,7 @@ exec csi -s $0 "$@"
     ssl
     parameters
     procedures
+    macros
     tips-tricks
     examples
     the-name
