@@ -231,7 +231,7 @@ The default value is {{#f}} (no explicit charset).
 
 An one-mandatory-argument procedure to be used by {{define-page}}
 (unless {{define-page}}'s {{no-template}} keyword parameter is set to
-{{#f}}) to generate HTML pages. Although the procedure yield by this
+{{#f}}) to generate HTML pages. Although the procedure yielded by this
 parameter takes only one mandatory argument, the following keyword
 arguments are passed:
 
