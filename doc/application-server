@@ -1,29 +1,54 @@
 === The awful application server
 
-Awful consists of an application server and an extension module.  The awful application server is a command line program whose usage is:
+Awful consists of an application server and an extension module.  The
+awful application server is a command line program whose usage is:
 
  $ awful --help
  awful [ -h | --help ]
  awful [ -v | --version ]
  awful [ --development-mode ] [ --disable-web-repl-fancy-editor ] [ --ip-address=<ip address> ] [ --port=<port number> ] [ <app1> <app2> ... ]
 
-{{<app1> <app2> ...}} are files containing code to be loaded by the awful application server.
+{{<app1> <app2> ...}} are files containing code to be loaded by the
+awful application server.
 
-{{--ip-address}} can be used to bind the web server to the given IP address.
+{{--ip-address}} can be used to bind the web server to the given IP
+address.
 
-{{--port}} can be used to make the web server listen to the given port.
+{{--port}} can be used to make the web server listen to the given
+port.
 
-{{--ip-address}} and {{--port}} take precedence over the Spiffy parameters to specify the server IP address ({{server-bind-address}}) and port ({{server-port}}).
+{{--ip-address}} and {{--port}} take precedence over the Spiffy
+parameters to specify the server IP address ({{server-bind-address}})
+and port ({{server-port}}).
 
-The {{--development-mode}} option is intended to be used during the development of your web application.  It's not recommended to run awful with {{--development-mode}} in production.  The development mode enables the web REPL and the session inspector (when {{enable-session}} is {{#t}}) for the localhost, prints error messages and backtraces to the client (e.g., web browser) and HTTP server debugging messages to the {{current-error-port}}.  It also makes the {{/reload}} path available for reloading awful applications.
+The {{--development-mode}} option is intended to be used during the
+development of your web application.  It's not recommended to run
+awful with {{--development-mode}} in production.  The development mode
+enables the web REPL and the session inspector (when
+{{enable-session}} is {{#t}}) for the localhost, prints error messages
+and backtraces to the client (e.g., web browser) and HTTP server
+debugging messages to the {{current-error-port}}.  It also makes the
+{{/reload}} path available for reloading awful applications.
 
-When in development mode, the web REPL and the session inspector are available from the {{/web-repl}} and {{/session-inspector}} paths.
+When in development mode, the web REPL and the session inspector are
+available from the {{/web-repl}} and {{/session-inspector}} paths.
 
-If you enable the development mode you can still use {{enable-web-repl}} and {{enable-session-inspector}} to customize their respective paths and access control procedures (although the development mode always allows access to web REPL and session inspector for the localhost).
+If you enable the development mode you can still use
+{{enable-web-repl}} and {{enable-session-inspector}} to customize
+their respective paths and access control procedures (although the
+development mode always allows access to web REPL and session
+inspector for the localhost).
 
-The {{--disable-web-repl-fancy-editor}} command line option disables the web REPL fancy editor.
+The {{--disable-web-repl-fancy-editor}} command line option disables
+the web REPL fancy editor.
 
-The {{--privileged-code}} command line options specify code to be run in privileged mode, for the cases when you specify a user/group to run the server ({{spiffy-user}}/{{spiffy-group}}).  In this case, you usually run awful as a user with administrator privileges (e.g., {{root}} in Unix[-like] systems) and spiffy switches to the specified user/group.  To make things clearer, let's take a look at awful's workflow:
+The {{--privileged-code}} command line options specify code to be run
+in privileged mode, for the cases when you specify a user/group to run
+the server ({{spiffy-user}}/{{spiffy-group}}).  In this case, you
+usually run awful as a user with administrator privileges (e.g.,
+{{root}} in Unix[-like] systems) and spiffy switches to the specified
+user/group.  To make things clearer, let's take a look at awful's
+workflow:
 
          |
          v
@@ -54,4 +79,5 @@ be used strictly to specify code which must be run with administrator
 privileges (like specifying server user/group and
 [[/egg/awful-ssl|enabling SSL]], for example).
 
-The privileged code is '''not''' reloaded when you reload applications via a defined reload page.
+The privileged code is '''not''' reloaded when you reload applications
+via a defined reload page.
