@@ -43,6 +43,15 @@ The {{--privileged-code}} command line options specify code to be run in privile
          |
          v
 
-As you can see, the privileged code is loaded and evaluated '''before''' switching user/group.  So, if you run awful with administrator privileges, the privileged code will the loaded with administrator privileges.  Running code with administrator privileges is usually not recommended, but it is necessary if you want, for example, to specify the user and group to switch to before acceting connections. So, the {{--privileged-code}} command line option should be used strictly to specify code which must be run with administrator privileges (like specifying server user/group and [[/egg/awful-ssl|enabling SSL]], for example).
+As you can see, the privileged code is loaded and evaluated
+'''before''' switching user/group.  So, if you run awful with
+administrator privileges, the privileged code will the loaded with
+administrator privileges.  Running code with administrator privileges
+is usually not recommended, but it is necessary if you want, for
+example, to specify the user and group to switch to before accepting
+connections. So, the {{--privileged-code}} command line option should
+be used strictly to specify code which must be run with administrator
+privileges (like specifying server user/group and
+[[/egg/awful-ssl|enabling SSL]], for example).
 
 The privileged code is '''not''' reloaded when you reload applications via a defined reload page.
