@@ -34,10 +34,10 @@ You may also want to create a directory for your awful applications:
 Create configuration files for awful.  In the privileged configuration
 file ({{privileged.conf}} below) you can set all the configuration
 parameters for awful and spiffy which require administrator
-provileges.
+privileges.
 
 In another file ({{awful.conf}} below) you can put whatever code which
-does not need administrator provileges.
+does not need administrator privileges.
 
 Here's some example configuration for awful listening on port 80
 (strictly speaking, [[/egg/spiffy|spiffy]] -- the actual web server --
