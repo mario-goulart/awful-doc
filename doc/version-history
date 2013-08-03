@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.39.1
+* Update jQuery to version 1.10.2
+* Bug fix: {{page-path}} should return {{(app-root-path)}} when given {{"/"}}
+* Bug fix: check to make sure redirect-to-login-page always generates html (patch by Hugo Arregui)
+
 ===== version 0.39
 
 * The default methods for {{define-page}} are now HEAD and GET (thanks to Thomas Hintz)
