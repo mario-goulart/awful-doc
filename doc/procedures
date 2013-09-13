@@ -444,7 +444,7 @@ Example:
 ==== Ajax
 
 ===== {{ajax}}
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets cache error-handler use-sxml)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler use-sxml)</procedure>
 
 Generate javascript code to be added to the page defined by
 {{define-page}}.  Return the generated javascript code (which usually
@@ -504,8 +504,22 @@ The {{vhost-root-path}} keyword parameter (a string) is the vhost root
 path.  It is useful for explicitly separate pages defined using the
 same path (see {{define-page}}) but for different vhosts.
 
+The {{on}} keyword parameter (boolean) indicates wheter ajax should
+use JQuery's {{on}} method (see [[http://api.jquery.com/on/]]).  If
+{{on}} gets bound to {{#t}}, awful will generate code to start
+delegating events from the {{document}} DOM element.  If {{on}} gets
+bound to a symbol, awful will generate code to start delegating events
+from DOM element whose id is the given symbol.  If {{on}} gets bound
+to a string, awful will generate code to start delegating events from
+DOM element which matches the given string representing a
+selector. The {{on}} keyword parameter was introduced in awful 0.39.2.
+
 The {{live}} keyword parameter (boolean) indicates wheter ajax should
-use JQuery's live method (see [[http://api.jquery.com/live/]]).
+use JQuery's {{live}} method (see
+[[http://api.jquery.com/live/]]). Note that the {{live}} method was
+deprecated in jQuery 1.7 and removed in version 1.9.  If you are using
+a more recent version of jQuery, see the {{on}} keyword parameter for
+{{ajax}} (introduced in awful 0.39.2).
 
 The {{prelude}} keyword parameter (string) is an arbitrary piece of
 javascript code to be placed right before the ajax request.
@@ -577,7 +591,7 @@ The {{ajax}} procedure is session, HTTP request and database -aware.
 
 
 ===== {{periodical-ajax}}
-<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live prelude update-targets error-handler use-sxml)</procedure>
+<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets error-handler use-sxml)</procedure>
 
 Periodically execute {{proc}} on the server side, using
 {{(app-root-path)/(ajax-namespace)/path}} as the URL path for the
@@ -590,7 +604,7 @@ The meaning of the keyword parameters is the same as for {{ajax}}'s.
 
 
 ===== {{ajax-link}}
-<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler use-sxml)</procedure>
+<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live on class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler use-sxml)</procedure>
 
 A shortcut to
 
@@ -602,7 +616,7 @@ A shortcut to
 
 The meaning of the {{target}}, {{action}}, {{method}}, {{arguments}},
 {{success}}, {{no-session}}, {{no-db}}, {{event}},
-{{vhost-root-path}}, {{update-targets}} and {{live}} keyword
+{{vhost-root-path}}, {{update-targets}} {{live}} and {{on}} keyword
 parameters is the same as for {{ajax}}'s.
 
 The meaning of the {{class}}, {{hreflang}}, {{type}}, {{rel}},
