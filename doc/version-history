@@ -1,5 +1,10 @@
 === Version history
 
+===== version 0.39.2
+* jQuery's {{on}} method support for {{ajax}} & friends
+* {{use-sxml}} keyword parameter for {{define-page}} and {{ajax}} & friends take precedence over {{enable-sxml}}. {{use-sxml}} can now be used to disable SXML mode for certain pages and {{ajax}} handlers when bound to {{#f}} (thanks to Thomas Hintz for reporting that issue)
+* Fix redirection to login page when in SXML mode (regression introduced by 03e4e6b9ca2378928fa35c5b8b68738561010aa2 in 0.39.1). Thanks to Thomas Hintz for reporting that and suggesting removing html-tags code
+
 ===== version 0.39.1
 * Update jQuery to version 1.10.2
 * Bug fix: {{page-path}} should return {{(app-root-path)}} when given {{"/"}}
