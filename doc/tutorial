@@ -12,7 +12,8 @@ Here's a "Hello, world!" example to be run by awful ({{hello-world.scm}}).
     "Hello, world!"))
 </enscript>
 
-To run this example, execute:
+To run this example, execute (assuming {{awful}} is installed and its
+location is in your system's {{PATH}}):
 
   $ awful hello-world.scm
 
