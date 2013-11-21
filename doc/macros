@@ -24,7 +24,7 @@ types are supported:
 
 ; lists of strings : lists of strings can be used to represent paths to be matched against requested paths.  For example, if the matcher is {{'("/" "/foo")}}, it'll match requests for {{"/foo"}} and {{"/foo/"}}.
 
-; one-argument procedures : if the matcher is an one-argument procedure, it will be given the requested path as argument.  If it returns a non-{{#f}} value, it indicates a match.
+; one-argument procedures : if the matcher is a one-argument procedure, it will be given the requested path as argument.  If it returns a non-{{#f}} value, it indicates a match.
 
 ; a regular expression object : if the matcher is a regular expression object (e.g., {{(regexp "/foo.*")}}), awful will try to match the requested path against the given regex.
 
@@ -36,7 +36,7 @@ optional.
 list given as first argument to {{parameterize}}) that are bound when
 body is evaluated.
 
-{{handler-hook}} is an one-argument procedure which is given the
+{{handler-hook}} is a one-argument procedure which is given the
 request handler continuation. It is more flexible than {{parameters}},
 since it can do anything before {{body}} is evaluated, including
 setting parameters (e.g., using {{parameterize}}).

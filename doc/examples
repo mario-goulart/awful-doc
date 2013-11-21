@@ -83,7 +83,7 @@ Here's the commented code:
     ;; Here we set an ajax handler for the REPL expressions
     ;; submission.  When users change the REPL input widget (i.e., by
     ;; pressing ENTER), the contents of the text input field are
-    ;; submitted and handled by the procedure given as the forth
+    ;; submitted and handled by the procedure given as the fourth
     ;; argument to `ajax'.
     (ajax "eval" 'repl-input 'change
           (lambda ()
