@@ -89,7 +89,7 @@ The default value is {{#f}}.
 <parameter>(ajax-library [string])</parameter>
 
 URL or path to the ajax library (currently only
-[[http://jquery.com|JQuery]] is supported.)
+[[http://jquery.com|jQuery]] is supported.)
 
 The default value is
 {{"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"}}
@@ -146,7 +146,7 @@ string or in the request body. The default value is {{#t}}.
 ===== {{session-cookie-name}}
 <parameter>(session-cookie-name [string])</parameter>
 
-The name of the cookie for storing the session identifier.  The dafult
+The name of the cookie for storing the session identifier.  The default
 value is {{"awful-cookie"}}.
 
 
@@ -252,7 +252,7 @@ The default value is {{html-page}} (see the
 An one-argument procedure to be used when an exception occurs while
 {{define-page}} tries to evaluate its contents.
 
-The default value is {{(lambda (exn) (<h3> "An error has accurred while processing your request."))}}
+The default value is {{(lambda (exn) (<h3> "An error has occurred while processing your request."))}}
 
 
 
@@ -354,7 +354,7 @@ input area is a simple HTML textarea.  The default value for
 ===== {{web-repl-fancy-editor-base-uri}}
 <parameter>(web-repl-fancy-editor-base-uri [string])</parameter>
 
-The URI which indicates the fancy editor source files (javascript and
+The URI which indicates the fancy editor source files (JavaScript and
 CSS) location.  The default value is
 {{http://parenteses.org/awful/codemirror}}.
 
@@ -378,12 +378,12 @@ Message to be printed when the access to the session inspector is denied.
 The default value is {{(<h3> "Access denied.")}}.
 
 
-==== Javascript (parameters)
+==== JavaScript (parameters)
 
 ===== {{enable-javascript-compression}}
 <parameter>(enable-javascript-compression [boolean])</parameter>
 
-Enable javascript compression support.  When enabled the compressor
+Enable JavaScript compression support.  When enabled the compressor
 set by {{javascript-compressor}} is used.
 
 The default value is {{#f}}.
@@ -392,7 +392,7 @@ The default value is {{#f}}.
 ===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure which receives javascript code and returns
+An one-argument procedure which receives JavaScript code and returns
 it compressed.  Only used when {{enable-javascript-compression}} is
 not {{#f}}.
 
@@ -405,7 +405,7 @@ A possible value for {{javascript-compressor}} is {{jsmin-string}}
 ===== {{javascript-position}}
 <parameter>(javascript-position [symbol])</parameter>
 
-A symbol indicating the position of javascript code in the generated
+A symbol indicating the position of JavaScript code in the generated
 pages.  Possible values are {{top}} (in the page headers) and
 {{bottom}} (right before {{</body>}}).  The default value is {{top}}.
 
@@ -447,7 +447,7 @@ parameter for {{define-page}} is {{#t}}.)
 ===== {{page-javascript}}
 <parameter>(page-javascript)</parameter>
 
-Javascript code to be added to the pages defined by {{define-page}}.
+JavaScript code to be added to the pages defined by {{define-page}}.
 
 
 ===== {{sid}}

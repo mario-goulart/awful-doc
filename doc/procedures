@@ -1,7 +1,7 @@
 === List of procedures and macros
 
 
-==== Miscelaneous
+==== Miscellaneous
 
 ===== {{++}}
 <procedure>(++ string1 string2 ... stringn)</procedure>
@@ -37,7 +37,7 @@ represented by a hash table whose format is described below:
 ; values: procedures representing the page handlers (the second argument given to {{define-page}}).
 
 
-==== Javascript
+==== JavaScript
 
 ===== {{include-javascript}}
 <procedure>(include-javascript . files)</procedure>
@@ -49,7 +49,7 @@ each file in {{files}}.
 ===== {{add-javascript}}
 <procedure>(add-javascript . code)</procedure>
 
-Add arbitrary javascript code to the pages defined by {{define-page}}
+Add arbitrary JavaScript code to the pages defined by {{define-page}}
 and {{define-session-page}}.
 
 Note that the {{literal-script/style?}} parameter may affect special
@@ -157,7 +157,7 @@ from the login page to the main page.
 
 Return a user/password login form (e.g., for using in authentication pages).
 
-When the {{refill-user}} is {{#t}}, the User field is reffiled with
+When the {{refill-user}} is {{#t}}, the User field is refilled with
 the value from the {{user}} query string value when either the session
 or the password is invalid.
 
@@ -199,7 +199,7 @@ Execute the given query ({{q}}) on the database and return the result
 as a list of lists or {{default}} if the result set is empty.
 
 The {{values}} keyword parameter (a list) is a list of values to
-replace the placehoders in the query.
+replace the placeholders in the query.
 
 Example:
 
@@ -224,7 +224,7 @@ Example:
 </enscript>
 
 ''Warning'': currently {{$db-row-obj}} is only implemented for
-Postgresql databases.
+PostgreSQL databases.
 
 
 ===== {{sql-quote}}
@@ -232,12 +232,12 @@ Postgresql databases.
 
 Escape and quote the concatenation of {{data}} to be used in SQL queries.
 
-''Warning'': for Sqlite databases, {{sql-quote}} just replaces {{'}}
-by {{''}} and quotes the {{data}}.  For Postgresql, {{sql-quote}}
+''Warning'': for SQLite databases, {{sql-quote}} just replaces {{'}}
+by {{''}} and quotes the {{data}}.  For PostgreSQL, {{sql-quote}}
 quotes the result of {{escape-string}}.
 
 Consider using the API for placeholders of your favorite database egg
-instead od {{sql-quote}} whenever possible.
+instead of {{sql-quote}} whenever possible.
 
 
 ==== Pages
@@ -292,7 +292,7 @@ If {{no-db}} is {{#t}}, it means that the page should not use the
 database, even when database usage is activated by {{enable-db}} and
 {{db-credentials}} is not {{#f}}.
 
-If {{no-javascript-compression}} is {{#t}} the javascript code for the
+If {{no-javascript-compression}} is {{#t}} the JavaScript code for the
 page is not compressed, even when {{enable-javascript-compression}} is
 not {{#f}}.
 
@@ -377,7 +377,7 @@ Examples:
 <procedure>(define-session-page path-matcher handlerr . rest)</procedure>
 
 Define a session-aware page.  When the page is accessed and a
-correponding session does not exist, it is created.  If the session
+corresponding session does not exist, it is created.  If the session
 already exists and is not valid, it is recreated.  If the session
 already exists and is valid, then it is refreshed.
 
@@ -414,7 +414,7 @@ Undefine a page whose path is {{path}} (a string or a regular
 expression object).
 
 The optional parameter {{vhost-root-path}} is the path of virtual host
-where the page is to be undefined.  If omited, {{(root-path)}} is
+where the page is to be undefined.  If omitted, {{(root-path)}} is
 used.
 
 
@@ -446,8 +446,8 @@ Example:
 ===== {{ajax}}
 <procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler use-sxml)</procedure>
 
-Generate javascript code to be added to the page defined by
-{{define-page}}.  Return the generated javascript code (which usually
+Generate JavaScript code to be added to the page defined by
+{{define-page}}.  Return the generated JavaScript code (which usually
 is not useful, so should be discarded).
 
 {{path}} is the URL path (a string) of the server side handler. This
@@ -458,9 +458,9 @@ is {{"ajax"}} and you use {{"do-something"}} as the first argument to
 {{"/my-app/ajax/do-something"}}.
 
 {{selector}} is the selector for the DOM element to be observed.  If
-it is a quoted symbol, awful generates a JQuery selector by DOM id
+it is a quoted symbol, awful generates a jQuery selector by DOM id
 (e.g., {{'my-selector}} generates {{"#my-selector"}}).  If it is a
-string, awful uses it as-is to generate the JQuery selector (e.g.,
+string, awful uses it as-is to generate the jQuery selector (e.g.,
 {{"input[name^=omg]"}} generates {{"input[name^=omg]"}}).
 
 {{event}} (a quoted symbol or a list) is the event(s) to be
@@ -504,8 +504,8 @@ The {{vhost-root-path}} keyword parameter (a string) is the vhost root
 path.  It is useful for explicitly separate pages defined using the
 same path (see {{define-page}}) but for different vhosts.
 
-The {{on}} keyword parameter (boolean) indicates wheter ajax should
-use JQuery's {{on}} method (see [[http://api.jquery.com/on/]]).  If
+The {{on}} keyword parameter (boolean) indicates whether ajax should
+use jQuery's {{on}} method (see [[http://api.jquery.com/on/]]).  If
 {{on}} gets bound to {{#t}}, awful will generate code to start
 delegating events from the {{document}} DOM element.  If {{on}} gets
 bound to a symbol, awful will generate code to start delegating events
@@ -514,15 +514,15 @@ to a string, awful will generate code to start delegating events from
 DOM element which matches the given string representing a
 selector. The {{on}} keyword parameter was introduced in awful 0.39.2.
 
-The {{live}} keyword parameter (boolean) indicates wheter ajax should
-use JQuery's {{live}} method (see
+The {{live}} keyword parameter (boolean) indicates whether ajax should
+use jQuery's {{live}} method (see
 [[http://api.jquery.com/live/]]). Note that the {{live}} method was
 deprecated in jQuery 1.7 and removed in version 1.9.  If you are using
 a more recent version of jQuery, see the {{on}} keyword parameter for
 {{ajax}} (introduced in awful 0.39.2).
 
 The {{prelude}} keyword parameter (string) is an arbitrary piece of
-javascript code to be placed right before the ajax request.
+JavaScript code to be placed right before the ajax request.
 
 The {{update-targets}} keyword parameter a boolean indicating whether
 multiple targets should be updated upon ajax response.  When
@@ -553,8 +553,8 @@ Here's an example:
 </enscript>
 
 The {{success}} keyword parameter (string) can be any arbitrary
-javascript code to be executed on the successful ajax request.  The
-javascript code can assume that a variable {{response}} is bound and
+JavaScript code to be executed on the successful ajax request.  The
+JavaScript code can assume that a variable {{response}} is bound and
 contains the request resulting data.  Here's an example:
 
 <enscript highlight=scheme>
@@ -577,8 +577,8 @@ contains the request resulting data.  Here's an example:
 
 The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will
 force requested pages not to be cached by the browser.  The default
-value is not set, leaving it to be set by JQuery. See
-[[http://api.jquery.com/jQuery.ajax/|JQuery's documentation]] for
+value is not set, leaving it to be set by jQuery. See
+[[http://api.jquery.com/jQuery.ajax/|jQuery's documentation]] for
 further details.
 
 The {{error-handler}} keyword parameter expects a JavaScript callback
@@ -636,7 +636,7 @@ The {{event}} keyword parameter syntax is the same for {{ajax}}'s
 <procedure>(redirect-to uri)</procedure>
 
 Perform an HTTP redirection (code 302) to the given {{uri}} (either a
-string or a [[/eggref/4/uri-common|uri-common]] uri object).  To be
+string or a [[/eggref/4/uri-common|uri-common]] URI object).  To be
 used from {{define-page}} handler.  Example:
 
 <enscript highlight=scheme>
