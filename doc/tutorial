@@ -17,7 +17,7 @@ location is in your system's {{PATH}}):
 
   $ awful hello-world.scm
 
-Then access localhost:8080 using your favourite web browser.
+Then access http://localhost:8080 using your favorite web browser.
 
 Without any configuration, awful listens on port 8080.  Since awful
 uses Spiffy behind the scenes, you can configure the web server
@@ -114,7 +114,7 @@ reloads the code:
 and restart the awful server.  Now, whenever you want to reload the
 application code, access {{http://localhost:8080/reload}}.
 
-You can control which IP numbers can access the reload page by using
+You can control which IP addresses can access the reload page by using
 the {{page-access-control}} parameter.  For example, allowing only the
 localhost to reload the apps:
 
@@ -438,7 +438,7 @@ Awful provides a way to control access to the session inspector
 returns {{#f}} or some other value to indicate whether the access to
 the session inspector is allowed or not. By default, it blocks all
 access.  Let's configure it so we can access the session inspector
-from the local machine (whose IP number is 127.0.0.1):
+from the local machine (whose IP address is 127.0.0.1):
 
 <enscript highlight=scheme>
 (session-inspector-access-control
@@ -497,7 +497,7 @@ disable the web REPL fancy editor.
 === Pages access control
 
 To allow/deny access to pages, you can use the {{page-access-control}}
-parameter.  It's an one-argument procedure (the page path) which can
+parameter.  It's a one-argument procedure (the page path) which can
 be set to determine if the access to the page is allowed or not.
 
 The example bellow shows a very silly access control to the main page:
@@ -533,7 +533,7 @@ it only allows the access when the value of the request variable
 </enscript>
 
 You can customize the access denied message by setting the
-{{page-access-denied-message}} with an one-argument procedure (the
+{{page-access-denied-message}} with a one-argument procedure (the
 page path).
 
 

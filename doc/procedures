@@ -249,8 +249,8 @@ Define an awful page.
 
 {{path-matcher}} matches requested paths.  It can be represented by three types:
 ; string: a literal path. When the path matcher is a string, the handler procedure must be a thunk.
-; regex: a regular expression to match the requested path (regexes created by both regex egg and irregex unit are valid values).  When the path matcher is a regular expression, the page handler procedure must be an one-argument procedure which will be given the requested path.
-; procedure: an one-argument procedure to match the requested path (feature introduced in awful 0.35). If the procedure matches the requested path, it should return a list to be applied to the page handler.  When the path matcher is a procedure, the arity of the page handler procedure must match the length of the list returned by the path matcher. {{#f}} indicates that there was no match.  Values which are not {{#f}} or a list will cause an invalid argument type error.
+; regex: a regular expression to match the requested path (regexes created by both regex egg and irregex unit are valid values).  When the path matcher is a regular expression, the page handler procedure must be a one-argument procedure which will be given the requested path.
+; procedure: a one-argument procedure to match the requested path (feature introduced in awful 0.35). If the procedure matches the requested path, it should return a list to be applied to the page handler.  When the path matcher is a procedure, the arity of the page handler procedure must match the length of the list returned by the path matcher. {{#f}} indicates that there was no match.  Values which are not {{#f}} or a list will cause an invalid argument type error.
 
 
 {{handler}} should return either a string or a no-argument procedure.
