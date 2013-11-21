@@ -81,7 +81,7 @@ Here's the commented code:
                       extendable: #t)))
 
     ;; Here we set an ajax handler for the REPL expressions
-    ;; submission.  When users change the REPL input widget (i.e., by
+    ;; submission.  When users change the REPL input widget (i.e. by
     ;; pressing ENTER), the contents of the text input field are
     ;; submitted and handled by the procedure given as the forth
     ;; argument to `ajax'.

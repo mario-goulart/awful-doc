@@ -26,7 +26,7 @@ development of your web application.  It's not recommended to run
 awful with {{--development-mode}} in production.  The development mode
 enables the web REPL and the session inspector (when
 {{enable-session}} is {{#t}}) for the localhost, prints error messages
-and backtraces to the client (e.g., web browser) and HTTP server
+and backtraces to the client (e.g. web browser) and HTTP server
 debugging messages to the {{current-error-port}}.  It also makes the
 {{/reload}} path available for reloading awful applications.
 
@@ -45,7 +45,7 @@ the web REPL fancy editor.
 The {{--privileged-code}} command line options specify code to be run
 in privileged mode, for the cases when you specify a user/group to run
 the server ({{spiffy-user}}/{{spiffy-group}}).  In this case, you
-usually run awful as a user with administrator privileges (e.g.,
+usually run awful as a user with administrator privileges (e.g.
 {{root}} in Unix[-like] systems) and spiffy switches to the specified
 user/group.  To make things clearer, let's take a look at awful's
 workflow:

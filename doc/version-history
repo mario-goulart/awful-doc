@@ -8,7 +8,7 @@
 ===== version 0.39.1
 * Update jQuery to version 1.10.2
 * Bug fix: {{page-path}} should return {{(app-root-path)}} when given {{"/"}}
-* Bug fix: check to make sure redirect-to-login-page always generates html (patch by Hugo Arregui)
+* Bug fix: check to make sure redirect-to-login-page always generates HTML (patch by Hugo Arregui)
 
 ===== version 0.39
 
@@ -42,7 +42,7 @@
 
 ===== version 0.36
 
-* SXML support.  The use of SXML mode (i.e., {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
+* SXML support.  The use of SXML mode (i.e. {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
 * {{++}} and {{concat}} have been deprecated (they are still available, but will be removed in future versions).
 * jQuery updated to version 1.8.2
 
@@ -90,7 +90,7 @@
 * Fixed {{redirect-to}} but introduced in version 0.29
 
 ===== version 0.30
-* The {{(ajax-library)}} is always linked before any other scripts and JavaScript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
+* The {{(ajax-library)}} is always linked before any other scripts and JavaScript code in the headers (e.g. when {{(javascript-position)}} is {{top}}).
 * Ajax-related procedures simplifications and bugfix in the session awareness code when called from {{define-session-page}}.
 
 ===== version 0.29
@@ -101,10 +101,10 @@
 
 ===== version 0.28
 * Updated jQuery from version 1.4.3 to 1.5.0.
-* {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (e.g., you don't need to explicitly pass the session identifier).
+* {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (i.e. you don't need to explicitly pass the session identifier).
 * Added the {{cache}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}.
 * The HTTP request variables are now parsed and made available on demand, when {{$}} is called for the first time for each request (thanks to David Krentzlin).
-* Applications are no longer loaded with administrator privileges when awful is run by administrator and configured to switch to a non privileged user. For code which needs administrator privileges (like binding to low ports, IP addresses, user/group settings etc), there's a new command line option for the awful application server: {{--privileged-code}}.  '''Warning''': if you rely on your configuration performing actions with administrator privileges, this change may affect your code.
+* Applications are no longer loaded with administrator privileges when awful is run by administrator and configured to switch to a non privileged user. For code which needs administrator privileges (like binding to low ports, IP addresses, user/group settings, etc.), there's a new command line option for the awful application server: {{--privileged-code}}.  '''Warning''': if you rely on your configuration performing actions with administrator privileges, this change may affect your code.
 * {{define-session-page}} bug fix (it was not properly obtaining the session identifier).
 
 
@@ -218,7 +218,7 @@
 * {{disable-reload?}} renamed to {{enable-reload}}.  {{enable-reload}} is {{#f}} by default.
 
 ===== version 0.3
-* {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}} etc)
+* {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}}, etc.)
 
 ===== version 0.2
 * Added JavaScript compression support
