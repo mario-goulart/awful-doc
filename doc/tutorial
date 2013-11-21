@@ -17,7 +17,7 @@ location is in your system's {{PATH}}):
 
   $ awful hello-world.scm
 
-Then access localhost:8080 using your favourite web browser.
+Then access http://localhost:8080 using your favourite web browser.
 
 Without any configuration, awful listens on port 8080.  Since awful
 uses Spiffy behind the scenes, you can configure the web server
@@ -70,7 +70,7 @@ permissions):
 
 Awful provides a procedure ({{$}}) to access variables from the
 request, both from the query string (GET method) and from the request
-body (e.g., POST method).
+body (e.g. POST method).
 
 Here's a modified "Hello, world!" example to greet some person instead
 of the whole world:
@@ -114,7 +114,7 @@ reloads the code:
 and restart the awful server.  Now, whenever you want to reload the
 application code, access {{http://localhost:8080/reload}}.
 
-You can control which IP numbers can access the reload page by using
+You can control which IP addresses can access the reload page by using
 the {{page-access-control}} parameter.  For example, allowing only the
 localhost to reload the apps:
 
@@ -143,7 +143,7 @@ By default, the ajax support is disabled, but it can be easily
 globally enabled by setting the {{enable-ajax}} parameter to {{#t}}.
 When you enable ajax via {{enable-ajax}}, all the pages defined via
 {{define-page}} will be linked to the jQuery JavaScript library. If
-you want just a couple of pages to have ajax support (i.e., not global
+you want just a couple of pages to have ajax support (i.e. not global
 ajax support), you can use the {{use-ajax}} keyword parameter for
 {{define-page}}, so only the pages defined with {{use-ajax: #t}} have
 ajax support.
@@ -388,7 +388,7 @@ its value in the query string .  If the password is not valid, awful
 will redirect to the login page ({{login-page-path}} parameter) and
 pass the following variables and values:
 
-; {{reason}} : the reason why awful redirected to the login page. It may be {{invalid-password}}, for when the password is invalid for the given user; or {{invalid-session}} for when the session identifier is not valid (e.g., the session expired).
+; {{reason}} : the reason why awful redirected to the login page. It may be {{invalid-password}}, for when the password is invalid for the given user; or {{invalid-session}} for when the session identifier is not valid (e.g. the session expired).
 
 ; {{attempted-page}} : the URL path to page the user tried to access, but couldn't because either he/she was not logged in or he/she provided an invalid session identifier.
 
@@ -438,7 +438,7 @@ Awful provides a way to control access to the session inspector
 returns {{#f}} or some other value to indicate whether the access to
 the session inspector is allowed or not. By default, it blocks all
 access.  Let's configure it so we can access the session inspector
-from the local machine (whose IP number is 127.0.0.1):
+from the local machine (whose IP address is 127.0.0.1):
 
 <enscript highlight=scheme>
 (session-inspector-access-control
@@ -453,7 +453,7 @@ Now we can access {{http://localhost:8080/session-inspector}} and see
 the session contents.
 
 ''Note'': if {{enable-session-cookie}} is {{#f}}, you need to pass the
-session identifier in the query string (e.g.,
+session identifier in the query string (e.g.
 {{http://localhost:8080/session-inspector?sid=the-session-id-here}}).
 
 Here's a screenshot:
@@ -497,7 +497,7 @@ disable the web REPL fancy editor.
 === Pages access control
 
 To allow/deny access to pages, you can use the {{page-access-control}}
-parameter.  It's an one-argument procedure (the page path) which can
+parameter.  It's a one-argument procedure (the page path) which can
 be set to determine if the access to the page is allowed or not.
 
 The example bellow shows a very silly access control to the main page:
@@ -533,7 +533,7 @@ it only allows the access when the value of the request variable
 </enscript>
 
 You can customize the access denied message by setting the
-{{page-access-denied-message}} with an one-argument procedure (the
+{{page-access-denied-message}} with a one-argument procedure (the
 page path).
 
 

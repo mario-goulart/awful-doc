@@ -155,7 +155,7 @@ from the login page to the main page.
 ===== {{login-form}}
 <procedure>(login-form #!key (user-label "User: ") (password-label "Password: ") (submit-label "Submit") (refill-user #t))</procedure>
 
-Return a user/password login form (e.g., for using in authentication pages).
+Return a user/password login form (e.g. for using in authentication pages).
 
 When the {{refill-user}} is {{#t}}, the User field is refilled with
 the value from the {{user}} query string value when either the session
@@ -174,7 +174,7 @@ form widgets, respectively.
 
 Return the HTTP request value for the given variable {{var}}.  The
 variable is looked for in both the query string (GET method) and
-request body (e.g., POST method).  See the documentation for the
+request body (e.g. POST method).  See the documentation for the
 procedure returned by
 [[/eggref/4/spiffy-request-vars|spiffy-request-vars]]'s
 {{request-vars}} for further details.
@@ -249,8 +249,8 @@ Define an awful page.
 
 {{path-matcher}} matches requested paths.  It can be represented by three types:
 ; string: a literal path. When the path matcher is a string, the handler procedure must be a thunk.
-; regex: a regular expression to match the requested path (regexes created by both regex egg and irregex unit are valid values).  When the path matcher is a regular expression, the page handler procedure must be an one-argument procedure which will be given the requested path.
-; procedure: an one-argument procedure to match the requested path (feature introduced in awful 0.35). If the procedure matches the requested path, it should return a list to be applied to the page handler.  When the path matcher is a procedure, the arity of the page handler procedure must match the length of the list returned by the path matcher. {{#f}} indicates that there was no match.  Values which are not {{#f}} or a list will cause an invalid argument type error.
+; regex: a regular expression to match the requested path (regexes created by both regex egg and irregex unit are valid values).  When the path matcher is a regular expression, the page handler procedure must be a one-argument procedure which will be given the requested path.
+; procedure: a one-argument procedure to match the requested path (feature introduced in awful 0.35). If the procedure matches the requested path, it should return a list to be applied to the page handler.  When the path matcher is a procedure, the arity of the page handler procedure must match the length of the list returned by the path matcher. {{#f}} indicates that there was no match.  Values which are not {{#f}} or a list will cause an invalid argument type error.
 
 
 {{handler}} should return either a string or a no-argument procedure.
@@ -267,7 +267,7 @@ SXML code, the parameter {{sxml->html}} yields the procedure used to
 generate HTML out of SXML.
 
 {{method}} (a symbol or a list) indicates the HTTP method to be used
-(e.g., {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
+(e.g. {{GET}}, {{POST}}, {{PUT}}).  {{method}} can also be a list of
 methods.  In this case, awful will define a page for each method of
 the list.  Methods are case-insensitive.  Pages that use different
 methods can use the same path.  The default value is {{(GET HEAD)}}
@@ -459,12 +459,12 @@ is {{"ajax"}} and you use {{"do-something"}} as the first argument to
 
 {{selector}} is the selector for the DOM element to be observed.  If
 it is a quoted symbol, awful generates a jQuery selector by DOM id
-(e.g., {{'my-selector}} generates {{"#my-selector"}}).  If it is a
-string, awful uses it as-is to generate the jQuery selector (e.g.,
+(e.g. {{'my-selector}} generates {{"#my-selector"}}).  If it is a
+string, awful uses it as-is to generate the jQuery selector (e.g.
 {{"input[name^=omg]"}} generates {{"input[name^=omg]"}}).
 
 {{event}} (a quoted symbol or a list) is the event(s) to be
-observed. If it is a quoted symbol (e.g., {{'click}}), only this event
+observed. If it is a quoted symbol (e.g. {{'click}}), only this event
 will be bound.  If {{event}} is a list of events, all the events from
 the list will be bound.
 

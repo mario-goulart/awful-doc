@@ -99,7 +99,7 @@ The default value is
 <parameter>(enable-ajax [boolean])</parameter>
 
 When {{#t}}, makes {{define-page}} link the {{ajax-library}} to the
-generated page.  It's effect is global, that is, once {{enable-ajax}}
+generated page.  Its effect is global, that is, once {{enable-ajax}}
 is set to {{#t}}, all pages defined via {{define-page}} will be linked
 to the ajax library, unless when the {{no-ajax}} keyword parameter is
 explicitly set.
@@ -153,7 +153,7 @@ value is {{"awful-cookie"}}.
 ===== {{session-cookie-setter}}
 <parameter>session-cookie-setter</parameter>
 
-An one-argument procedure (the sid) that is called when
+A one-argument procedure (the sid) that is called when
 creating/refreshing the session.
 
 The default value is the following procedure:
@@ -169,7 +169,7 @@ The default value is the following procedure:
 ===== {{page-access-control}}
 <parameter>(page-access-control [procedure])</parameter>
 
-An one-argument (URL path of the current page) procedure which tells
+A one-argument (URL path of the current page) procedure which tells
 whether the access to the page is allowed or not.
 
 The default value is {{(lambda (path) #t)}}.
@@ -178,7 +178,7 @@ The default value is {{(lambda (path) #t)}}.
 ===== {{page-access-denied-message}}
 <parameter>(page-access-denied-message [procedure])</parameter>
 
-An one-argument (URL path of the current page) procedure which returns
+A one-argument (URL path of the current page) procedure which returns
 the access denied message.
 
 The default value is {{(lambda (path) (<h3> "Access denied."))}}.
@@ -229,7 +229,7 @@ The default value is {{#f}} (no explicit charset).
 ===== {{page-template}}
 <parameter>(page-template [procedure])</parameter>
 
-An one-mandatory-argument procedure to be used by {{define-page}}
+A one-mandatory-argument procedure to be used by {{define-page}}
 (unless {{define-page}}'s {{no-template}} keyword parameter is set to
 {{#f}}) to generate HTML pages. Although the procedure yielded by this
 parameter takes only one mandatory argument, the following keyword
@@ -249,7 +249,7 @@ The default value is {{html-page}} (see the
 ===== {{page-exception-message}}
 <parameter>(page-exception-message [procedure])</parameter>
 
-An one-argument procedure to be used when an exception occurs while
+A one-argument procedure to be used when an exception occurs while
 {{define-page}} tries to evaluate its contents.
 
 The default value is {{(lambda (exn) (<h3> "An error has occurred while processing your request."))}}
@@ -392,7 +392,7 @@ The default value is {{#f}}.
 ===== {{javascript-compressor}}
 <parameter>(javascript-compressor [procedure])</parameter>
 
-An one-argument procedure which receives JavaScript code and returns
+A one-argument procedure which receives JavaScript code and returns
 it compressed.  Only used when {{enable-javascript-compression}} is
 not {{#f}}.
 

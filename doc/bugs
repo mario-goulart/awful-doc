@@ -2,7 +2,7 @@
 
 * Awful currently doesn't detect if cookies are enabled on the client side.
 
-* Reloading of compiled applications is not supported (i.e., you have defined a page to reload your compiled applications). See [[http://bugs.call-cc.org/ticket/442|ticket #442]].
+* Reloading of compiled applications is not supported (i.e. you have defined a page to reload your compiled applications). See [[http://bugs.call-cc.org/ticket/442|ticket #442]].
 
 * When {{define-page}}'s {{no-template}} is not false,
 {{add-javascript}} and ajax-related features for {{define-page}}
