@@ -124,7 +124,7 @@ Here's the commented code:
       (input (@ (type "text") (id "repl-input")))
       (div (@ (id "repl-output")))))
 
-  ;; This tells `define-session-page' to link the page to JQuery
+  ;; This tells `define-session-page' to link the page to jQuery
   use-ajax: #t)
 </enscript>
 
@@ -351,7 +351,7 @@ Here's a screenshot:
 I-wonder is a simple awful example application which uses SQLite as
 storage (with the [[/egg/sql-de-lite|sql-de-lite]] egg).
 
-You can find the code for that application on github: [[https://github.com/mario-goulart/i-wonder|https://github.com/mario-goulart/i-wonder]]
+You can find the code for that application on GitHub: [[https://github.com/mario-goulart/i-wonder|https://github.com/mario-goulart/i-wonder]]
 
 Here's a screenshot
 

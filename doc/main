@@ -8,10 +8,10 @@ awful provides an application and an extension to ease the development of web-ba
 
 Here's a short summary of awful features:
 
-* Straightforward interface to databases (currently supported are postgresql and sqlite3)
+* Straightforward interface to databases (currently supported are [[http://www.postgresql.org/|PostgreSQL]] and [[http://www.sqlite.org/|SQLite3]])
 * Support for page dispatching via regular expressions
 * Easy access to query string and body request variables from HTTP requests
-* Ajax support via [[http://jquery.com/|JQuery]]
+* Ajax support via [[http://jquery.com/|jQuery]]
 * Reasonably flexible (several configuration parameters)
 * Compiled pages made easy
 * Session inspector
@@ -47,7 +47,7 @@ The mailing list archives are available at
 
 === Repository
 
-The git repository for the awful source code is hosted by github:
+The git repository for the awful source code is hosted by GitHub:
 [[https://github.com/mario-goulart/awful|https://github.com/mario-goulart/awful]].
 
 Additionally, there are some extra repositories related to awful (they
@@ -55,7 +55,7 @@ are not required to use awful):
 
 * [[https://github.com/mario-goulart/awful-init-scripts|awful-init-scripts]]: init scripts for some operating systems
 * [[https://github.com/mario-goulart/awful-doc|awful-doc]]: the source code for this document
-* [[https://github.com/mario-goulart/awful-codemirror|awful-codemirror]]: the javascript files used by the web REPL
+* [[https://github.com/mario-goulart/awful-codemirror|awful-codemirror]]: the JavaScript files used by the web REPL
 
 
 

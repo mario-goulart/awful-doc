@@ -43,7 +43,7 @@
 ===== version 0.36
 
 * SXML support.  The use of SXML mode (i.e., {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
-* {{++}} and {{concat}} have been decrecated (they are still available, but will be removed in future versions).
+* {{++}} and {{concat}} have been deprecated (they are still available, but will be removed in future versions).
 * jQuery updated to version 1.8.2
 
 
@@ -55,7 +55,7 @@
 * The return value of the second argument to {{define-page}} can now be a procedure
 * {{add-request-handler-hook!}} overwrites hooks with the same name instead of adding multiple copies
 * {{define-page}}'s {{use-ajax}} keyword parameter can also be bound to a string indicating the path to the ajax library
-* Code moved to github
+* Code moved to GitHub
 
 
 ===== version 0.34
@@ -66,7 +66,7 @@
 ===== version 0.33
 * jQuery updated to version 1.7.1
 * Added {{session-cookie-setter}} (thanks to Thomas Hintz)
-* Added {{event}} argument to anonymous javascript function given as argument to {{bind}}/{{live}} ({{ajax}} and friends).  Patch by Thomas Hintz.
+* Added {{event}} argument to anonymous JavaScript function given as argument to {{bind}}/{{live}} ({{ajax}} and friends).  Patch by Thomas Hintz.
 * The {{method}} keyword parameter for {{define-page}} and {{ajax}} & friends can be bound to a list of methods.  Methods are now case insensitive.
 
 ===== version 0.32
@@ -75,7 +75,7 @@
 * {{ajax}} and friends send {{Content-Type: application/json}} when {{update-targets}} is non-#f
 * {{ajax}} bugfix: only opens db connection and refresh session when the page access is allowed
 * The default value for {{awful-backlog}} has been set to 100
-* Updated JQuery from version 1.5.2 to 1.6.3
+* Updated jQuery from version 1.5.2 to 1.6.3
 * Dropped {{-lambda-lift}} build option
 * Added the {{reload-apps}} procedure. {{load-apps}} no longer resets the resources table
 * {{awful-start}} requires a thunk as argument. With this, awful can be embedded into standalone applications
@@ -83,24 +83,24 @@
 
 ===== version 0.31
 * Added a tiny wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]], adding the {{with-request-variables}} macro and exporting {{spiffy-request-vars}}'s converters.
-* Updated JQuery from version 1.5.1 to 1.5.2.
+* Updated jQuery from version 1.5.1 to 1.5.2.
 * Better support for multiple applications under the same virtual host ({{add-request-handler-hook!}} and {{remove-request-handler-hook!}})
 * {{$db}} checks if database access is enabled via {{(enable-db)}} and throws an error if it is not.
 * Fixed critical bug regarding to parameters and thread reuse by Spiffy
 * Fixed {{redirect-to}} but introduced in version 0.29
 
 ===== version 0.30
-* The {{(ajax-library)}} is always linked before any other scripts and javascript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
+* The {{(ajax-library)}} is always linked before any other scripts and JavaScript code in the headers (e.g., when {{(javascript-position)}} is {{top}}).
 * Ajax-related procedures simplifications and bugfix in the session awareness code when called from {{define-session-page}}.
 
 ===== version 0.29
-* Updated JQuery from version 1.5.0 to 1.5.1.
+* Updated jQuery from version 1.5.0 to 1.5.1.
 * {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simultaneously, or {{periodical-ajax}} and {{add-javascript}}).
 * The default URI for {{ajax-library}} is now protocol-relative (thanks to Peter Bex).
 * Added the {{javascript-position}} parameter.
 
 ===== version 0.28
-* Updated JQuery from version 1.4.3 to 1.5.0.
+* Updated jQuery from version 1.4.3 to 1.5.0.
 * {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (e.g., you don't need to explicitly pass the session identifier).
 * Added the {{cache}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}.
 * The HTTP request variables are now parsed and made available on demand, when {{$}} is called for the first time for each request (thanks to David Krentzlin).
@@ -130,14 +130,14 @@
 * web-repl and session-inspector beautification
 * web-repl and session inspector provide a {{headers}} keyword parameter
 * fixes for {{define-page}} regarding to regex-based paths
-* {{ajax}} always prioritizes the {{success}} keyword parameter value (when it's given) to generate code for JQuery's {{success}} attribute, even when {{target}} and {{update-targets}} are given
+* {{ajax}} always prioritizes the {{success}} keyword parameter value (when it's given) to generate code for jQuery's {{success}} attribute, even when {{target}} and {{update-targets}} are given
 * awful (the application) handles the {{-v}} and {{--version}} command line options
 
 ===== version 0.23
 * added the {{update-targets}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} procedures (multiple targets update support)
 * added the {{debug-resources}} parameter for debugging the resources table
-* the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} has been renamed to {{success}} (to match JQuery's API naming for Ajax). '''Warning''': if your code uses the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} or {{ajax-link}}, this change will break your code.
-* the javascript variable bound to the response data on successful ajax request has been renamed to {{response}} (it was {{h}} before). The same warning for the {{js}}->{{success}} renaming is valid for this change, since it is directly related to {{js}} (now {{success}}).
+* the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} has been renamed to {{success}} (to match jQuery's API naming for Ajax). '''Warning''': if your code uses the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} or {{ajax-link}}, this change will break your code.
+* the JavaScript variable bound to the response data on successful ajax request has been renamed to {{response}} (it was {{h}} before). The same warning for the {{js}}->{{success}} renaming is valid for this change, since it is directly related to {{js}} (now {{success}}).
 * the default value for {{main-page-path}} is now {{"/"}} (it was {{"/main"}} before).  There's no more main page redirection.  '''Warning''': if your code relies on hardcoded {{"/main"}} paths (instead of using {{(main-page-path)}}) or if you rely on the main page automatic redirection, this change will break your code.
 * {{ajax}} bugfix regarding to session identifiers (could cause "Invalid session ID" errors in some cases, specially with {{define-session-page}}).
 * better handling of URI paths regarding to paths as directories (see FAQ's ''How does awful bind URIs to files/directories on the filesystem and procedures?'')
@@ -175,7 +175,7 @@
 * bug fix for {{link}}
 
 ===== version 0.15
-* jquery updated to 1.4.2 ({{ajax-library}}).
+* jQuery updated to 1.4.2 ({{ajax-library}}).
 
 ===== version 0.14
 * {{link}}'s {{args}} keyword parameter renamed to {{arguments}} (the same as {{ajax}}'s).
@@ -190,16 +190,16 @@
 * awful sets Spiffy's {{root-path}} to {{(current-directory)}}
 
 ===== version 0.10
-* Multiple database support. Currently Postgresql (via [[/egg/postgresql|postgresql]] egg) and Sqlite3 (via [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs) are supported.  See [[/egg/awful-postgresql|awful-postgresql]], [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs.
+* Multiple database support. Currently PostgreSQL (via [[/egg/postgresql|postgresql]] egg) and SQLite3 (via [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs) are supported.  See [[/egg/awful-postgresql|awful-postgresql]], [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs.
 * Removed requirement for postgresql
 * {{enable-db}} is now a procedure (not a parameter as before) and accepts no arguments
 
 ===== version 0.9
-* {{login-form}} gets the {{user}} refilled when the session or passowrd is not valid.  This feature may be disabled by setting the {{refill-user}} keyword parameter for {{login-form}} to {{#f}} (default is {{#t}}).  Thanks to Arthur Maciel for suggesting this feature.
+* {{login-form}} gets the {{user}} refilled when the session or password is not valid.  This feature may be disabled by setting the {{refill-user}} keyword parameter for {{login-form}} to {{#f}} (default is {{#t}}).  Thanks to Arthur Maciel for suggesting this feature.
 
 ===== version 0.8
-* jquery updated to 1.4.1 ({{ajax-library}}).
-* support for jquery's {{live}} method ({{live}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}).  See [[http://api.jquery.com/live/]]
+* jQuery updated to 1.4.1 ({{ajax-library}}).
+* support for jQuery's {{live}} method ({{live}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}).  See [[http://api.jquery.com/live/]]
 * bug fixes: {{periodical-ajax}} and {{ajax-link}} propagate {{vhost-root-path}} to {{ajax}}
 * added {{awful-start}} and dropped spiffy requirement for awful (the server)
 * dropped requirement for miscmacros
@@ -221,7 +221,7 @@
 * {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}} etc)
 
 ===== version 0.2
-* Added javascript compression support
+* Added JavaScript compression support
 
 ===== version 0.1
 * Initial release
