@@ -153,7 +153,7 @@ Define a trampoline -- an intermediate page accessed when redirecting
 from the login page to the main page.
 
 ===== {{login-form}}
-<procedure>(login-form #!key (user-label "User: ") (password-label "Password: ") (submit-label "Submit") (refill-user #t))</procedure>
+<procedure>(login-form #!key (user-label "User: ") (password-label "Password: ") (submit-label "Submit") (refill-user #t) (trampoline-path "/login-trampoline"))</procedure>
 
 Return a user/password login form (e.g., for using in authentication pages).
 
@@ -165,7 +165,9 @@ The {{user-label}}, {{password-label}} and {{submit-label}} keyword
 parameters are labels to be used for the user, password and submit
 form widgets, respectively.
 
-
+{{trampoline-path}} is a string that specify the path the form will be
+submitted to.  It must match the path given as argument to
+{{define-login-trampoline}}.
 
 ==== Request variables and values
 
