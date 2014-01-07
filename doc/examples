@@ -2,6 +2,64 @@
 
 Here are some simple examples using assorted awful features.
 
+==== Example with AngularJS
+
+Assuming you have
+[[https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js|angular.min.js]]
+in the {{root-path}} (the current directory, by default) and the code
+below is in a file {{angular-app.scm}}:
+
+<enscript highlight=scheme>
+(use html-utils ;; you'll need html-utils >= 0.10
+     awful)
+
+(enable-sxml #t)
+
+(define-page (main-page-path)
+  (lambda ()
+    (html-page
+     `(div (@ (class "container"))
+           "Name: " (input (@ (type "text")
+                              (ng-model "name")))
+           "{{ name }}")
+     html-attribs: '((ng-app))
+     doctype: "<!DOCTYPE html>"
+     headers: (include-javascript "/angular.min.js")))
+  no-template: #t)
+</enscript>
+
+Alternatively, you can set the {{page-template}} parameter:
+
+<enscript highlight=scheme>
+(use html-utils ;; you'll need html-utils >= 0.10
+     awful)
+
+;; Configure page-template to set ng-app as attribute for the html tag
+(page-template
+ (lambda (content . args)
+   (apply html-page
+          (append (list content html-attribs: '((ng-app)))
+                  args))))
+
+(enable-sxml #t)
+
+(define-page (main-page-path)
+  (lambda ()
+    `((div (@ (class "container"))
+           "Name: " (input (@ (type "text")
+                              (ng-model "name")))
+           "{{ name }}")))
+  doctype: "<!DOCTYPE html>"
+  headers: (include-javascript "/angular.min.js"))
+</enscript>
+
+To run the example, execute:
+
+  $ awful angular-app.scm
+
+and use your favorite web browser to access
+{{http://localhost:8080/}}.
+
 
 ==== Number guessing game
 
