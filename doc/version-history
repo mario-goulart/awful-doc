@@ -5,12 +5,12 @@
 * {{use-sxml}} keyword parameter for {{define-page}} and {{ajax}} & friends take precedence over {{enable-sxml}}. {{use-sxml}} can now be used to disable SXML mode for certain pages and {{ajax}} handlers when bound to {{#f}} (thanks to Thomas Hintz for reporting that issue)
 * Fix redirection to login page when in SXML mode (regression introduced by 03e4e6b9ca2378928fa35c5b8b68738561010aa2 in 0.39.1). Thanks to Thomas Hintz for reporting that and suggesting removing html-tags code
 
-===== version 0.39.1
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=29489|version 0.39.1]]
 * Update jQuery to version 1.10.2
 * Bug fix: {{page-path}} should return {{(app-root-path)}} when given {{"/"}}
 * Bug fix: check to make sure redirect-to-login-page always generates HTML (patch by Hugo Arregui)
 
-===== version 0.39
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=28751|version 0.39]]
 
 * The default methods for {{define-page}} are now HEAD and GET (thanks to Thomas Hintz)
 * Bug fix for {{link}} in SXML mode
@@ -19,35 +19,35 @@
 * Add {{add-css}} procedure (suggested by John J. Foerch)
 
 
-===== version 0.38.2
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=28237|version 0.38.2]]
 
 * Fix bug related to path matchers as procedures and sessions which caused errors, for example, on redirections from pages defined with path matchers as procedures to the login page
 
 
-===== version 0.38.1
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=27797|version 0.38.1]]
 
 * Fix bug in handler for {{/reload}} when in development mode and in SXML mode
 * Versions now have a second dot for bugfix releases
 
 
-===== version 0.38
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=27701|version 0.38]]
 
 * Fix bug in {{define-page}} when page handlers return procedures
 
 
-===== version 0.37
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=27693|version 0.37]]
 
 * Fix {{page-exception-message}} when in development mode and using SXML (thanks to sECuRE for catching that)
 
 
-===== version 0.36
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=27510|version 0.36]]
 
 * SXML support.  The use of SXML mode (i.e., {{(enable-sxml #t)}} is highly encouraged.  All the documentation examples show SXML code.  Page handlers that yield strings are deprecated and support for them will be removed in future versions.
 * {{++}} and {{concat}} have been deprecated (they are still available, but will be removed in future versions).
 * jQuery updated to version 1.8.2
 
 
-===== version 0.35
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=26831|version 0.35]]
 
 * Added {{awful-resources-table}}
 * Added {{set-page-title!}} (thanks to John J. Foerch for suggesting that)
@@ -58,18 +58,18 @@
 * Code moved to GitHub
 
 
-===== version 0.34
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=25890|version 0.34]]
 * Don't check {{current-effective-user-id}} on windows, since it is not available on that platform.  Reported by Karl_H on #chicken.
 * Use {{<label>}} instead of {{<span>}} for login form labels (patch by Arthur Maciel).  Warning: this change may break your login form layout if you rely on the specific {{<span>}} tags for form labels.
 
 
-===== version 0.33
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=25689|version 0.33]]
 * jQuery updated to version 1.7.1
 * Added {{session-cookie-setter}} (thanks to Thomas Hintz)
 * Added {{event}} argument to anonymous JavaScript function given as argument to {{bind}}/{{live}} ({{ajax}} and friends).  Patch by Thomas Hintz.
 * The {{method}} keyword parameter for {{define-page}} and {{ajax}} & friends can be bound to a list of methods.  Methods are now case insensitive.
 
-===== version 0.32
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=25073|version 0.32]]
 * Added {{method}} keyword parameter for {{define-page}}.  Now the page router takes into account the HTTP method, so it is possible to have two different pages using the same path but different methods.
 * Added {{error-handler}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}} (suggested by Thomas Hintz)
 * {{ajax}} and friends send {{Content-Type: application/json}} when {{update-targets}} is non-#f
@@ -81,7 +81,7 @@
 * {{awful-start}} requires a thunk as argument. With this, awful can be embedded into standalone applications
 
 
-===== version 0.31
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=23515|version 0.31]]
 * Added a tiny wrapper around [[/egg/spiffy-request-vars|spiffy-request-vars]], adding the {{with-request-variables}} macro and exporting {{spiffy-request-vars}}'s converters.
 * Updated jQuery from version 1.5.1 to 1.5.2.
 * Better support for multiple applications under the same virtual host ({{add-request-handler-hook!}} and {{remove-request-handler-hook!}})
@@ -89,17 +89,17 @@
 * Fixed critical bug regarding to parameters and thread reuse by Spiffy
 * Fixed {{redirect-to}} but introduced in version 0.29
 
-===== version 0.30
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=23075|version 0.30]]
 * The {{(ajax-library)}} is always linked before any other scripts and JavaScript code in the headers (i.e., when {{(javascript-position)}} is {{top}}).
 * Ajax-related procedures simplifications and bugfix in the session awareness code when called from {{define-session-page}}.
 
-===== version 0.29
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=22907|version 0.29]]
 * Updated jQuery from version 1.5.0 to 1.5.1.
 * {{ajax}} and {{periodical-ajax}} bugfix (for situations when they are used simultaneously, or {{periodical-ajax}} and {{add-javascript}}).
 * The default URI for {{ajax-library}} is now protocol-relative (thanks to Peter Bex).
 * Added the {{javascript-position}} parameter.
 
-===== version 0.28
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=22639|version 0.28]]
 * Updated jQuery from version 1.4.3 to 1.5.0.
 * {{ajax}} and friends ({{periodical-ajax}}, {{ajax-link}}) are now session-aware when called from {{define-session-page}} (i.e., you don't need to explicitly pass the session identifier).
 * Added the {{cache}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}.
@@ -108,23 +108,23 @@
 * {{define-session-page}} bug fix (it was not properly obtaining the session identifier).
 
 
-===== version 0.27
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=20689|version 0.27]]
 * Require the {{regex}} egg, for chickens >= 4.6.2
 
-===== version 0.26
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=19844|version 0.26]]
 * {{define-page}} allows page redefinitions
 * Added the {{undefine-page}} procedure
 * Fancy web REPL (enabled by default).  The awful application server now accepts the {{--disable-web-repl-fancy-editor}} command line option to disable the web REPL fancy editor.
 * Added the following parameters, related to the fancy web REPL: {{enable-web-repl-fancy-editor}} and {{web-repl-fancy-editor-base-uri}}.
 * Bug fix for the development mode: requests to the {{/reload}} path killed {{/web-repl}} and {{/session-inspector}}
 
-===== version 0.25
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=19496|version 0.25]]
 * The awful application server can now be used with the {{--development-mode}} command line option, which enables the web REPL, the session inspector (when {{enable-session}} is #t) for the localhost and on-browser error messages and backtraces.  When running in development mode, the {{/reload}} path is defined to reload awful apps.
 * The awful application server now supports the {{--ip-address}} and {{--port}} command line options.
 * {{use-ajax}} keyword parameter for {{define-page}} (for when {{enable-ajax}} is {{#f}} and you need ajax for some specific pages only)
 * Added {{awful-response-headers}} and {{development-mode?}} parameters
 
-===== version 0.24
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18903|version 0.24]]
 * initial support for storing session identifiers in cookies.  Added the {{enable-session-cookie}} and {{session-cookie-name}} parameters.  By default, cookies-sessions are enabled (relevant only when using sessions, of course). '''Warning''': if your code relies on the availability of session identifiers in the query string or in the request body for whatever reason, it will break.
 * initial support for HTTP redirection via {{redirect-to}}.
 * web-repl and session-inspector beautification
@@ -133,7 +133,7 @@
 * {{ajax}} always prioritizes the {{success}} keyword parameter value (when it's given) to generate code for jQuery's {{success}} attribute, even when {{target}} and {{update-targets}} are given
 * awful (the application) handles the {{-v}} and {{--version}} command line options
 
-===== version 0.23
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18559|version 0.23]]
 * added the {{update-targets}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} procedures (multiple targets update support)
 * added the {{debug-resources}} parameter for debugging the resources table
 * the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}} has been renamed to {{success}} (to match jQuery's API naming for Ajax). '''Warning''': if your code uses the {{js}} keyword parameter for {{ajax}}, {{periodical-ajax}} or {{ajax-link}}, this change will break your code.
@@ -142,7 +142,7 @@
 * {{ajax}} bugfix regarding to session identifiers (could cause "Invalid session ID" errors in some cases, specially with {{define-session-page}}).
 * better handling of URI paths regarding to paths as directories (see FAQ's ''How does awful bind URIs to files/directories on the filesystem and procedures?'')
 
-===== version 0.22
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18328|version 0.22]]
 * bug fix: fixed unintended shadowing of {{js}} in ajax
 * added the {{prelude}} keyword parameter for {{ajax}}, {{periodical-ajax}} and {{ajax-link}}
 * {{$db}} supports the {{values}} keyword parameter (patch by Stephen Eilert)
@@ -150,54 +150,54 @@
 * awful (the application) handles {{-h}} and {{--help}}
 * dropped [[/eggref/4/jsmin|jsmin]] requirement
 
-===== version 0.21
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18149|version 0.21]]
 * ajax and main page redirection issues fixes
 
-===== version 0.20
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18051|version 0.20]]
 * {{page-access-control}} controls access to pages even when no session is in use
 * '''Warning''': the following parameters have been removed: {{enable-reload}}, {{reload-path}} and {{reload-message}}.  Now the way to define reloaders is via {{define-page}}.
 * new parameter: {{awful-apps}} (a list of awful applications as passed to the awful server)
 
-===== version 0.19
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18040|version 0.19]]
 * bug fix for {{(reload-path)}} handler
 
-===== version 0.18
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=18030|version 0.18]]
 * support for regex-based page paths (see {{define-page}})
 * {{define-page}} checks whether the second arg is a procedure.
 * use {{-O3 -lambda-lift}} instead of {{-O2}} for compilation
 * {{main-page-path}} redirection made with code stolen from [[/egg/spiffy|spiffy]]'s {{send-response}}
 
-===== version 0.17
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17510|version 0.17]]
 * .meta bug fix.  postgresql is not required as a dependency (thanks to Stephen Pedrosa Eilert for pointing this issue).
 
-===== version 0.16
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17393|version 0.16]]
 * added {{define-session-page}}
 * bug fix for {{link}}
 
-===== version 0.15
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17383|version 0.15]]
 * jQuery updated to 1.4.2 ({{ajax-library}}).
 
-===== version 0.14
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17350|version 0.14]]
 * {{link}}'s {{args}} keyword parameter renamed to {{arguments}} (the same as {{ajax}}'s).
 
-===== version 0.13
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17346|version 0.13]]
 * Session-aware {{link}} and {{form}} procedures.  Bug fix for {{ajax-link}} (was not passing the {{class}} keyword argument to <a>).
 
-===== version 0.12
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17278|version 0.12]]
 * Containers for user and password fields ({{login-form}})
 
-===== version 0.11
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17275|version 0.11]]
 * awful sets Spiffy's {{root-path}} to {{(current-directory)}}
 
-===== version 0.10
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17186|version 0.10]]
 * Multiple database support. Currently PostgreSQL (via [[/egg/postgresql|postgresql]] egg) and SQLite3 (via [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs) are supported.  See [[/egg/awful-postgresql|awful-postgresql]], [[/egg/sqlite3|sqlite3]] and [[/egg/sql-de-lite|sql-de-lite]] eggs.
 * Removed requirement for postgresql
 * {{enable-db}} is now a procedure (not a parameter as before) and accepts no arguments
 
-===== version 0.9
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17172|version 0.9]]
 * {{login-form}} gets the {{user}} refilled when the session or password is not valid.  This feature may be disabled by setting the {{refill-user}} keyword parameter for {{login-form}} to {{#f}} (default is {{#t}}).  Thanks to Arthur Maciel for suggesting this feature.
 
-===== version 0.8
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17149|version 0.8]]
 * jQuery updated to 1.4.1 ({{ajax-library}}).
 * support for jQuery's {{live}} method ({{live}} keyword parameter for {{ajax}}, {{ajax-link}} and {{periodical-ajax}}).  See [[http://api.jquery.com/live/]]
 * bug fixes: {{periodical-ajax}} and {{ajax-link}} propagate {{vhost-root-path}} to {{ajax}}
@@ -205,23 +205,23 @@
 * dropped requirement for miscmacros
 * added more ajax tests
 
-===== version 0.7
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17139|version 0.7]]
 * {{ajax-link}} accepts all {{<a>}}'s keyword arguments
 
-===== version 0.6
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17134|version 0.6]]
 * Explicitly depends on [[/egg/http-session|http-session]] 2.0
 
-===== version 0.5
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17130|version 0.5]]
 * Reload handler register the reload path after reloading.
 
-===== version 0.4
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17127|version 0.4]]
 * {{disable-reload?}} renamed to {{enable-reload}}.  {{enable-reload}} is {{#f}} by default.
 
-===== version 0.3
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17122|version 0.3]]
 * {{awful}} (the server) allows applications to use Chicken syntax ({{use}}, {{include}}, etc.)
 
-===== version 0.2
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17120|version 0.2]]
 * Added JavaScript compression support
 
-===== version 0.1
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=17109|version 0.1]]
 * Initial release
