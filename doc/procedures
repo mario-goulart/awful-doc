@@ -152,6 +152,14 @@ hidden input field to pass the session identifier (unless
 Define a trampoline -- an intermediate page accessed when redirecting
 from the login page to the main page.
 
+{{vhost-root-path}} is the path to the virtual host the trampoline
+will be defined for.
+
+{{hook}} is a one-argument procedure which receives the given user.
+It is called right before the redirection to the attempted path (if
+any was attempted) or {{(main-page-path)}}.
+
+
 ===== {{login-form}}
 <procedure>(login-form #!key (user-label "User: ") (password-label "Password: ") (submit-label "Submit") (refill-user #t) (trampoline-path "/login-trampoline"))</procedure>
 
