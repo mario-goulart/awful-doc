@@ -217,6 +217,11 @@ Example:
 ($db "insert into foo (bar, baz) values (?, ?)" values: '("bar-val" "baz-val"))
 </enscript>
 
+If you use the [[/egg/awful-ssql|awful-ssql]] egg, you can give
+{{$db}} the query as a SSQL expression.  See the documentation for
+[[/egg/awful-ssql|awful-ssql]] for more details.  Support for SSQL has
+been introduced in awful version 0.40.0.
+
 
 ===== {{$db-row-obj}}
 <procedure>($db-row-obj q)</procedure>
@@ -236,6 +241,10 @@ Example:
 ''Warning'': currently {{$db-row-obj}} is only implemented for
 PostgreSQL databases.
 
+If you use the [[/egg/awful-ssql|awful-ssql]] egg, you can give
+{{$db}} the query as a SSQL expression.  See the documentation for
+[[/egg/awful-ssql|awful-ssql]] for more details.  Support for SSQL has
+been introduced in awful version 0.40.0.
 
 ===== {{sql-quote}}
 <procedure>(sql-quote . data)</procedure>
