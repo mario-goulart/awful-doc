@@ -1,7 +1,7 @@
 === Version history
 
 ===== version 0.40.0
-* SSQL support for {{$db}}
+* SSQL support for {{$db}} and {{$db-row-obj}}
 * Full support for static pages generation (via [[/egg/awful-static-pages|awful-static-pages]])
 * {{--privileged-code}} now accepts multiple files (comma-separated)
 * Bug fixes in web-repl when in SXML mode
