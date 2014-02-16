@@ -249,6 +249,9 @@ been introduced in awful version 0.40.0.
 ===== {{sql-quote}}
 <procedure>(sql-quote . data)</procedure>
 
+''Warning'': this procedure is deprecated and will be removed in
+future awful versions.
+
 Escape and quote the concatenation of {{data}} to be used in SQL queries.
 
 ''Warning'': for SQLite databases, {{sql-quote}} just replaces {{'}}
