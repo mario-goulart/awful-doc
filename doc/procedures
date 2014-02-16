@@ -793,7 +793,7 @@ thing that maps URIs to procedures) before loading applications.
 ==== The awful server
 
 ===== {{awful-start}}
-<procedure>(awful-start thunk #!key dev-mode? port ip-address use-fancy-web-repl? privileged-code))</procedure>
+<procedure>(awful-start thunk #!key dev-mode? port ip-address (use-fancy-web-repl? #t) privileged-code))</procedure>
 
 Starts awful.  This procedure is only useful for standalone
 applications which intent to embed awful.  For example, the awful
@@ -813,7 +813,8 @@ application.
 {{ip-address}} (string) indicates the IP address to bind to.
 
 {{use-fancy-web-repl?}} (boolean): indicates whether the web REPL
-should use the fancy editor.
+should use the fancy editor.  The default value is {{#t}} (since awful
+0.40.0 -- before that it was {{#f}})
 
 {{privileged-code}} (procedure): a thunk that is executed while awful
 is still running with privileged permissions (when run by the
