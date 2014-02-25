@@ -1,6 +1,36 @@
 === Version history
 
-===== version 0.40.0
+===== version 0.41.0
+
+* The deprecated procedure {{sql-quote}} has been removed
+
+* Set the default value for {{$db}}'s {{default}} keyword param as {{'()}}
+
+To be consistent with the db-support eggs for awful.
+
+'''WARNING''': this change may break your code!  In case of an empty
+result set from a query, {{$db}} will now return {{'()}} instead of
+{{#f}}.
+
+This change can be specially harmful in case you have something like
+
+<enscript highlight=scheme>
+         (or ($db "some query") "something")
+</enscript>
+
+In this example, if the query returns an empty result set, that
+expression would produce:
+
+* in older awful versions: {{"something"}}
+* in awful versions with this change: {{'()}}
+
+To work around the incompatible behaviors, you can:
+
+* require awful 0.41.0 in you .meta file
+* always provide a value for {{$db}}'s {{default}} keyword parameter
+
+
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=30483|version 0.40.0]]
 * SSQL support for {{$db}} and {{$db-row-obj}}
 * Full support for static pages generation (via [[/egg/awful-static-pages|awful-static-pages]])
 * {{--privileged-code}} now accepts multiple files (comma-separated)
