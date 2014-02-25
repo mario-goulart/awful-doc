@@ -250,21 +250,6 @@ If you use the [[/egg/awful-ssql|awful-ssql]] egg, you can give
 [[/egg/awful-ssql|awful-ssql]] for more details.  Support for SSQL has
 been introduced in awful version 0.40.0.
 
-===== {{sql-quote}}
-<procedure>(sql-quote . data)</procedure>
-
-''Warning'': this procedure is deprecated and will be removed in
-future awful versions.
-
-Escape and quote the concatenation of {{data}} to be used in SQL queries.
-
-''Warning'': for SQLite databases, {{sql-quote}} just replaces {{'}}
-by {{''}} and quotes the {{data}}.  For PostgreSQL, {{sql-quote}}
-quotes the result of {{escape-string}}.
-
-Consider using the API for placeholders of your favorite database egg
-instead of {{sql-quote}} whenever possible.
-
 
 ==== Pages
 
