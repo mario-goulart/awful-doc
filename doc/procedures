@@ -203,7 +203,7 @@ procedures are exported, for convenience.
 ==== Database access
 
 ===== {{$db}}
-<procedure>($db q #!key default values)</procedure>
+<procedure>($db q #!key (default '()) values)</procedure>
 
 Execute the given query ({{q}}) on the database and return the result
 as a list of lists or {{default}} if the result set is empty.
@@ -216,6 +216,10 @@ Example:
 <enscript highlight=scheme>
 ($db "insert into foo (bar, baz) values (?, ?)" values: '("bar-val" "baz-val"))
 </enscript>
+
+''Note'': up to version 0.40.0, {{$db}} returned {{#f}} when queries
+returned empty set of results.  Starting from version 0.41.0, {{$db}}
+returns {{'()}} queries return empty set of results.
 
 If you use the [[/egg/awful-ssql|awful-ssql]] egg, you can give
 {{$db}} the query as a SSQL expression.  See the documentation for
