@@ -455,11 +455,13 @@ Example:
 ==== Ajax
 
 ===== {{ajax}}
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler use-sxml)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler no-page-javascript use-sxml)</procedure>
 
 Generate JavaScript code to be added to the page defined by
-{{define-page}}.  Return the generated JavaScript code (which usually
-is not useful, so should be discarded).
+{{define-page}}.  Return the generated JavaScript code. Unless
+{{no-page-javascript}} is a truthy value, the JavaScript code will be
+added to the page in which case the returned JavaScript code is
+usually not useful and can be discarded.
 
 {{path}} is the URL path (a string) of the server side handler. This
 path is placed under the {{(app-root-path)/(ajax-namespace)}} path.
@@ -597,6 +599,13 @@ to be used as the error handler for the Ajax request.  See the
 {{error}} attribute for the {{settings}} object given as argument to
 jQuery.ajax
 ([[http://api.jquery.com/jQuery.ajax/|http://api.jquery.com/jQuery.ajax/]]).
+
+The {{no-page-javascript}} keyword parameter is a boolean that
+determines whether the generated JavaScript code is automatically
+added to the page or not.  Defaults to {{#f}}. This parameter may be
+useful if you want more control of where or when the generated
+JavaScript code gets added to the page or even if it gets added at
+all.
 
 The {{ajax}} procedure is session, HTTP request and database -aware.
 
