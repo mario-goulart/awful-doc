@@ -316,7 +316,7 @@ not {{#f}}.
 {{vhost-root-path}} (a string or {{#f}}) is the root path of the
 virtual host the page definition is to be applied to.  If
 {{vhost-root-path}} is set to a path, the page definition will only be
-valid for the virtual host whose root path is the given path.q
+valid for the virtual host whose root path is the given path.
 
 Examples:
 
