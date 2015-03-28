@@ -254,7 +254,7 @@ been introduced in awful version 0.40.0.
 ==== Pages
 
 ===== {{define-page}}
-<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method use-sxml)</procedure>
+<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method use-sxml vhost-root-path)</procedure>
 
 Define an awful page.
 
@@ -312,6 +312,11 @@ database, even when database usage is activated by {{enable-db}} and
 If {{no-javascript-compression}} is {{#t}} the JavaScript code for the
 page is not compressed, even when {{enable-javascript-compression}} is
 not {{#f}}.
+
+{{vhost-root-path}} (a string or {{#f}}) is the root path of the
+virtual host the page definition is to be applied to.  If
+{{vhost-root-path}} is set to a path, the page definition will only be
+valid for the virtual host whose root path is the given path.q
 
 Examples:
 
