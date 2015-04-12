@@ -1,6 +1,47 @@
 === Version history
 
-===== version 0.41.0
+===== version 0.42.0
+
+* Use SPIFFY_TEST_PORT environment variable's value (if provided) for tests
+
+* Make {{awful-start}} properly honor the {{dev-mode?}} keyword parameter. Before this change, {{development-mode-actions}} would only be called from {{load-apps}}.  So, if an application uses {{awful-start}} with {{dev-mode?}} set to {{#t}}, but doesn't call {{load-apps}}, {{development-mode-actions}} would not be called.  While at it, call {{development-mode-actions}} ''before'' evaluating the thunk for {{awful-start}}, so that the evaluated code can override the settings made by {{development-mode-actions}}.
+
+* Bug fix for {{form}} in SXML mode. Thanks to Thomas Hintz for spotting that issue.
+
+* {{debug-file}}: its value can now also be an output-port. {{debug}} and {{debug-pp}} will properly handle the {{debug-file}} value types: filenames (strings) or output port objects.
+
+* Add {{strict}} keyword parameter for define-page and ajax & friends
+
+For convenience, awful sloppily considered requests for files and
+directories to be equivalent.  For example, if a page was defined with
+a {{"/foo"}} matcher, a request for {{"/foo/"}} would be handled by
+{{"/foo"}}'s handler.
+
+That's not always desired.  For example, consider this case:
+
+  (define-page (irregex "/[^/]*") identity)
+
+We want to specify that, e.g., requests for {{/foo}} should be
+handled, but requests for {{/foo/}} should ''not'' be handled.  However,
+since awful tries to find a handler by stripping the trailing slash, a
+request for {{/foo/}} would actually be handled by the handler for
+{{(irregex "/[^/]*")}}, even if the regex specified that paths with a
+trailing slash should not match.
+
+To work around that inconsistency, a new keyword parameter has been
+added to {{define-page}}, {{ajax}}, {{periodical-ajax}} and
+{{ajax-link}}: {{strict}} (default: {{#f}}, for backward
+compatibility).  If the {{strict}} keyword parameter is truthy, awful
+will not try to find a handler for the requested path by removing the
+trailing slash.
+
+With this change, the format of the resources table has changed too.
+Now the value part of hash table items is a pair whose car is the
+resource handler and the cdr is a boolean indicating whether the
+resource is "strict" or not.
+
+
+===== [[http://wiki.call-cc.org/eggref/4/awful?action=show&rev=32298|version 0.41.0]]
 
 * The deprecated procedure {{sql-quote}} has been removed
 

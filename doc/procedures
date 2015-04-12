@@ -254,7 +254,7 @@ been introduced in awful version 0.40.0.
 ==== Pages
 
 ===== {{define-page}}
-<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method use-sxml vhost-root-path)</procedure>
+<procedure>(define-page path-matcher handler #!key css title doctype headers charset no-ajax use-ajax no-template no-session no-db no-javascript-compression method use-sxml vhost-root-path strict)</procedure>
 
 Define an awful page.
 
@@ -317,6 +317,22 @@ not {{#f}}.
 virtual host the page definition is to be applied to.  If
 {{vhost-root-path}} is set to a path, the page definition will only be
 valid for the virtual host whose root path is the given path.
+
+If {{strict}} is truthy, awful will only match the requested path if
+it strictly matches the defined matchers.  For convenience, awful
+sloppily considered requests for files and directories to be
+equivalent.  For example, if a page was defined with a {{"/foo"}}
+matcher, a request for {{"/foo/"}} would be handled by {{"/foo"}}'s
+handler.  That's not always desired.  For example, consider this case:
+
+  (define-page (irregex "/[^/]*") identity)
+
+We want to specify that, e.g., requests for {{/foo}} should be
+handled, but requests for {{/foo/}} should ''not'' be handled.  However,
+since awful tries to find a handler by stripping the trailing slash, a
+request for {{/foo/}} would actually be handled by the handler for
+{{(irregex "/[^/]*")}}, even if the regex specified that paths with a
+trailing slash should not match.
 
 Examples:
 
@@ -466,7 +482,7 @@ Example:
 ==== Ajax
 
 ===== {{ajax}}
-<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler no-page-javascript use-sxml)</procedure>
+<procedure>(ajax path selector event proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets cache error-handler use-sxml strict)</procedure>
 
 Generate JavaScript code to be added to the page defined by
 {{define-page}}.  Return the generated JavaScript code. Unless
@@ -622,7 +638,7 @@ The {{ajax}} procedure is session, HTTP request and database -aware.
 
 
 ===== {{periodical-ajax}}
-<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets error-handler use-sxml)</procedure>
+<procedure>(periodical-ajax path interval proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db vhost-root-path live on prelude update-targets error-handler use-sxml strict)</procedure>
 
 Periodically execute {{proc}} on the server side, using
 {{(app-root-path)/(ajax-namespace)/path}} as the URL path for the
@@ -635,7 +651,7 @@ The meaning of the keyword parameters is the same as for {{ajax}}'s.
 
 
 ===== {{ajax-link}}
-<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live on class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler use-sxml)</procedure>
+<procedure>(ajax-link path id text proc #!key target (action 'html) (method 'POST) (arguments '()) success no-session no-db (event 'click) vhost-root-path live on class hreflang type rel rev charset coords shape accesskey tabindex a-target prelude update-targets error-handler use-sxml strict)</procedure>
 
 A shortcut to
 
