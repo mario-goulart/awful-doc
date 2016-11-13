@@ -226,6 +226,21 @@ If you use the [[/egg/awful-ssql|awful-ssql]] egg, you can give
 [[/egg/awful-ssql|awful-ssql]] for more details.  Support for SSQL has
 been introduced in awful version 0.40.0.
 
+Note that {{$db}} is supposed to be used in the context of request
+handlers (i.e., in the body of a lambda bound to a uri path by
+{{define-page}}).
+
+If you want to use {{$db}} out of the context of request handlers,
+you'll have to manage database connections yourself.  Basically, you
+have to parameterize {{db-connection}} with the actual connection
+object.  Example:
+
+<enscript highlight=scheme>
+(parameterize ((db-connection (open-database (db-credentials))))
+  ($db the-query)
+  (close-database (db-connection)))
+</enscript>
+
 
 ===== {{$db-row-obj}}
 <procedure>($db-row-obj q)</procedure>
