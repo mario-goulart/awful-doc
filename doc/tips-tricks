@@ -7,7 +7,11 @@ code every time a request is handled by awful.  Here's a simple
 example:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (add-request-handler-hook!
  'reload-on-request
@@ -17,7 +21,7 @@ example:
 
 (define-page (main-page-path)
   (lambda ()
-    "1"))
+    '("1")))
 </enscript>
 
 
@@ -40,9 +44,11 @@ consider using {{with-request-variables}}.
 For example, instead of:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-session-page "save-and-show-user"
   (lambda ()
@@ -53,9 +59,11 @@ For example, instead of:
 consider using something like:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-session-page "save-and-show-user"
   (lambda ()
@@ -108,9 +116,11 @@ plain {{define-page}} is not enough for what you need.  Here's an
 example:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define (define-custom-page path content)
   (define-page path
@@ -120,7 +130,7 @@ example:
 
 (define-custom-page (main-page-path)
   (lambda ()
-    "Hey!"))
+    '("Hey!")))
 </enscript>
 
 If you access {{http://localhost:8080}} you'll get the following HTML code:
@@ -136,9 +146,14 @@ debugging (although not for production environments).  Here's a way to
 accomplish that:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import (chicken base)
+            (chicken condition)
+            (chicken port))
+    (import awful)))
 
 (page-exception-message
  (lambda (exn)
@@ -166,76 +181,6 @@ change to the directory containing the files and execute {{awful}}.
 The access {{http://<host>:8080/<the-file-you-want>}}.
 
 
-==== Awful & SXML
-
-Since version 0.36, awful provides SXML support.  To enable it, you
-can either do it globally, by setting the {{enable-sxml}} parameter to
-{{#t}}, or in a per-page basis, by binding {{define-page}}'s
-{{use-sxml}} keyword parameter to {{#t}}.
-
-Notice that supporting SXML by default is a goal.  Strings support
-will be deprecated and removed in future versions.  So, if you are
-about to start a project using awful, consider setting {{enable-sxml}}
-to {{#t}}.
-
-Here are some examples:
-
-===== Globally using SXML
-
-<enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
-
-(define-page (main-page-path)
-  (lambda ()
-    `(div (@ (id "content"))
-          "Hi, this is awful " ,(awful-version))))
-</enscript>
-
-
-You can also use [[/egg/html-tags|html-tags]] and
-[[/egg/html-utils|html-utils]] to generate SXML content:
-
-<enscript highlight=scheme>
-(use awful html-tags)
-
-(enable-sxml #t)
-(generate-sxml? #t) ;; from html-tags
-
-(define-page (main-page-path)
-  (lambda ()
-    (<div> id: "content"
-           "Hi, this is awful " (awful-version))))
-</enscript>
-
-
-===== Using SXML in a per-page basis
-
-<enscript highlight=scheme>
-(use awful html-tags)
-
-(define-page "/strings"
-  (lambda ()
-    (<div> id: "content"
-           "Hi, this is awful " (awful-version))))
-
-
-(define-page "/sxml"
-  (lambda ()
-    `(div (@ (id "content"))
-          "Hi, this is awful " ,(awful-version)))
-  use-sxml: #t)
-
-
-(define-page "/sxml-with-html-tags"
-  (lambda ()
-    (parameterize ((generate-sxml? #t))
-      (<div> id: "content"
-             "Hi, this is awful " (awful-version))))
-  use-sxml: #t)
-</enscript>
-
 
 ==== Reloading awful from Emacs
 
@@ -262,7 +207,7 @@ output buffer.
 
 Here's a screenshot:
 
-[[image:http://parenteses.org/mario/img/awful/awful-reload-emacs.png|Reloading awful apps from Emacs]]
+[[image://parenteses.org/mario/img/awful/awful-reload-emacs.png|Reloading awful apps from Emacs]]
 
 
 ==== Performance tweaks
@@ -285,10 +230,15 @@ page]] for other options):
 ==== Binding URI paths as arguments to page handler procedures
 
 <enscript highlight=scheme>
-(use awful regex srfi-13)
+(cond-expand
+  (chicken-4
+    (use awful irregex srfi-13))
+  (chicken-5
+    (import (chicken string))
+    (import awful irregex srfi-13)))
 
 (define (define-page* page-path content)
-  (define-page (regexp (string-append page-path "/*.*"))
+  (define-page (irregex (string-append page-path "/*.*"))
     (lambda (path)
       (let ((url-args
              (string-split
@@ -309,7 +259,7 @@ page]] for other options):
 ;; http://<server>:<port>/page1/1/2 => "no args"
 (define-page* "/page1"
   (lambda _
-    "no args"))
+    '("no args")))
 
 
 ;;;
@@ -320,7 +270,7 @@ page]] for other options):
 ;; http://<server>:<port>/page1/1/2 => "invalid arity"
 (define-page* "/page2"
   (lambda (foo)
-    (conc "foo=" foo)))
+    '("foo=" foo)))
 
 
 ;;;
@@ -333,7 +283,7 @@ page]] for other options):
 ;; http://<server>:<port>/page1/1/2/3 => "foo=1, bar=2"
 (define-page* "/page3"
   (lambda (foo #!optional bar)
-    (conc "foo=" foo ", bar=" bar)))
+    '("foo=" foo ", bar=" bar)))
 
 
 ;;;
@@ -345,10 +295,10 @@ page]] for other options):
 ;; http://<server>:<port>/page4/1/2/3 => "foo=1, bar=2"
 (define-page* "/page4"
   (lambda (#!optional foo bar)
-    (conc "foo=" foo ", bar=" bar)))
+    '("foo=" foo ", bar=" bar)))
 </enscript>
 
 
 ==== Awful badge
 
-Here's a suggestion:  [[image:http://parenteses.org/mario/img/thats-awful.png|That's awful!]]
+Here's a suggestion:  [[image://parenteses.org/mario/img/thats-awful.png|That's awful!]]

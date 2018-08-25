@@ -3,25 +3,6 @@
 
 ==== Miscellaneous
 
-===== {{++}}
-<procedure>(++ string1 string2 ... stringn)</procedure>
-
-A shortcut to {{string-append}}.
-
-This procedure has been deprecated in awful 0.36 and will be removed
-in future versions.
-
-
-===== {{concat}}
-<procedure>(concat args #!optional (sep ""))</procedure>
-
-Convert {{args}} to string and intersperse the resulting strings with {{sep}}.
-
-
-This procedure has been deprecated in awful 0.36 and will be removed
-in future versions.
-
-
 ===== {{awful-version}}
 <procedure>(awful-version)</procedure>
 
@@ -352,12 +333,22 @@ trailing slash should not match.
 Examples:
 
 <enscript highlight=scheme>
-(use awful
-     srfi-1  ;; for filter-map
-     regex   ;; for regexp
-     spiffy) ;; for send-static-file
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful
+         srfi-1   ;; for filter-map
+         srfi-13  ;; for string-prefix?
+         irregex  ;; for irregex
+         spiffy)) ;; for send-static-file
+  (chicken-5
+    (import (chicken irregex) ;; for irregex
+            (chicken format)  ;; for sprintf
+            (chicken string)) ;; for string-split
+    (import awful
+            srfi-1   ;; for filter-map
+            srfi-13  ;; for string-prefix?
+            spiffy)) ;; for send-static-file
+  )
 
 ;;
 ;; Path matcher as a string
@@ -374,7 +365,7 @@ Examples:
 ;;
 
 ;; http://host:port/add/1/2/3 => 6
-(define-page (regexp "/add/.*")
+(define-page (irregex "/add/.*")
   (lambda (path)
     (let ((numbers (filter-map string->number (string-split path "/"))))
       `(,(apply + numbers)))))
@@ -439,9 +430,11 @@ The {{rest}} parameters are the same as for {{define-page}}.
 Here's an example (the [[http://www.paulgraham.com/arcchallenge.html|arc challenge]]):
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-session-page "said"
   (lambda ()
@@ -471,7 +464,6 @@ where the page is to be undefined.  If omitted, {{(root-path)}} is
 used.
 
 
-
 ===== {{set-page-title!}}
 <procedure>(set-page-title! title)</procedure>
 
@@ -484,13 +476,43 @@ This procedure has been introduced in awful 0.35.
 Example:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
     (set-page-title! "a title")
     "Hi!"))
 </enscript>
+
+
+===== {{html-page}}
+
+<procedure>(html-page contents #!key css title doctype headers charset content-type literal-style? (html-attribs '()) (body-attribs '()))</procedure>
+
+Generates an SXML page containing {{contents}} (SXML).  The following
+keywords arguments may be used to customize the page:
+
+* {{headers}}: an SXML form containing additional headers to be inserted in the section delimited by the {{<head>}} tag. Default = {{#f}}.
+
+* {{title}}: the title for the page (to be used in the {{<title>}} tag). Default = {{#f}}.
+
+* {{css}}: may be either a path to a Cascading Style Sheet file, to be linked from the generated page (the default value is {{#f}}, so no CSS is used) or a list of paths to CSS files. If a list of paths is used, the elements which are also lists are read and inlined into the generated page. Example: {{css: '("css1.css" ("css2.css"))}}. In the example, {{css1.css}} would be linked from the generated page (using the link tag) and {{css2.css}} would be inlined into the generated page (e.g., {{html-page}} would read the {{css2.css}} file and inline its contents in the HTML code).
+
+* {{doctype}}: specifies the document type of the generated page. The default value is {{#f}}. The possible values are the ones available from the [[doctype]] egg.
+
+* {{charset}}: specifies the default charset to be used in the corresponding meta tag of the document. The default value is {{"UTF-8"}} (only when {{content-type}} is provided).
+
+* {{literal-style?}}: if {{#f}}, convert special characters in style code (CSS) to theyr equivalent HTML entities.  If non-{{#f}}, insert them verbatim.
+
+* {{content-type}} and {{charset}} are used together for the {{<meta http-equiv ...>}} specification.: {{charset}}'s default value is {{"UTF-8"}} and {{content-type}}'s default value is {{"application/xhtml+xml"}}.
+
+* {{html-attribs}}: attributes to the {{html}} tag. The format is a list of lists {{(<attribute> <value>)}} ({{<attribute>}} is a symbol).  Example: {{(html-page "foo" html-attribs: '((lang "us")))}}.
+
+* {{body-attribs}}: attributes to the {{body}} tag. The format is a list of lists {{(<attribute> <value>)}} ({{<attribute>}} is a symbol).  Example: {{(html-page "foo" body-attribs: '((bgcolor "red")))}}.
 
 
 
@@ -588,9 +610,11 @@ identifiers to their corresponding values.
 Here's an example:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -613,9 +637,11 @@ JavaScript code can assume that a variable {{response}} is bound and
 contains the request resulting data.  Here's an example:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -702,7 +728,11 @@ string or a [[/eggref/4/uri-common|uri-common]] URI object).  To be
 used from {{define-page}} handler.  Example:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 ;; / -> /foo
 (define-page "/"
@@ -719,7 +749,11 @@ Redirections can also be performed when the origin path is a regular
 expression:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 ;; /bar.* -> /foo
 (define-page (regexp "/bar.*")

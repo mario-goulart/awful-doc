@@ -58,7 +58,12 @@ applications is by checking the path prefix, so foo is available from
 be used, but for simplicity, we'll just use path prefixes.
 
 <enscript highlight=scheme>
-(use awful srfi-13 html-tags awful-sql-de-lite)
+(cond-expand
+  (chicken-4
+    (use awful awful-sql-de-lite srfi-13))
+  (chicken-5
+    (import awful awful-sql-de-lite srfi-13)))
+
 
 ;;;
 ;;; App foo
@@ -68,7 +73,6 @@ be used, but for simplicity, we'll just use path prefixes.
              (string-prefix? "/foo" path))
 
   parameters: ((enable-ajax #t)
-               (enable-sxml #t)
                (ajax-library "/js/foo.js"))
 
   (define-page "/foo/baz"
@@ -79,7 +83,7 @@ be used, but for simplicity, we'll just use path prefixes.
     (lambda ()
       '(p "quux from foo")))
 
-  )
+)
 
 ;;;
 ;;; App bar
@@ -97,13 +101,13 @@ be used, but for simplicity, we'll just use path prefixes.
 
   (define-page "/bar/baz"
     (lambda ()
-      (<p> "baz from bar")))
+      '(p "baz from bar")))
 
   (define-page "/bar/quux"
     (lambda ()
-      (<p> "quux from bar")))
+      '(p "quux from bar")))
 
-  )
+)
 
 ;;;
 ;;; App baz
@@ -114,11 +118,11 @@ be used, but for simplicity, we'll just use path prefixes.
 
   (define-page "/baz/foo"
     (lambda ()
-      "foo from baz"))
+      '("foo from baz")))
 
   (define-page "/baz/bar"
     (lambda ()
-      "bar from baz"))
+      '("bar from baz")))
 
-  )
+)
 </enscript>

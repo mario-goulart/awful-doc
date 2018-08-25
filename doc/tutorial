@@ -3,9 +3,11 @@
 Here's a "Hello, world!" example to be run by awful ({{hello-world.scm}}).
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -51,9 +53,11 @@ An alternative way to write Awful '''scripts''' is by using the
 <enscript highlight=scheme>
 #! /usr/bin/awful
 
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -76,9 +80,11 @@ Here's a modified "Hello, world!" example to greet some person instead
 of the whole world:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -101,9 +107,11 @@ server.  To do that, we can define a special page whose handler just
 reloads the code:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page "/reload"
   (lambda ()
@@ -119,7 +127,11 @@ the {{page-access-control}} parameter.  For example, allowing only the
 localhost to reload the apps:
 
 <enscript highlight=scheme>
-(use awful spiffy)
+(cond-expand
+  (chicken-4
+    (use awful spiffy))
+  (chicken-5
+    (import awful spiffy)))
 
 (page-access-control
  (lambda (path)
@@ -158,9 +170,11 @@ The URL of the jQuery file can be customized by setting the
 So, if we now change our code to
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -175,9 +189,11 @@ generic one ({{ajax}}) to reply the page greetings when we click
 "Hello, <person>!".
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -214,9 +230,11 @@ code when clicked, awful provides the {{ajax-link}} procedure.  So our
 example could be coded like:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -237,9 +255,11 @@ an example using JavaScript's {{alert}} and our "Hello, world!"
 example:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -286,10 +306,13 @@ doesn't return any result. {{$db}} returns a list of lists. Below is
 an usage example:
 
 <enscript highlight=scheme>
-(use awful awful-postgresql)
+(cond-expand
+  (chicken-4
+    (use awful awful-postgresql))
+  (chicken-5
+    (import awful awful-postgresql)))
 
 (enable-db)
-(enable-sxml #t)
 
 (db-credentials '((dbname . "my-db")
                   (user . "mario")
@@ -360,9 +383,12 @@ password are the same:
 4. Create a login page.  Awful provides a simple user/password login form ({{login-form}}), which we are going to use.  Here's our full example so far (using the basic "Hello, world!" as main page).
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
-(enable-sxml #t)
 (enable-session #t)
 
 (define-login-trampoline "/login-trampoline")
@@ -458,7 +484,7 @@ session identifier in the query string (e.g.,
 
 Here's a screenshot:
 
-[[image:http://parenteses.org/mario/img/awful/session-inspector.png|Awful session inspector]]
+[[image://parenteses.org/mario/img/awful/session-inspector.png|Awful session inspector]]
 
 When {{enable-session}} is {{#t}} and the {{--development-mode}}
 option is given to the awful application server, the session inspector
@@ -485,7 +511,7 @@ session inspector.  The relevant procedure and parameters are:
 
 Here's a screenshot (using the fancy editor):
 
-[[image:http://parenteses.org/mario/img/awful/fancy-web-repl.png|Awful web REPL]]
+[[image://parenteses.org/mario/img/awful/fancy-web-repl.png|Awful web REPL]]
 
 When the {{--development-mode}} option is given to the awful
 application server, the web REPL is automatically enabled and is
@@ -505,9 +531,12 @@ it only allows the access when the value of the request variable
 {{user}} is {{"mario"}}:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
-(enable-sxml #t)
 (enable-session #t)
 
 (define-login-trampoline "/login-trampoline")

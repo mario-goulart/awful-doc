@@ -1,5 +1,15 @@
 === Version history
 
+===== version 1.0.0
+
+* CHICKEN 5 support
+* Drop support for page handlers that produce strings ("string mode").  Now only SXML is supported.
+* {{enable-sxml}} has been deprecated.  It is still available, but doesn't do anything.
+* Drop dependency on the following eggs: regex, html-tags, html-utils
+* The following deprecated procedures have been removed: {{++}}, {{concat}}
+* New procedure: {{html-page}}
+
+
 ===== version 0.42.0
 
 * Use SPIFFY_TEST_PORT environment variable's value (if provided) for tests

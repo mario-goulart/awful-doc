@@ -47,8 +47,12 @@ listens on this port):
 
 <enscript highlight=scheme>
 ;; -*- scheme -*-
+(cond-expand
+  (chicken-4
+    (use awful spiffy))
+  (chicken-5
+    (import awful spiffy)))
 
-(use spiffy awful)
 (spiffy-user "awful")
 (server-port 80)
 (root-path "/var/www/awful")

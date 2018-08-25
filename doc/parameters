@@ -5,14 +5,8 @@
 ===== {{enable-sxml}}
 <parameter>(enable-sxml [boolean])</parameter>
 
-If {{#t}} specifies that awful should assume that page handlers always
-produce SXML.  If {{#f}} specifies that awful should assume that page
-handlers always produce strings.
-
-The default value is {{#f}} (likely to be changed in future versions,
-since supporting SXML by default is a goal).
-
-This parameter has been introduced in awful 0.36.
+Deprecated.  Since version 1.0.0, this parameter has no effect.  It is
+going to be removed in future versions.
 
 
 ===== {{sxml->html}}
@@ -179,9 +173,9 @@ The default value is {{(lambda (path) #t)}}.
 <parameter>(page-access-denied-message [procedure])</parameter>
 
 A one-argument (URL path of the current page) procedure which returns
-the access denied message.
+the access denied message in SXML.
 
-The default value is {{(lambda (path) (<h3> "Access denied."))}}.
+The default value is {{(lambda (path) '(h3 "Access denied."))}}.
 
 
 ===== {{valid-password?}}
@@ -252,7 +246,7 @@ The default value is {{html-page}} (see the
 A one-argument procedure to be used when an exception occurs while
 {{define-page}} tries to evaluate its contents.
 
-The default value is {{(lambda (exn) (<h3> "An error has occurred while processing your request."))}}
+The default value is {{(lambda (exn) '(h3 "An error has occurred while processing your request."))}}
 
 
 
@@ -334,11 +328,11 @@ The default value is {{(lambda () #f)}}.
 
 
 ===== {{web-repl-access-denied-message}}
-<parameter>(web-repl-access-denied-message [string])</parameter>
+<parameter>(web-repl-access-denied-message [SXML])</parameter>
 
 Message to be printed when the access to the web REPL is denied.
 
-The default value is {{(<h3> "Access denied.")}}.
+The default value is {{'(h3 "Access denied.")}}.
 
 
 ===== {{enable-web-repl-fancy-editor}}
@@ -371,11 +365,11 @@ The default value is {{(lambda () #f)}}.
 
 
 ===== {{session-inspector-access-denied-message}}
-<parameter>(session-inspector-access-denied-message [string])</parameter>
+<parameter>(session-inspector-access-denied-message [SXML])</parameter>
 
 Message to be printed when the access to the session inspector is denied.
 
-The default value is {{(<h3> "Access denied.")}}.
+The default value is {{'(h3 "Access denied.")}}.
 
 
 ==== JavaScript (parameters)

@@ -7,3 +7,5 @@
 * When {{define-page}}'s {{no-template}} is not false,
 {{add-javascript}} and ajax-related features for {{define-page}}
 won't be effective for the page in question.
+
+* If you encounter bugs, please report them to the author.

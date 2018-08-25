@@ -3,9 +3,17 @@
 exec csi -s $0 "$@"
 |#
 
-(use utils posix)
+(import scheme)
+(cond-expand
+ (chicken-4
+  (use utils posix))
+ (chicken-5
+  (import (chicken io)
+          (chicken pathname)))
+ (else
+  (error "Unsupported CHICKEN version.")))
 
-(define sections 
+(define sections
   '(main
     tutorial
     application-server
@@ -23,5 +31,8 @@ exec csi -s $0 "$@"
     version-history))
 
 (for-each (lambda (section)
-            (print (read-all (make-pathname "doc" (symbol->string section)))))
+            (print
+             (with-input-from-file
+                 (make-pathname "doc" (symbol->string section))
+               read-string)))
           sections)

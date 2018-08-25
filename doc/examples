@@ -10,10 +10,11 @@ in the {{root-path}} (the current directory, by default) and the code
 below is in a file {{angular-app.scm}}:
 
 <enscript highlight=scheme>
-(use html-utils ;; you'll need html-utils >= 0.10
-     awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define-page (main-page-path)
   (lambda ()
@@ -31,8 +32,11 @@ below is in a file {{angular-app.scm}}:
 Alternatively, you can set the {{page-template}} parameter:
 
 <enscript highlight=scheme>
-(use html-utils ;; you'll need html-utils >= 0.10
-     awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 ;; Configure page-template to set ng-app as attribute for the html tag
 (page-template
@@ -40,8 +44,6 @@ Alternatively, you can set the {{page-template}} parameter:
    (apply html-page
           (append (list content html-attribs: '((ng-app)))
                   args))))
-
-(enable-sxml #t)
 
 (define-page (main-page-path)
   (lambda ()
@@ -71,9 +73,11 @@ generated on the server side and the user tries to guess it.  It shows
 some basic ajax features.
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define (prompt-guess)
   '(input (@ (type "text") (id "guess"))))
@@ -119,7 +123,14 @@ results.
 Here's the commented code:
 
 <enscript highlight=scheme>
-(use awful sandbox)
+(cond-expand
+  (chicken-4
+    (use awful sandbox))
+  (chicken-5
+    (import (chicken base)
+            (chicken condition)
+            (chicken port))
+    (import awful sandbox)))
 
 (enable-sxml #t)
 
@@ -199,11 +210,11 @@ and access {{http://localhost:8080}}.
 
 Here are some screenshots of the code above running on Firefox:
 
-[[image:http://gazette.call-cc.org/img/10/web-sandbox.png|Screenshot of the sandboxed web REPL running on Firefox]]
+[[image://gazette.call-cc.org/img/10/web-sandbox.png|Screenshot of the sandboxed web REPL running on Firefox]]
 
 If you try something nasty, the sandbox will abort the evaluation and you'll get an error message and the call chain:
 
-[[image:http://gazette.call-cc.org/img/10/web-sandbox-loop.png|Screenshot of the sandboxed web REPL running on Firefox]]
+[[image://gazette.call-cc.org/img/10/web-sandbox-loop.png|Screenshot of the sandboxed web REPL running on Firefox]]
 
 We can also compile the web application:
 
@@ -217,9 +228,11 @@ Here's an example provided by
 [[/users/christian-kellermann|Christian Kellermann]] demonstrating an ajax-based color chooser:
 
 <enscript highlight=scheme>
-(use awful)
-
-(enable-sxml #t)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (define color-table
   '("f63353" "fead76" "107279" "10fabc" "1181bf" "120902" "129105"
@@ -258,7 +271,7 @@ Here's an example provided by
 
 Here's a screenshot:
 
-[[image:http://parenteses.org/mario/img/awful/color-chooser.png|Awful color chooser]]
+[[image://parenteses.org/mario/img/awful/color-chooser.png|Awful color chooser]]
 
 To run this example (considering you save the code above in a file called {{color-chooser.scm}}):
 
@@ -269,6 +282,8 @@ editing the input boxes then pressing enter.
 
 
 ==== Fortune server
+
+Note: this example assumes CHICKEN 4.
 
 This example is a fortune server in awful.  It demonstrates some handy
 awful features like database access and ajax.  You'll need the
@@ -401,7 +416,7 @@ body
 
 Here's a screenshot:
 
-[[image:http://parenteses.org/mario/img/awful/fortune-server.png|Awful fortune server]]
+[[image://parenteses.org/mario/img/awful/fortune-server.png|Awful fortune server]]
 
 
 ==== I-wonder
@@ -413,4 +428,4 @@ You can find the code for that application on GitHub: [[https://github.com/mario
 
 Here's a screenshot
 
-[[image:http://parenteses.org/mario/img/awful/i-wonder.png|I-wonder]]
+[[image://parenteses.org/mario/img/awful/i-wonder.png|I-wonder]]

@@ -22,9 +22,9 @@ Here's a short summary of awful features:
 
 Here are some screencasts about awful:
 
-; [[http://parenteses.org/mario/awful/awful.ogv|Awful in 35s]] : a 35 seconds video showing the installation of the awful egg and the development of a "hello, world" example
+; [[//parenteses.org/mario/awful/awful.ogv|Awful in 35s]] : a 35 seconds video showing the installation of the awful egg and the development of a "hello, world" example
 
-; [[http://parenteses.org/mario/awful/awful-guess.ogv|Number guessing game]] : a video demonstrating the development of a very simple number guessing game using ajax and the web REPL
+; [[//parenteses.org/mario/awful/awful-guess.ogv|Number guessing game]] : a video demonstrating the development of a very simple number guessing game using ajax and the web REPL
 
 === Mailing list
 
@@ -66,11 +66,13 @@ The following eggs are required:
 * [[/egg/spiffy|spiffy]]
 * [[/egg/spiffy-cookies|spiffy-cookies]]
 * [[/egg/spiffy-request-vars|spiffy-request-vars]]
-* [[/egg/html-tags|html-tags]]
-* [[/egg/html-utils|html-utils]]
 * [[/egg/json|json]]
 * [[/egg/http-session|http-session]]
 * [[/egg/sxml-transforms|sxml-transforms]]
+* [[/eggref/5/srfi-1|srfi-1]] (CHICKEN 5 only -- in CHICKEN 4 it is a core unit)
+* [[/eggref/5/srfi-13|srfi-13]] (CHICKEN 5 only -- in CHICKEN 4 it is a core unit)
+* [[/eggref/5/srfi-69|srfi-69]] (CHICKEN 5 only -- in CHICKEN 4 it is a core unit)
+
 
 === Components
 
