@@ -363,7 +363,11 @@ Here's the code for {{create-database.scm}} which creates and populates the fort
 Here's the code for the fortune server:
 
 <enscript highlight=scheme>
-(use awful awful-sql-de-lite)
+(cond-expand
+  (chicken-4
+    (use awful awful-sql-de-lite))
+  (chicken-5
+    (import awful awful-sql-de-lite)))
 
 (enable-sxml #t)
 (enable-db)
