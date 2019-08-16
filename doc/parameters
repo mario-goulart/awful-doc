@@ -298,21 +298,25 @@ automatically.
 Here's an example:
 
 <enscript highlight=scheme>
-(use awful)
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
 
 (enable-sxml #t)
 
 (define (define-json path body)
   (define-page path
     (lambda ()
-      (awful-response-headers '((content-type "text/json")))
+      (awful-response-headers '((content-type "application/json")))
       (body))
     no-template: #t))
 
 
 (define-json (main-page-path)
   (lambda ()
-    '("{a: 1}")))
+    '(literal "{\"a\": 1}")))
 </enscript>
 
 
