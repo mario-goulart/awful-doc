@@ -1,5 +1,9 @@
 === Version history
 
+===== version 1.0.1
+* Fix handling of the {{--ip-address}} command line option (thanks to Vasilij Schneidermann for spotting the problem)
+
+
 ===== version 1.0.0
 
 * CHICKEN 5 support
