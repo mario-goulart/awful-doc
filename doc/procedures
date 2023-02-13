@@ -656,6 +656,36 @@ contains the request resulting data.  Here's an example:
   use-ajax: #t)
 </enscript>
 
+When {{success}} is used together with {{target}} or {{update-targets}}, the
+success code runs before the update code.  This allows to update parts of the
+dom that cannot be identified by id (e.g., attributes), post-process the
+response before targets are updated, or skip the update altogether by
+performing a return from the callback function.  Here's an example:
+
+<enscript highlight=scheme>
+(cond-expand
+  (chicken-4
+    (use awful))
+  (chicken-5
+    (import awful)))
+
+(define-page (main-page-path)
+  (lambda ()
+
+    (ajax "foo" 'foo 'click
+          (lambda ()
+            '((lang . "en") (a . 1) (b . 2) (c . 3)))
+          update-targets: #t
+          success: "document.documentElement.lang = response['lang'];")
+
+    `(,(link "#" "Click me" id: "foo")
+      (span (@ (id "lang") (display "none")))
+      (div (@ (id "a")))
+      (div (@ (id "b")))
+      (div (@ (id "c")))))
+  use-ajax: #t)
+</enscript>
+
 The {{cache}} keyword parameter (boolean), if set to {{#f}}, it will
 force requested pages not to be cached by the browser.  The default
 value is not set, leaving it to be set by jQuery. See
