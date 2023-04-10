@@ -1,5 +1,12 @@
 === Version history
 
+===== version 1.0.3 (2023-04-10)
+
+* Automatically reject (i.e., respond 404) to dangerous paths.  Dangerous paths are those that could cause a path traversal issue.
+
+* ajax: allow using success with target/update-targets (contributed by Pietro Cerutti)
+
+
 ===== version 1.0.2 (2020-08-03)
 
 * Fix typo in SXML attribute affecting JavaScript code in web-repl
