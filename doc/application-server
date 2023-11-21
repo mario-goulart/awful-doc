@@ -18,7 +18,8 @@ awful application server is a command line program whose usage is:
     applications are automatically activated.  They get bound to /web-repl,
     /session-inspector and /reload, respectively, and access to them is only
     permited from the local host.  In this mode, error messages and call
-    chains are printed to the client.  Running awful with --development-mode
+    chains are printed to the client.  The spiffy debug-log parameter is set
+    to the current-output-port.  Running awful with --development-mode
     is not recommended for applications in production.
   
   --privileged-code=<file1>[,<file2> ...]
@@ -57,8 +58,9 @@ awful with {{--development-mode}} in production.  The development mode
 enables the web REPL and the session inspector (when
 {{enable-session}} is {{#t}}) for the localhost, prints error messages
 and backtraces to the client (e.g., web browser) and HTTP server
-debugging messages to the {{current-error-port}}.  It also makes the
-{{/reload}} path available for reloading awful applications.
+debugging messages to the {{current-error-port}}, by parameterizing spiffy's
+{{debug-log}}.  It also makes the {{/reload}} path available for reloading
+awful applications.
 
 When in development mode, the web REPL and the session inspector are
 available from the {{/web-repl}} and {{/session-inspector}} paths.
