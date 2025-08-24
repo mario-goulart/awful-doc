@@ -1,5 +1,10 @@
 === Version history
 
+===== version 1.0.4 (2025-08-24)
+
+* CHICKEN 6 support (thanks for Pietro Cerutti)
+
+
 ===== version 1.0.3 (2023-04-10)
 
 * Automatically reject (i.e., respond 404) to dangerous paths.  Dangerous paths are those that could cause a path traversal issue.
