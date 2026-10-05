@@ -1,5 +1,10 @@
 === Version history
 
+===== version 1.0.5 (2026-10-05)
+
+* In CHICKEN 6, where strings are UTF-8-encoded, determine {{Content-Length}} using {{number-of-bytes}}, not {{string-length}}. (thanks to Pietro Cerutti)
+
+
 ===== version 1.0.4 (2025-08-24)
 
 * CHICKEN 6 support (thanks to Pietro Cerutti)
